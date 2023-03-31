@@ -29,55 +29,95 @@ body {
   flex-direction: column;
   align-items: flex-start;
 
-  padding: 1rem 0;
-}
+  /* padding: 1rem 0; */
 
-.sidebarExpanded {
   padding: 1rem;
   width: 15rem;
 }
 
+.sidebarExpanded {
+  /* padding: 1rem;
+  width: 15rem; */
+  animation: sidebarExpandAnimation 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes sidebarExpandAnimation {
+  0% {
+    padding: 1rem 0.2rem;
+    width: 4rem;
+  }
+  100% {
+    padding: 1rem;
+    width: 15rem;
+  }
+}
+
 .sidebarCollapsed {
-  padding: 1rem 0.2rem;
-  /* width: 4.75rem; */
-  width: 4rem;
+  animation: sidebarCollapseAnimation 0.55s ease-in-out;
+  animation-fill-mode: forwards;
+  /* padding: 1rem 0.2rem;
+  width: 4rem; */
+}
+
+@keyframes sidebarCollapseAnimation {
+  0% {
+    padding: 1rem;
+    width: 15rem;
+  }
+  100% {
+    padding: 1rem 0.2rem;
+    width: 4rem;
+  }
 }
 
 .sidebarButtonsCollapsed {
-  /* visibility: hidden; */
-  display: none;
+  /* display: none; */
+  animation: sidebarButtonsAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes sidebarButtonsAnimation {
+  0% {
+    /* display: inherit; */
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    width: 0%;
+    /* display: none; */
+  }
 }
 
 .sidebar--menu {
   display: flex;
+  align-items: center;
   width: 100%;
   margin-bottom: 2rem;
-  align-items: center;
+  height: 2rem;
 }
 
 .sidebar--menu--text {
   font-weight: 800;
-  line-height: 1rem;
   font-size: 1.3rem;
+  height: 2rem;
   width: 80%;
   text-align: center;
+  overflow: hidden;
 }
 
 .sidebar--menu img {
-  height: 1.8rem;
-  width: 1.8rem;
+  height: 2rem;
+  width: 2rem;
+  padding: 0.2rem;
+  margin: 0 auto;
   background-color: transparent;
   cursor: pointer;
-  width: 20%;
-  /* margin-left: auto; */
-}
-
-.sidebar--menu img:hover {
-  background-color: var(--sidebar-hover);
   border-radius: 10px;
 }
 
 .sidebar--button {
+  /* display: initial; */
   color: var(--sidebar-Text);
   background-color: transparent;
   border-radius: 10px;
@@ -89,14 +129,14 @@ body {
   border: none;
   margin: 0.3rem auto;
 
-  /* padding: 0 1rem; */
+  padding: 0 0.5rem;
 }
 
 .sidebar--button img {
   height: 2rem;
   width: 2rem;
   margin: 0 auto;
-  /* margin-right: 1rem; */
+  /* margin-right: 0.3rem; */
   /* margin: 0 1rem; */
 }
 
@@ -106,10 +146,7 @@ body {
   height: 2rem;
   font-weight: 500;
   line-height: 2rem;
-}
-
-.sidebar--button:hover {
-  background-color: var(--sidebar-hover);
+  overflow: hidden;
 }
 
 .sidebar--button:last-of-type {
@@ -121,4 +158,19 @@ body {
   font-weight: 200;
   width: 80%;
   text-align: center;
+}
+
+.sidebar--menu img:hover,
+.sidebar--button:hover {
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes sidebarButtonHoverAnimation {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: var(--sidebar-hover);
+  }
 }
