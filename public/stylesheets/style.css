@@ -15,7 +15,6 @@
 
 body {
   color: white;
-
   background-color: black;
 }
 
@@ -172,5 +171,41 @@ body {
   }
   100% {
     background-color: var(--sidebar-hover);
+  }
+}
+
+.panel {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 15rem;
+  padding: 1rem;
+}
+
+.panelExpanded {
+  animation: panelExpandAnimation 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes panelExpandAnimation {
+  0% {
+    left: 4rem;
+  }
+  100% {
+    left: 15rem;
+  }
+}
+
+.panelCollapsed {
+  animation: panelCollapseAnimation 0.55s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes panelCollapseAnimation {
+  0% {
+    left: 15rem;
+  }
+  100% {
+    left: 4rem;
   }
 }
