@@ -17,7 +17,11 @@ app.use(express.static(path.join(__dirname, "/public/images")));
 app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 
 app.get("/", async (req, res) => {
-  res.render("signin");
+  res.render("index");
+});
+
+app.get("/signIn", async (req, res) => {
+  res.render("signIn");
 });
 
 app.listen(port, () => {

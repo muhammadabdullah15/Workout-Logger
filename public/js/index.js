@@ -2,6 +2,7 @@ const sidebarButtonTexts = document.querySelectorAll(".buttonText");
 const sidebar = document.querySelector(".sidebar");
 const sidebarTitle = document.querySelector(".sidebar--menu--text");
 const panels = document.querySelectorAll(".panel");
+let URL = window.location.href.split("/", 3).join("/");
 
 const collapseButton = document.getElementById("collapseButton");
 const extendButton = document.getElementById("extendButton");
@@ -117,7 +118,8 @@ leaderboardButton.onclick = function () {
 };
 
 profileButton.onclick = function () {
-  if (focusedPanel == "profile") return;
-  focusedPanel = "profile";
-  updatePanels();
+  //   if (focusedPanel == "profile") return;
+  //   focusedPanel = "profile";
+  //   updatePanels();
+  location.href = URL + "/signIn";
 };
