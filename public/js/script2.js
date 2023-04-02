@@ -1,6 +1,7 @@
 const signInButton = document.getElementById("signInButton");
 const signUpButton = document.getElementById("signUpButton");
 const passwordReveal = document.getElementById("passwordReveal");
+const passwordInput = document.getElementById("passwordInput");
 
 let selector = "signIn";
 let passwordRevealed = "hidden";
@@ -34,16 +35,15 @@ signUpButton.onclick = function () {
 };
 
 passwordReveal.onclick = function () {
-  console.log(passwordReveal.src);
   console.log("toggle");
   if (passwordRevealed == "revealed") {
     passwordRevealed = "hidden";
     passwordReveal.src = "http://localhost:8800/eye-outline.svg";
-    console.log(passwordReveal.src);
+    passwordInput.type = "password";
   } else {
     passwordRevealed = "revealed";
     passwordReveal.src = "http://localhost:8800/eye-off-outline.svg";
-    console.log(passwordReveal.src);
+    passwordInput.type = "text";
   }
 };
 
