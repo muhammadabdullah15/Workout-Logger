@@ -2,7 +2,10 @@ const signInButtonSelector = document.getElementById("signInButtonSelector");
 const signUpButtonSelector = document.getElementById("signUpButtonSelector");
 const passwordReveal = document.getElementById("passwordReveal");
 const passwordInput = document.getElementById("passwordInput");
-const signInButton = document.getElementById("signInButton");
+const emailInput = document.getElementById("emailInput");
+// const signInButton = document.getElementById("signInButton");
+const form = document.getElementById("form");
+
 let URL = window.location.href.split("/", 3).join("/");
 
 let selector = "signIn";
@@ -61,6 +64,28 @@ signUpButtonSelector.onmouseover = function () {
   }
 };
 
-signInButton.onclick = function () {
-  location.href = URL + "/";
-};
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const response = await fetch("/checkPassword", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      password: passwordInput.value,
+      email: emailInput.value,
+    }),
+  });
+  const result = await response.text();
+  console.log(result);
+});
+
+// signInButton.onclick = async function () {
+//   //   location.href = URL + "/";
+//   const plaintextPassword = document.getElementById("passwordInput").value;
+//   try {
+//     const hashedPassword = await bcrypt.hash(plaintextPassword, 10);
+//     console.log(hashedPassword);
+//     // Send the hashed password to the server using AJAX or form submission
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
