@@ -35,7 +35,7 @@ body {
   justify-content: center;
 }
 
-.form {
+#form {
   margin-left: 5rem;
   display: flex;
   width: 30rem;
@@ -49,7 +49,8 @@ body {
 
 .sign-in-selector {
   display: flex;
-  width: 100%;
+  width: 30rem;
+  margin-left: 5rem;
   margin-bottom: 3rem;
   /* background-color: var(--sidebarHover); */
   /* border-radius: 10px; */

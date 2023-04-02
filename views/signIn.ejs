@@ -9,27 +9,32 @@
   </head>
   <body>
     <div class="container">
-      <!-- <form action="none"> -->
-      <div class="form">
-        <div class="sign-in-selector">
-          <button id="signInButtonSelector">Sign In</button>
-          <button id="signUpButtonSelector">Sign Up</button>
-        </div>
+      <div class="sign-in-selector">
+        <button id="signInButtonSelector">Sign In</button>
+        <button id="signUpButtonSelector">Sign Up</button>
+      </div>
 
-        <input class="hover-animation" type="text" placeholder="Username" />
+      <form id="form">
+        <input
+          id="emailInput"
+          class="hover-animation"
+          type="text"
+          placeholder="Email"
+        />
         <div class="password-field hover-animation">
           <input id="passwordInput" type="password" placeholder="Password" />
           <img id="passwordReveal" src="/eye-outline.svg" alt="Show Password" />
         </div>
 
-        <button id="signInButton" class="hover-animation">Log In</button>
+        <button type="submit" id="signInButton" class="hover-animation">
+          Log In
+        </button>
         Or
         <button class="google-button hover-animation">
           <img src="/logo-google.svg" alt="Google Logo" />
           Continue with google
         </button>
-        <!-- </form> -->
-      </div>
+      </form>
     </div>
 
     <script src="/signIn.js"></script>
