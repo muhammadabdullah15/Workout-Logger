@@ -36,10 +36,13 @@ function updateSidebar() {
       element.classList.remove("panelExpanded");
     });
     sidebarButtonTexts.forEach((element) => {
+      element.classList.remove("sidebarButtonsExtended");
       element.classList.add("sidebarButtonsCollapsed");
     });
+
+    sidebarTitle.classList.remove("sidebarButtonsExtended");
     sidebarTitle.classList.add("sidebarButtonsCollapsed");
-    sidebarTitle.style.display = "none";
+    // sidebarTitle.style.display = "none";
 
     sidebar.classList.remove("sidebarExpanded");
     sidebar.classList.add("sidebarCollapsed");
@@ -63,11 +66,13 @@ function updateSidebar() {
     //   extendButton.classList.add("sidebarButtonsCollapsed");
     extendButton.style.display = "none";
 
+    sidebarTitle.classList.add("sidebarButtonsExtended");
     sidebarTitle.classList.remove("sidebarButtonsCollapsed");
-    sidebarTitle.style.display = "initial";
+    // sidebarTitle.style.display = "initial";
 
     sidebarButtonTexts.forEach((element) => {
       element.classList.remove("sidebarButtonsCollapsed");
+      element.classList.add("sidebarButtonsExtended");
     });
 
     panels.forEach((element) => {
