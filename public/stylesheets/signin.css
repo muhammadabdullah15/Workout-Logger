@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif !important;
+}
+
+:root {
+  --sidebar: #2f3336;
+  --sidebarHover: #3a3f43;
+  --sidebarText: white;
+  /* --panel: #3a3f43; */
+  /* --panel: #cccccc; */
+
+  /* --panel: #fbfef9; */
+  /* --panel: #33a1fd; */
+  --panel: #9399a3;
+  --panelText: black;
+}
+
+body {
+  background-color: var(--panel);
+}
+
+.container {
+  clip-path: polygon(0 0, 100% 0, 40% 100%, 0% 100%, 0 0);
+  color: white;
+  background-color: var(--sidebar);
+  width: 65%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form {
+  margin-left: 5rem;
+  display: flex;
+  width: 30rem;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+
+  display: flex;
+  position: relative;
+}
+
+.sign-in-selector {
+  display: flex;
+  width: 100%;
+  margin-bottom: 3rem;
+  /* background-color: var(--sidebarHover); */
+  /* border-radius: 10px; */
+}
+
+.sign-in-selector button {
+  width: 50%;
+  margin: 0;
+}
+
+.selectorButtonSelected {
+  animation: selectButtonAnimation 0.55s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes selectButtonAnimation {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: var(--sidebarHover);
+  }
+}
+
+input {
+  background-color: var(--sidebar);
+  border: none;
+  height: 2rem;
+  width: 80%;
+  color: var(--sidebarText);
+  margin: 0.5rem;
+  border-radius: 10px;
+  padding: 0 0.5rem;
+  /* border: 1px solid red; */
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  /* display: block; */
+  /* display: inline-block; */
+  width: 80%;
+  height: 2rem;
+  background-color: transparent;
+  border-radius: 10px;
+  border: none;
+  color: var(--sidebarText);
+  /* border: 1px solid red; */
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.hover-animation:hover {
+  animation: ButtonHoverAnimation 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes ButtonHoverAnimation {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: var(--sidebarHover);
+    /* border: 1px solid red; */
+  }
+}
+
+.password-field {
+  display: flex;
+  width: 80%;
+  height: 2rem;
+  /* border: 1px solid red; */
+  margin: 0.5rem;
+  border-radius: 10px;
+}
+
+.password-field input {
+  margin: 0;
+  width: 90%;
+  border-radius: 0;
+  background-color: transparent;
+}
+.password-field img {
+  width: 10%;
+  margin: 0 0.3rem;
+  cursor: pointer;
+  /* z-index: 1; */
+}
+
+.google-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+}
+
+.google-button img {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 1rem;
+}
