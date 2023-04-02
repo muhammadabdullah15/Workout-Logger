@@ -87,6 +87,23 @@ function updateSidebar() {
   }
 }
 
+function runQuery() {
+  fetch("/query", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: "SELECT * FROM Users",
+      params: [],
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
 collapseButton.onclick = function () {
   sidebarState = "collapsed";
   updateSidebar();
@@ -132,18 +149,5 @@ signOutButton.onclick = function () {
 };
 
 testButton.onclick = function () {
-  fetch("/query", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      query: "SELECT * FROM Users",
-      params: [],
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-    });
+  runQuery();
 };
