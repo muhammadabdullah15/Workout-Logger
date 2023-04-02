@@ -5,6 +5,7 @@ CREATE TABLE Users(
 	u_last_name VARCHAR(20) NOT NULL,
 	u_email VARCHAR(50) NOT NULL,
 	u_password VARCHAR(255) NOT NULL,
+	u_gender CHAR NOT NULL,
 	u_birth_date DATE CHECK(u_birth_date > '1960-01-01' AND u_birth_date < CURRENT_DATE) NOT NULL,
 	u_height NUMERIC(5,2) CHECK(u_height > 50) NOT NULL,
 	u_weight NUMERIC(5,2) CHECK(u_height > 30) NOT NULL,
