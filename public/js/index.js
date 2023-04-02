@@ -15,6 +15,9 @@ const signOutButton = document.getElementById("signOutButton");
 
 let sidebarState = "expanded";
 let focusedPanel = "workout";
+
+const testButton = document.getElementById("testButton");
+let signedUserId = 1;
 // updateSidebar();
 // extendButton.classList.add("sidebarButtonsCollapsed");
 extendButton.style.display = "none";
@@ -126,4 +129,21 @@ profileButton.onclick = function () {
 
 signOutButton.onclick = function () {
   location.href = URL + "/signIn";
+};
+
+testButton.onclick = function () {
+  fetch("/query", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      query: "SELECT * FROM Users",
+      params: [],
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
 };

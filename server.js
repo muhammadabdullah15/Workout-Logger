@@ -7,6 +7,20 @@ const { OAuth2Client } = require("google-auth-library");
 // const gClient = new OAuth2Client ()
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
+
+//DB RELATED
+const bodyParser = require("body-parser");
+const db = require("./db.js");
+app.use(bodyParser.json());
+
+app.post("/query", (req, res) => {
+  const query = req.body.query;
+  const params = req.body.params;
+  db.query(query, params, (rows) => {
+    res.json(rows);
+  });
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
