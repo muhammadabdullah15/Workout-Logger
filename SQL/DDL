@@ -1,0 +1,20 @@
+CREATE TABLE Users(
+	u_id SERIAL,
+	u_first_name VARCHAR(20) NOT NULL,
+	u_middle_name VARCHAR(20),
+	u_last_name VARCHAR(20) NOT NULL,
+	u_email VARCHAR(50) NOT NULL,
+	u_password VARCHAR(255) NOT NULL,
+	u_birth_date DATE CHECK(u_birth_date > '1960-01-01' AND u_birth_date < CURRENT_DATE) NOT NULL,
+	u_height NUMERIC(5,2) CHECK(u_height > 50) NOT NULL,
+	u_weight NUMERIC(5,2) CHECK(u_height > 30) NOT NULL,
+	u_body_fat_percent NUMERIC(5,2) CHECK(u_body_fat_percent > 5 AND u_body_fat_percent < 70), 
+	u_body_type VARCHAR(20) NOT NULL,
+	
+	CONSTRAINT user_pk_u_id PRIMARY KEY(u_id)
+);
+
+INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_birth_date,u_height,u_weight,u_body_type) VALUES
+('f1','l1','e1','p1','2003-01-01',150,70,'b1');
+
+SELECT * FROM Users;
