@@ -11,6 +11,7 @@ const mealButton = document.getElementById("mealButton");
 const waterButton = document.getElementById("waterButton");
 const leaderboardButton = document.getElementById("leaderboardButton");
 const profileButton = document.getElementById("profileButton");
+const signOutButton = document.getElementById("signOutButton");
 
 let sidebarState = "expanded";
 let focusedPanel = "workout";
@@ -118,8 +119,11 @@ leaderboardButton.onclick = function () {
 };
 
 profileButton.onclick = function () {
-  //   if (focusedPanel == "profile") return;
-  //   focusedPanel = "profile";
-  //   updatePanels();
+  if (focusedPanel == "profile") return;
+  focusedPanel = "profile";
+  updatePanels();
+};
+
+signOutButton.onclick = function () {
   location.href = URL + "/signIn";
 };
