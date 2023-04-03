@@ -8,7 +8,7 @@ const { OAuth2Client } = require("google-auth-library");
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
-const db = require("./db.js");
+const { pool } = require("./db");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,13 +19,13 @@ app.use(express.static(path.join(__dirname, "/public/js")));
 app.use(express.static(path.join(__dirname, "/public/images")));
 app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 
-app.post("/query", (req, res) => {
-  const query = req.body.query;
-  const params = req.body.params;
-  db.query(query, params, (rows) => {
-    res.json(rows);
-  });
-});
+// app.post("/query", (req, res) => {
+//   const query = req.body.query;
+//   const params = req.body.params;
+//   db.query(query, params, (rows) => {
+//     res.json(rows);
+//   });
+// });
 
 app.post("/hash", async (req, res) => {
   const plaintextPassword = req.body.password;
@@ -41,99 +41,47 @@ app.post("/hash", async (req, res) => {
 app.post("/checkPassword", async (req, res) => {
   const plaintextPassword = req.body.password;
   const userEmail = req.body.email;
-
   try {
-    const hashedPassword = await bcrypt.hash(plaintextPassword, 10);
-    //check
-    savedPassword = getSavedPassword(userEmail);
-    // res.send(hashedPassword);
+    const savedPassword = await getSavedPassword(userEmail);
+
+    if (savedPassword == null) {
+      isPasswordValid = false;
+    } else {
+      isPasswordValid = await bcrypt.compare(plaintextPassword, savedPassword);
+    }
     console.log("check call output:");
-    console.log(userEmail);
-
-    console.log(savedPassword);
-
-    res.send(savedPassword);
+    console.log(isPasswordValid);
+    res.send(isPasswordValid);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Bcrypt Encryption error while checking");
+    res.status(500).send("Error");
   }
 });
 
-// function getSavedPassword(email, callback) {
-//   const params = [];
-//   let savedPassword = "";
-//   const query = "SELECT u_password FROM Users WHERE u_email='" + email + "'";
-//   console.log(query);
-//   db.query(query, params, (err, result) => {
-//     if (err) {
-//       console.log("function error: " + err);
-
-//       callback(err, null);
-//     } else {
-//       savedPassword = result[0].u_password;
-//       console.log("function output");
-//       console.log(savedPassword);
-
-//       if (savedPassword == null) {
-//         callback(new Error("No password found for email: " + email), null);
-//       } else {
-//         callback(null, savedPassword);
-//       }
-//     }
-//   });
-// }
-
-function getSavedPassword(email, callback) {
-  const params = [];
-//   let savedPassword = "";
-  const query = "SELECT u_password FROM Users WHERE u_email='" + email + "'";
-  console.log(query);
-  db.query(query, params, (result) => {
-    // if (err) {
-    //   console.log("ERROR");
-    //   callback(err, null);
-    // }
-    console.log("function output:",result[0].u_password);
-    callback(result[0].u_password);
-  });
-}
-//0938281026
-
-// function getSavedPassword(email) {
-//   let savedPassword = "";
-//   const params = [];
-//   const query = "SELECT u_password FROM Users WHERE u_email='" + email + "'";
-//   //   console.log(query);
-//   db.query(query, params, (result) => {
-//     savedPassword = result[0].u_password;
-//     console.log("function output:");
-//     console.log(savedPassword);
-//   });
-//   return savedPassword;
-// }
-//   console.log("test output");
-// console.log(getSavedPassword("e1"));
-
-getSavedPassword("e1", function (savedPassword) {
-  console.log("test output");
-//   if (err) {
-//     console.log("Error: ", err.message);
-//   } else {
-    console.log("Saved password: ", savedPassword);
-//   }
+app.post("/query", async (req, res) => {
+  const queryText = req.body.query;
+  const data = await runQuery(queryText);
+  console.log(data);
+  res.json(data);
 });
 
-// getSavedPassword("e1");
+//0938281026
 
-// const query = "SELECT u_password FROM Users WHERE u_email='e1'";
+async function getSavedPassword(email) {
+  const queryText =
+    "SELECT u_password FROM Users WHERE u_email='" + email + "'";
+  const result = await runQuery(queryText);
+  if (result.length > 0) {
+    return result[0].u_password;
+  } else {
+    return null;
+  }
+}
 
-// console.log(db.query("SELECT u_password FROM Users WHERE u_email='e1'",[],null));
-
-// db.query("SELECT u_password FROM Users WHERE u_email='e1'", (err, res) => {
-//   if (err) throw err;
-//   console.log(res.rows);
-//   db.end();
-// });
+async function runQuery(queryText) {
+  const { rows } = await pool.query(queryText);
+  return rows;
+}
 
 app.get("/", async (req, res) => {
   res.render("index");
