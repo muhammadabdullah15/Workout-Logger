@@ -87,7 +87,7 @@ function updateSidebar() {
   }
 }
 
-async function runQuery() {
+async function runTestQuery() {
   try {
     const res = await fetch("/query", {
       method: "POST",
@@ -150,5 +150,5 @@ signOutButton.onclick = function () {
 };
 
 testButton.onclick = function () {
-  runQuery();
+  runTestQuery();
 };

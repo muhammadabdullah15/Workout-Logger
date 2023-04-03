@@ -19,14 +19,6 @@ app.use(express.static(path.join(__dirname, "/public/js")));
 app.use(express.static(path.join(__dirname, "/public/images")));
 app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 
-// app.post("/query", (req, res) => {
-//   const query = req.body.query;
-//   const params = req.body.params;
-//   db.query(query, params, (rows) => {
-//     res.json(rows);
-//   });
-// });
-
 app.post("/hash", async (req, res) => {
   const plaintextPassword = req.body.password;
   try {
@@ -65,7 +57,7 @@ app.post("/query", async (req, res) => {
   res.json(data);
 });
 
-//0938281026
+//0938281026 :)
 
 async function getSavedPassword(email) {
   const queryText =
