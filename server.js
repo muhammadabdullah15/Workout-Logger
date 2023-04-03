@@ -59,44 +59,77 @@ app.post("/checkPassword", async (req, res) => {
   }
 });
 
+// function getSavedPassword(email, callback) {
+//   const params = [];
+//   let savedPassword = "";
+//   const query = "SELECT u_password FROM Users WHERE u_email='" + email + "'";
+//   console.log(query);
+//   db.query(query, params, (err, result) => {
+//     if (err) {
+//       console.log("function error: " + err);
+
+//       callback(err, null);
+//     } else {
+//       savedPassword = result[0].u_password;
+//       console.log("function output");
+//       console.log(savedPassword);
+
+//       if (savedPassword == null) {
+//         callback(new Error("No password found for email: " + email), null);
+//       } else {
+//         callback(null, savedPassword);
+//       }
+//     }
+//   });
+// }
+
 function getSavedPassword(email, callback) {
   const params = [];
-  let savedPassword = "";
+//   let savedPassword = "";
   const query = "SELECT u_password FROM Users WHERE u_email='" + email + "'";
-  //   console.log(query);
-  db.query(query, params, (err, result) => {
-    if (err) {
-      callback(err, null);
-    } else {
-      savedPassword = result[0].u_password;
-      console.log("function output");
-      console.log(savedPassword);
-
-      if (savedPassword == null) {
-        callback(new Error("No password found for email: " + email), null);
-      } else {
-        callback(null, savedPassword);
-      }
-    }
+  console.log(query);
+  db.query(query, params, (result) => {
+    // if (err) {
+    //   console.log("ERROR");
+    //   callback(err, null);
+    // }
+    console.log("function output:",result[0].u_password);
+    callback(result[0].u_password);
   });
-  //   return savedPassword;
 }
-console.log("test output");
-getSavedPassword("e1", function (err, savedPassword) {
-  if (err) {
-    console.log("Error: ", err.message);
-  } else {
-    console.log("Saved password: ", savedPassword);
-  }
-});
+//0938281026
+
+// function getSavedPassword(email) {
+//   let savedPassword = "";
+//   const params = [];
+//   const query = "SELECT u_password FROM Users WHERE u_email='" + email + "'";
+//   //   console.log(query);
+//   db.query(query, params, (result) => {
+//     savedPassword = result[0].u_password;
+//     console.log("function output:");
+//     console.log(savedPassword);
+//   });
+//   return savedPassword;
+// }
+//   console.log("test output");
 // console.log(getSavedPassword("e1"));
+
+getSavedPassword("e1", function (savedPassword) {
+  console.log("test output");
+//   if (err) {
+//     console.log("Error: ", err.message);
+//   } else {
+    console.log("Saved password: ", savedPassword);
+//   }
+});
+
 // getSavedPassword("e1");
 
 // const query = "SELECT u_password FROM Users WHERE u_email='e1'";
 
 // console.log(db.query("SELECT u_password FROM Users WHERE u_email='e1'",[],null));
 
-// db.query("ELECT u_password FROM Users WHERE u_email='e1'", (err, res) => {
+// db.query("SELECT u_password FROM Users WHERE u_email='e1'", (err, res) => {
 //   if (err) throw err;
 //   console.log(res.rows);
 //   db.end();
