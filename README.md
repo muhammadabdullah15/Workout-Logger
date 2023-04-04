@@ -1,13 +1,11 @@
 # Workout-Logger
 
-
 ## Authors
 
 - Muhammad Abdullah&emsp; &emsp;(2021317) ([@muhammadabdullah15](https://github.com/muhammadabdullah15/))
 - Mohammad Umer Tayyab (2021306) ([@Umert306](https://github.com/Umert306))
 - Ahmed Ali Abid &emsp; &emsp;&emsp;&emsp; (2021065) ([@](https://github.com/))
 - Eman Anjum&emsp; &emsp; &emsp; &emsp; &emsp; (2021148) ([@](https://github.com/))
-
 
 ## Abstract
 
@@ -16,26 +14,30 @@ However, a healthy lifestyle cannot be practiced perfectly by exercise only, as 
 eye on their daily water intake because a sufficient amount of water intake is necessary for the human body as well. The challenges module allows the user to compete with their friends on a leaderboard, motivating them to pursue a healthy lifestyle.
 
 ## Dependencies
-Node Js 
+
+Node Js
+
 ```bash
-  //Installation for Windows
+  #Installation for Windows
   https://phoenixnap.com/kb/install-node-js-npm-on-windows
 
-  //Installation for Ubuntu
+  #Installation for Ubuntu
   sudo apt update
   sudo apt install nodejs
   sudo apt install npm
 ```
 
 ## Initialization & Installing Required Packages
+
 Clone/Download repository  
 Go to directory and open terminal  
 Execute the following commands to setup:
+
 ```bash
-  //To initialize:
+  #To initialize:
   npm init
 
-  //To install required packages:
+  #To install required packages:
   npm i bcrypt
   npm i cookie-parser
   npm i dotenv
@@ -48,7 +50,6 @@ Execute the following commands to setup:
   npm i pg
 ```
 
-    
 ## Running
 
 Run using:
