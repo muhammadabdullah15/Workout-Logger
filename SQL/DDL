@@ -1,3 +1,32 @@
+CREATE TABLE Mealplan(
+	m_id SERIAL,
+	m_name VARCHAR(25) NOT NULL,
+	daily_calories INT CHECK(daily_calories > 100 AND daily_calories < 5000) NOT NULL,
+	type VARCHAR(25) NOT NULL,
+	
+	CONSTRAINT mealplan_pk_m_id PRIMARY KEY(m_id)
+);
+
+CREATE TABLE Challenge(
+	c_id SERIAL ,
+	c_name VARCHAR(50) NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE CHECK(end_date > CURRENT_DATE),
+	
+	CONSTRAINT challenge_pk_c_id PRIMARY KEY(c_id)
+);
+
+CREATE TABLE Workout(
+	w_id SERIAL,
+	w_name VARCHAR(50) NOT NULL,
+	w_cpm_low FLOAT CHECK(w_cpm_low > 0) NOT NULL,
+	w_cpm_medium FLOAT CHECK(w_cpm_medium > 0) NOT NULL,
+	w_cpm_high FLOAT CHECK(w_cpm_high > 0) NOT NULL,
+
+	
+	CONSTRAINT workout_pk_w_id PRIMARY KEY(w_id)
+);
+
 CREATE TABLE Users(
 	u_id SERIAL,
 	u_first_name VARCHAR(20) NOT NULL,
@@ -11,11 +40,38 @@ CREATE TABLE Users(
 	u_weight NUMERIC(5,2) CHECK(u_height > 30) NOT NULL,
 	u_body_fat_percent NUMERIC(5,2) CHECK(u_body_fat_percent > 5 AND u_body_fat_percent < 70), 
 	u_body_type VARCHAR(20) NOT NULL,
+	joining_date DATE CHECK(joining_date > '1960-01-01' AND joining_date <= CURRENT_DATE) NOT NULL,
+	m_id INT,
 	
-	CONSTRAINT user_pk_u_id PRIMARY KEY(u_id)
+	CONSTRAINT user_pk_u_id PRIMARY KEY(u_id),
+	CONSTRAINT mealplan_fk_m_id FOREIGN KEY(m_id) REFERENCES Mealplan(m_id)
 );
 
+CREATE TABLE Works_out(
+	u_id INT NOT NULL,
+	w_id INT NOT NULL,
+	intensity VARCHAR(25),
+	location VARCHAR(50) NOT NULL,
+	duration TIME CHECK(duration > '00:05:00' AND duration < '10:00:00') NOT NULL,
+	
+	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES Users(u_id),
+	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id)
+
+);
+
+CREATE TABLE Participates(
+	w_id INT,
+	u_id INT,
+	c_id INT,
+	
+	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id),
+	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES UserS(u_id),
+	CONSTRAINT challenge_fk_c_id FOREIGN KEY(c_id) REFERENCES Challenge(c_id)
+);
+
+--TEST QUERIES
 INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_birth_date,u_height,u_weight,u_body_type) VALUES
 ('f1','l1','e1','p1','2003-01-01',150,70,'b1');
 
 SELECT * FROM Users;
+
