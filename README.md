@@ -18,10 +18,10 @@ eye on their daily water intake because a sufficient amount of water intake is n
 Node Js
 
 ```bash
-  #Installation for Windows
+  # Installation for Windows
   https://phoenixnap.com/kb/install-node-js-npm-on-windows
 
-  #Installation for Ubuntu
+  # Installation for Ubuntu
   sudo apt update
   sudo apt install nodejs
   sudo apt install npm
@@ -34,10 +34,10 @@ Go to directory and open terminal
 Execute the following commands to setup:
 
 ```bash
-  #To initialize:
+  # To initialize:
   npm init
 
-  #To install required packages:
+  # To install required packages:
   npm i bcrypt
   npm i cookie-parser
   npm i dotenv
