@@ -147,3 +147,12 @@ button {
   width: 1.5rem;
   margin-right: 1rem;
 }
+
+#passwordErrorPrompt {
+  width: 60%;
+  text-align: center;
+  height: 0.75rem;
+  font-size: 0.75rem;
+  margin: 1.5rem;
+  margin-top: 2rem;
+}

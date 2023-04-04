@@ -3,11 +3,13 @@ const signUpButtonSelector = document.getElementById("signUpButtonSelector");
 const passwordReveal = document.getElementById("passwordReveal");
 const passwordInput = document.getElementById("passwordInput");
 const emailInput = document.getElementById("emailInput");
+const passwordErrorPrompt = document.getElementById("passwordErrorPrompt");
 // const signInButton = document.getElementById("signInButton");
 const form = document.getElementById("form");
 
 let URL = window.location.href.split("/", 3).join("/");
 
+passwordErrorPrompt.style.display = "none";
 let selector = "signIn";
 let passwordRevealed = "hidden";
 signUpButtonSelector.classList.add("hover-animation");
@@ -76,6 +78,11 @@ form.addEventListener("submit", async (event) => {
   });
   const result = await response.text();
   console.log(result);
+  if (result == "false") {
+    passwordErrorPrompt.style.display = "initial";
+  } else {
+    location.href = URL + "/";
+  }
 });
 
 // signInButton.onclick = async function () {
