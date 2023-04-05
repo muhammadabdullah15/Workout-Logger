@@ -68,22 +68,43 @@ signUpButtonSelector.onmouseover = function () {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const response = await fetch("/checkPassword", {
+  email = emailInput.value;
+  password = passwordInput.value;
+
+  const result = await fetch("/login", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      password: passwordInput.value,
-      email: emailInput.value,
+      email,
+      password,
     }),
-  });
-  const result = await response.text();
-  console.log(result);
-  if (result == "false") {
-    passwordErrorPrompt.style.display = "initial";
-  } else {
-    location.href = URL + "/";
-  }
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        passwordErrorPrompt.style.display = "initial";
+        return;
+      }
+      window.location.href = res.path;
+    });
 });
+//   const response = await fetch("/checkPassword", {
+//     method: "POST",
+//     headers: { "Content-Type": "application/json" },
+//     body: JSON.stringify({
+//       password: passwordInput.value,
+//       email: emailInput.value,
+//     }),
+//   });
+//   const result = await response.text();
+//   console.log(result);
+//   if (result == "false") {
+//     passwordErrorPrompt.style.display = "initial";
+//   } else {
+//     location.href = URL + "/";
+//   }
 
 // signInButton.onclick = async function () {
 //   //   location.href = URL + "/";
