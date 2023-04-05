@@ -39,13 +39,15 @@ app.post("/testGetData", async (req, res) => {
   res.json(data);
 });
 
-// app.get("/login", authenticate, async (req, res) => {
-//   if (res.locals.id) {
-//     console.log("Already logged in");
-//   } else {
-//     res.render("signIn");
-//   }
-// });
+app.get("/login", authenticate, async (req, res, next) => {
+  console.log(res.locals.id);
+  if (res.locals.id) {
+    console.log("Already logged in");
+  } else {
+    console.log("Session expired");
+    res.redirect("signIn");
+  }
+});
 
 app.get("/logout", async (req, res) => {
   res.clearCookie("WorkoutLoggerToken");
@@ -59,6 +61,7 @@ app.post("/login", authenticate, login, async (req, res, next) => {
     res.send({ path: "/" });
   }
 });
+
 //0938281026 :)
 
 async function runQuery(queryText) {
@@ -78,10 +81,10 @@ async function getSavedPassword(email) {
 }
 
 async function getIdByEmail(email) {
-  const queryText = "SELECT u_id FROM Users WHERE u_email='" + email + "'";
+  const queryText = `SELECT u_id FROM Users WHERE u_email='${email}'`;
   const result = await runQuery(queryText);
   if (result.length > 0) {
-    return result[0].id;
+    return result[0].u_id;
   } else {
     return null;
   }
@@ -100,7 +103,7 @@ async function generateToken(signedUserId) {
 async function login(req, res, next) {
   const plaintextPassword = req.body.password;
   const userEmail = req.body.email;
-  const userId = getIdByEmail(userEmail);
+  const userId = await getIdByEmail(userEmail);
   let isPasswordValid = false;
   try {
     const savedPassword = await getSavedPassword(userEmail);
@@ -110,8 +113,6 @@ async function login(req, res, next) {
     } else {
       isPasswordValid = await bcrypt.compare(plaintextPassword, savedPassword);
     }
-    console.log("check call output:");
-    console.log(isPasswordValid);
   } catch (error) {
     console.error(error);
   }
@@ -136,7 +137,7 @@ async function authenticate(req, res, next) {
     return next();
   } else {
     const user = JWT.verify(token, process.env.JWT_SECRET);
-    res.locals.id = user.id;
+    res.locals.id = user.user_id;
     return next();
   }
 }

@@ -23,6 +23,8 @@ const leaderboardButton = document.getElementById("leaderboardButton");
 const profileButton = document.getElementById("profileButton");
 const signOutButton = document.getElementById("signOutButton");
 
+authenticateUser();
+
 let sidebarState = "expanded";
 let focusedPanel = "profile";
 
@@ -95,6 +97,18 @@ function updateSidebar() {
       element.classList.remove("panelCollapsed");
     });
   }
+}
+
+async function authenticateUser() {
+  console.log("authenticating");
+  fetch("/login", {
+    method: "GET",
+    credentials: "same-origin",
+  }).then((response) => {
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
+  });
 }
 
 async function runTestQuery() {
@@ -189,8 +203,6 @@ signOutButton.onclick = function () {
       window.location.href = response.url;
     }
   });
-
-  //   location.href = URL + "/signIn";
 };
 
 testButton.onclick = function () {
