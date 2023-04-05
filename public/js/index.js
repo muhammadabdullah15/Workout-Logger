@@ -181,7 +181,16 @@ profileButton.onclick = function () {
 };
 
 signOutButton.onclick = function () {
-  location.href = URL + "/signIn";
+  fetch("/logout", {
+    method: "GET",
+    credentials: "same-origin",
+  }).then((response) => {
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
+  });
+
+  //   location.href = URL + "/signIn";
 };
 
 testButton.onclick = function () {

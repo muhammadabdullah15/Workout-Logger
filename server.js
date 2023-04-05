@@ -19,27 +19,6 @@ app.use(express.static(path.join(__dirname, "/public/js")));
 app.use(express.static(path.join(__dirname, "/public/images")));
 app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 
-//Deprecated
-app.post("/checkPassword", async (req, res) => {
-  const plaintextPassword = req.body.password;
-  const userEmail = req.body.email;
-  try {
-    const savedPassword = await getSavedPassword(userEmail);
-
-    if (savedPassword == null) {
-      isPasswordValid = false;
-    } else {
-      isPasswordValid = await bcrypt.compare(plaintextPassword, savedPassword);
-    }
-    console.log("check call output:");
-    console.log(isPasswordValid);
-    res.send(isPasswordValid);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error");
-  }
-});
-
 //Change for specific queries
 app.post("/query", async (req, res) => {
   const queryText = req.body.query;
@@ -67,6 +46,11 @@ app.post("/testGetData", async (req, res) => {
 //     res.render("signIn");
 //   }
 // });
+
+app.get("/logout", async (req, res) => {
+  res.clearCookie("WorkoutLoggerToken");
+  res.redirect("/signIn");
+});
 
 app.post("/login", authenticate, login, async (req, res, next) => {
   if (res.locals.error) {
