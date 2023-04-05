@@ -59,6 +59,11 @@ app.post("/query", async (req, res) => {
 
 //0938281026 :)
 
+async function runQuery(queryText) {
+  const { rows } = await pool.query(queryText);
+  return rows;
+}
+
 async function getSavedPassword(email) {
   const queryText =
     "SELECT u_password FROM Users WHERE u_email='" + email + "'";
@@ -70,10 +75,16 @@ async function getSavedPassword(email) {
   }
 }
 
-async function runQuery(queryText) {
-  const { rows } = await pool.query(queryText);
-  return rows;
-}
+app.post("/testGetData", async (req, res) => {
+  const signedInUserId = 1;
+  const queryText =
+    "SELECT u_first_name,u_last_name,u_email,u_birth_date,u_height,u_weight,u_body_type FROM Users WHERE u_id='" +
+    signedInUserId +
+    "'";
+  const data = await runQuery(queryText);
+  //   console.log(data);
+  res.json(data);
+});
 
 app.get("/", async (req, res) => {
   res.render("index");

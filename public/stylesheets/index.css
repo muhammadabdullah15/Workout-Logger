@@ -247,3 +247,10 @@ body {
     width: calc(100% - 4rem);
   }
 }
+
+.tempDisplays {
+  height: 1rem;
+  font-size: 1rem;
+  width: 20rem;
+  margin-bottom: 1rem;
+}

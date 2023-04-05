@@ -4,6 +4,16 @@ const sidebarTitle = document.querySelector(".sidebar--menu--text");
 const panels = document.querySelectorAll(".panel");
 let URL = window.location.href.split("/", 3).join("/");
 
+//TEST LABELS
+const u_first_name = document.getElementById("u_first_name");
+const u_last_name = document.getElementById("u_last_name");
+const u_email = document.getElementById("u_email");
+const u_birth_date = document.getElementById("u_birth_date");
+const u_height = document.getElementById("u_height");
+const u_weight = document.getElementById("u_weight");
+const u_body_type = document.getElementById("u_body_type");
+//TEST LABELS END
+
 const collapseButton = document.getElementById("collapseButton");
 const extendButton = document.getElementById("extendButton");
 const workoutButton = document.getElementById("workoutButton");
@@ -99,7 +109,32 @@ async function runTestQuery() {
       }),
     });
     const data = await res.json();
+    console.log("TEST QUERY BUTTON OUTPUT");
     console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getTestData() {
+  console.log("GET DATA OUTPUT");
+  try {
+    const res = await fetch("/testGetData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+    const data = await res.json();
+    console.log(data);
+    u_first_name.innerText = data[0].u_first_name;
+    u_last_name.innerText = data[0].u_last_name;
+    u_email.innerText = data[0].u_email;
+    u_birth_date.innerText = data[0].u_birth_date;
+    u_weight.innerText = data[0].u_weight;
+    u_height.innerText = data[0].u_height;
+    u_body_type.innerText = data[0].u_body_type;
   } catch (error) {
     console.log(error);
   }
@@ -150,5 +185,6 @@ signOutButton.onclick = function () {
 };
 
 testButton.onclick = function () {
-  runTestQuery();
+  // runTestQuery();
+  getTestData();
 };
