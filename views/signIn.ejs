@@ -16,22 +16,90 @@
         <button id="signUpButtonSelector">Sign Up</button>
       </div>
 
-      <form id="form">
+      <form class="form" id="signInForm">
         <input
-          id="emailInput"
+          id="signInEmailInput"
           class="hover-animation"
           type="text"
           placeholder="Email"
         />
         <div class="password-field hover-animation">
-          <input id="passwordInput" type="password" placeholder="Password" />
-          <img id="passwordReveal" src="/eye-outline.svg" alt="Show Password" />
+          <input
+            id="signInPasswordInput"
+            type="password"
+            placeholder="Password"
+          />
+          <img
+            id="signInPasswordReveal"
+            src="/eye-outline.svg"
+            alt="Show Password"
+          />
         </div>
 
-        <div id="passwordErrorPrompt">Incorrect Password/Email provided</div>
+        <div id="signInPasswordErrorPrompt">
+          Incorrect Password/Email provided
+        </div>
 
         <button type="submit" id="signInButton" class="hover-animation">
           Log In
+        </button>
+        Or
+        <button class="google-button hover-animation">
+          <img src="/logo-google.svg" alt="Google Logo" />
+          Continue with google
+        </button>
+      </form>
+
+      <form class="form" id="signUpForm">
+        <input
+          id="signUpEmailInput"
+          class="hover-animation"
+          type="text"
+          placeholder="Email"
+        />
+
+        <input
+          id="signUpFirstNameInput"
+          class="hover-animation"
+          type="text"
+          placeholder="First Name"
+        />
+
+        <input
+          id="signUpLastNameInput"
+          class="hover-animation"
+          type="text"
+          placeholder="Last Name"
+        />
+
+        <div class="password-field hover-animation">
+          <input
+            id="signUpPasswordInput"
+            type="password"
+            placeholder="Password"
+          />
+          <img
+            id="signUpPasswordReveal"
+            src="/eye-outline.svg"
+            alt="Show Password"
+          />
+        </div>
+
+        <div class="password-field hover-animation">
+          <input
+            id="signUpConfirmPasswordInput"
+            type="password"
+            placeholder="Confirm Password"
+          />
+          <img
+            id="signUpConfirmPasswordReveal"
+            src="/eye-outline.svg"
+            alt="Show Password"
+          />
+        </div>
+
+        <button type="submit" id="signUpButton" class="hover-animation">
+          Sign Up
         </button>
         Or
         <button class="google-button hover-animation">
