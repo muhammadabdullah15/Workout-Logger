@@ -40,9 +40,8 @@ app.post("/testGetData", async (req, res) => {
 });
 
 app.get("/login", authenticate, async (req, res, next) => {
-  console.log(res.locals.id);
   if (res.locals.id) {
-    console.log("Already logged in");
+    console.log(`User ${res.locals.id} authenticated`);
   } else {
     console.log("Session expired");
     res.redirect("signIn");
@@ -96,7 +95,7 @@ async function generateToken(signedUserId) {
   const options = { expiresIn: "1h" };
 
   const token = JWT.sign(payload, secret, options);
-  console.log(token);
+  //   console.log(token);
   return token;
 }
 
@@ -139,6 +138,7 @@ async function authenticate(req, res, next) {
     const user = JWT.verify(token, process.env.JWT_SECRET);
     res.locals.id = user.user_id;
     return next();
+    //May not verify => add check
   }
 }
 
