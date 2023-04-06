@@ -66,13 +66,6 @@ function updateSidebar() {
       element.classList.add("panelCollapsedAnimation");
     });
 
-    // document
-    //   .getElementById(focusedPanel)
-    //   .classList.remove("panelExpandedAnimation");
-    // document
-    //   .getElementById(focusedPanel)
-    //   .classList.add("panelCollapsedAnimation");
-
     sidebarButtons.forEach((element) => {
       element.classList.remove("sidebar--button--hover");
     });
@@ -112,13 +105,6 @@ function updateSidebar() {
       element.classList.add("panelExpandedAnimation");
       element.classList.remove("panelCollapsedAnimation");
     });
-
-    // document
-    //   .getElementById(focusedPanel)
-    //   .classList.add("panelExpandedAnimation");
-    // document
-    //   .getElementById(focusedPanel)
-    //   .classList.remove("panelCollapsedAnimation");
   }
 }
 
