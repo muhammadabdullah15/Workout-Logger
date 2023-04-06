@@ -49,6 +49,7 @@ app.get("/login", authenticate, async (req, res, next) => {
 });
 
 app.get("/logout", async (req, res) => {
+  console.log("User logger out");
   res.clearCookie("WorkoutLoggerToken");
   res.redirect("/signIn");
 });
@@ -57,6 +58,7 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   if (res.locals.error) {
     res.send({ path: "/signIn", error: res.locals.error });
   } else {
+    console.log("Login Successful");
     res.send({ path: "/" });
   }
 });
