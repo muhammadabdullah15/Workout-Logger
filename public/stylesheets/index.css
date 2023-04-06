@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1rem;
+  padding: 0.8rem;
   width: 15rem;
 }
 
@@ -67,7 +67,7 @@ body {
 }
 
 .sidebarTitleCollapsed {
-  animation: sidebarTitleCollapseAnimation 0.5s ease-in-out;
+  animation: sidebarTitleCollapseAnimation 0.4s ease-in-out;
   animation-fill-mode: forwards;
 }
 
@@ -139,9 +139,12 @@ body {
 }
 
 .sidebar--button img {
-  height: 2rem;
-  width: 2rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0.45rem;
   margin: 0 auto;
+  margin-left: 0.6rem;
+  border-radius: 10px;
 }
 
 .sidebar--button .buttonText {
@@ -161,13 +164,6 @@ body {
   font-weight: 200;
   width: 80%;
   text-align: center;
-}
-
-.sidebar--button--hover {
-  border-radius: 10px;
-  /* border: 1rem transparent !important; */
-  /* margin: 1rem; */
-  /* height: 3rem; */
 }
 
 .sidebar--menu img:hover,
@@ -204,9 +200,19 @@ body {
   text-align: center;
 }
 
-.panelExpanded {
+.panelExpandedAnimation {
   animation: panelExpandAnimation 0.5s ease-in-out;
   animation-fill-mode: forwards;
+}
+
+.panelCollapsed {
+  left: 4rem;
+  width: calc(100% - 4rem);
+}
+
+.panelExpanded {
+  left: 15rem;
+  width: calc(100% - 15rem);
 }
 
 @keyframes panelExpandAnimation {
@@ -220,7 +226,7 @@ body {
   }
 }
 
-.panelCollapsed {
+.panelCollapsedAnimation {
   animation: panelCollapseAnimation 0.5s ease-in-out;
   animation-fill-mode: forwards;
 }

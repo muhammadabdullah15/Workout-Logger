@@ -3,6 +3,7 @@ const sidebarButtonImages = document.querySelectorAll(".buttonImages");
 const sidebar = document.querySelector(".sidebar");
 const sidebarMenu = document.querySelector(".sidebar--menu");
 const panels = document.querySelectorAll(".panel");
+
 let URL = window.location.href.split("/", 3).join("/");
 
 //TEST LABELS
@@ -20,7 +21,7 @@ const extendButton = document.getElementById("extendButton");
 const workoutButton = document.getElementById("workoutButton");
 const mealButton = document.getElementById("mealButton");
 const waterButton = document.getElementById("waterButton");
-const leaderboardButton = document.getElementById("leaderboardButton");
+const socialButton = document.getElementById("socialButton");
 const profileButton = document.getElementById("profileButton");
 const signOutButton = document.getElementById("signOutButton");
 
@@ -30,9 +31,7 @@ let sidebarState = "expanded";
 let focusedPanel = "profile";
 
 const testButton = document.getElementById("testButton");
-let signedUserId = 1;
-// updateSidebar();
-// extendButton.classList.add("sidebarButtonsCollapsed");
+
 extendButton.style.display = "none";
 updatePanels();
 updateSidebar();
@@ -41,6 +40,20 @@ function updatePanels() {
   panels.forEach((element) => {
     element.style.display = "none";
   });
+
+  if (sidebarState == "expanded") {
+    document
+      .getElementById(focusedPanel)
+      .classList.remove("panelExpandedAnimation");
+    document.getElementById(focusedPanel).classList.remove("panelCollapsed");
+    document.getElementById(focusedPanel).classList.add("panelExpanded");
+  } else if (sidebarState == "collapsed") {
+    document
+      .getElementById(focusedPanel)
+      .classList.remove("panelCollapsedAnimation");
+    document.getElementById(focusedPanel).classList.remove("panelExpanded");
+    document.getElementById(focusedPanel).classList.add("panelCollapsed");
+  }
   document.getElementById(focusedPanel).style.display = "initial";
 }
 
@@ -48,15 +61,19 @@ function updateSidebar() {
   if (sidebarState == "collapsed") {
     console.log("Collapse");
 
-    // document.body.classList.remove("bodyCollapsed");
-    // document.body.classList.add("bodyExpanded");
-
     panels.forEach((element) => {
-      element.classList.add("panelCollapsed");
-      element.classList.remove("panelExpanded");
+      element.classList.remove("panelExpandedAnimation");
+      element.classList.add("panelCollapsedAnimation");
     });
+
+    // document
+    //   .getElementById(focusedPanel)
+    //   .classList.remove("panelExpandedAnimation");
+    // document
+    //   .getElementById(focusedPanel)
+    //   .classList.add("panelCollapsedAnimation");
+
     sidebarButtons.forEach((element) => {
-      //   element.classList.remove("sidebarButtonsExtended");
       element.classList.remove("sidebar--button--hover");
     });
     sidebarButtonImages.forEach((element) => {
@@ -65,36 +82,26 @@ function updateSidebar() {
 
     sidebarMenu.classList.remove("sidebarTitleExtended");
     sidebarMenu.classList.add("sidebarTitleCollapsed");
-    // sidebarMenu.style.display = "none";
 
     sidebar.classList.remove("sidebarExpanded");
     sidebar.classList.add("sidebarCollapsed");
-    // collapseButton.classList.add("sidebarButtonsCollapsed");
-    collapseButton.style.display = "none";
 
-    // extendButton.classList.remove("sidebarButtonsCollapsed");
+    collapseButton.style.display = "none";
     extendButton.style.display = "initial";
   } else if (sidebarState == "expanded") {
     console.log("Expand");
 
-    // document.body.classList.remove("bodyExpanded");
-    // document.body.classList.add("bodyCollapsed");
-
     sidebar.classList.remove("sidebarCollapsed");
     sidebar.classList.add("sidebarExpanded");
 
-    //   collapseButton.classList.remove("sidebarButtonsCollapsed");
     collapseButton.style.display = "initial";
 
-    //   extendButton.classList.add("sidebarButtonsCollapsed");
     extendButton.style.display = "none";
 
     sidebarMenu.classList.add("sidebarTitleExtended");
     sidebarMenu.classList.remove("sidebarTitleCollapsed");
-    // sidebarMenu.style.display = "initial";
 
     sidebarButtons.forEach((element) => {
-      //   element.classList.remove("sidebar--button--hover");
       element.classList.add("sidebar--button--hover");
     });
     sidebarButtonImages.forEach((element) => {
@@ -102,9 +109,16 @@ function updateSidebar() {
     });
 
     panels.forEach((element) => {
-      element.classList.add("panelExpanded");
-      element.classList.remove("panelCollapsed");
+      element.classList.add("panelExpandedAnimation");
+      element.classList.remove("panelCollapsedAnimation");
     });
+
+    // document
+    //   .getElementById(focusedPanel)
+    //   .classList.add("panelExpandedAnimation");
+    // document
+    //   .getElementById(focusedPanel)
+    //   .classList.remove("panelCollapsedAnimation");
   }
 }
 
@@ -191,9 +205,9 @@ waterButton.onclick = function () {
   updatePanels();
 };
 
-leaderboardButton.onclick = function () {
-  if (focusedPanel == "leaderboard") return;
-  focusedPanel = "leaderboard";
+socialButton.onclick = function () {
+  if (focusedPanel == "social") return;
+  focusedPanel = "social";
   updatePanels();
 };
 
