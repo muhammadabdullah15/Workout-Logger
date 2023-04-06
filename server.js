@@ -100,6 +100,7 @@ async function generateToken(signedUserId) {
 }
 
 async function login(req, res, next) {
+  console.log("Login attempted");
   const plaintextPassword = req.body.password;
   const userEmail = req.body.email;
   const userId = await getIdByEmail(userEmail);
@@ -122,6 +123,7 @@ async function login(req, res, next) {
       secure: true,
       httpOnly: true,
     });
+    console.log("Token generated: ", token);
     res.locals.id = userId;
     return next();
   } else {
@@ -134,11 +136,18 @@ async function authenticate(req, res, next) {
   let token = req.cookies.WorkoutLoggerToken;
   if (!token) {
     return next();
+    console.log("Token not found");
   } else {
-    const user = JWT.verify(token, process.env.JWT_SECRET);
-    res.locals.id = user.user_id;
-    return next();
-    //May not verify => add check
+    console.log("Token found .... attempting to verify");
+    try {
+      const user = JWT.verify(token, process.env.JWT_SECRET);
+      res.locals.id = user.user_id;
+      console.log("Token verified");
+      return next();
+    } catch (error) {
+      console.error("Error verifying token:", error.message);
+      return next();
+    }
   }
 }
 
