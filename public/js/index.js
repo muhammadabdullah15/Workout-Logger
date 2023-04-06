@@ -1,6 +1,7 @@
-const sidebarButtonTexts = document.querySelectorAll(".buttonText");
+const sidebarButtons = document.querySelectorAll(".sidebar--button");
+const sidebarButtonImages = document.querySelectorAll(".buttonImages");
 const sidebar = document.querySelector(".sidebar");
-const sidebarTitle = document.querySelector(".sidebar--menu--text");
+const sidebarMenu = document.querySelector(".sidebar--menu");
 const panels = document.querySelectorAll(".panel");
 let URL = window.location.href.split("/", 3).join("/");
 
@@ -34,6 +35,7 @@ let signedUserId = 1;
 // extendButton.classList.add("sidebarButtonsCollapsed");
 extendButton.style.display = "none";
 updatePanels();
+updateSidebar();
 
 function updatePanels() {
   panels.forEach((element) => {
@@ -48,18 +50,22 @@ function updateSidebar() {
 
     // document.body.classList.remove("bodyCollapsed");
     // document.body.classList.add("bodyExpanded");
+
     panels.forEach((element) => {
       element.classList.add("panelCollapsed");
       element.classList.remove("panelExpanded");
     });
-    sidebarButtonTexts.forEach((element) => {
-      element.classList.remove("sidebarButtonsExtended");
-      element.classList.add("sidebarButtonsCollapsed");
+    sidebarButtons.forEach((element) => {
+      //   element.classList.remove("sidebarButtonsExtended");
+      element.classList.remove("sidebar--button--hover");
+    });
+    sidebarButtonImages.forEach((element) => {
+      element.classList.add("sidebar--button--hover");
     });
 
-    sidebarTitle.classList.remove("sidebarButtonsExtended");
-    sidebarTitle.classList.add("sidebarButtonsCollapsed");
-    // sidebarTitle.style.display = "none";
+    sidebarMenu.classList.remove("sidebarTitleExtended");
+    sidebarMenu.classList.add("sidebarTitleCollapsed");
+    // sidebarMenu.style.display = "none";
 
     sidebar.classList.remove("sidebarExpanded");
     sidebar.classList.add("sidebarCollapsed");
@@ -83,13 +89,16 @@ function updateSidebar() {
     //   extendButton.classList.add("sidebarButtonsCollapsed");
     extendButton.style.display = "none";
 
-    sidebarTitle.classList.add("sidebarButtonsExtended");
-    sidebarTitle.classList.remove("sidebarButtonsCollapsed");
-    // sidebarTitle.style.display = "initial";
+    sidebarMenu.classList.add("sidebarTitleExtended");
+    sidebarMenu.classList.remove("sidebarTitleCollapsed");
+    // sidebarMenu.style.display = "initial";
 
-    sidebarButtonTexts.forEach((element) => {
-      element.classList.remove("sidebarButtonsCollapsed");
-      element.classList.add("sidebarButtonsExtended");
+    sidebarButtons.forEach((element) => {
+      //   element.classList.remove("sidebar--button--hover");
+      element.classList.add("sidebar--button--hover");
+    });
+    sidebarButtonImages.forEach((element) => {
+      element.classList.remove("sidebar--button--hover");
     });
 
     panels.forEach((element) => {

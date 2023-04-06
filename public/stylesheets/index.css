@@ -34,94 +34,79 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
-  /* padding: 1rem 0; */
-
   padding: 1rem;
   width: 15rem;
 }
 
 .sidebarExpanded {
-  /* padding: 1rem;
-  width: 15rem; */
   animation: sidebarExpandAnimation 0.5s ease-in-out;
   animation-fill-mode: forwards;
 }
 
 @keyframes sidebarExpandAnimation {
   0% {
-    padding: 1rem 0.2rem;
-    width: 4rem;
+    left: -10rem;
   }
   100% {
-    padding: 1rem;
-    width: 15rem;
+    left: 0;
   }
 }
 
 .sidebarCollapsed {
   animation: sidebarCollapseAnimation 0.55s ease-in-out;
   animation-fill-mode: forwards;
-  /* padding: 1rem 0.2rem;
-  width: 4rem; */
 }
 
 @keyframes sidebarCollapseAnimation {
   0% {
-    padding: 1rem;
-    width: 15rem;
+    left: 0;
   }
   100% {
-    padding: 1rem 0.2rem;
-    width: 4rem;
+    left: -10rem;
   }
 }
 
-.sidebarButtonsCollapsed {
-  animation: sidebarButtonsCollapseAnimation 0.3s ease-in-out;
+.sidebarTitleCollapsed {
+  animation: sidebarTitleCollapseAnimation 0.5s ease-in-out;
   animation-fill-mode: forwards;
 }
 
-@keyframes sidebarButtonsCollapseAnimation {
+@keyframes sidebarTitleCollapseAnimation {
   0% {
-    opacity: 1;
+    width: 100%;
+    font-size: 1.3rem;
   }
   100% {
-    opacity: 0;
-    width: 0%;
+    width: 93%;
+    font-size: 1rem;
   }
 }
 
-.sidebarButtonsExtended {
-  animation: sidebarButtonsExtendAnimation 0.3s ease-in-out;
-  animation-delay: 0.1s;
+.sidebarTitleExtended {
+  animation: sidebarTitleExtendAnimation 0.5s ease-in-out;
   animation-fill-mode: forwards;
 }
 
-@keyframes sidebarButtonsExtendAnimation {
+@keyframes sidebarTitleExtendAnimation {
   0% {
-    /* display: inherit; */
-    opacity: 0;
-    width: 0%;
+    width: 93%;
+    font-size: 1rem;
   }
   100% {
-    opacity: 1;
-    width: 80%;
-    /* display: none; */
+    width: 100%;
+    font-size: 1.3rem;
   }
 }
 
 .sidebar--menu {
   display: flex;
   align-items: center;
-  width: 100%;
   margin-bottom: 2rem;
   height: 2rem;
 }
 
 .sidebar--menu--text {
   font-weight: 800;
-  font-size: 1.3rem;
   height: 2rem;
   width: 80%;
   text-align: center;
@@ -139,7 +124,6 @@ body {
 }
 
 .sidebar--button {
-  /* display: initial; */
   color: var(--sidebarText);
   background-color: transparent;
   border-radius: 10px;
@@ -158,13 +142,10 @@ body {
   height: 2rem;
   width: 2rem;
   margin: 0 auto;
-  /* margin-right: 0.3rem; */
-  /* margin: 0 1rem; */
 }
 
 .sidebar--button .buttonText {
   width: 80%;
-  /* margin-left: 1rem; */
   height: 2rem;
   font-weight: 500;
   line-height: 2rem;
@@ -182,8 +163,15 @@ body {
   text-align: center;
 }
 
+.sidebar--button--hover {
+  border-radius: 10px;
+  /* border: 1rem transparent !important; */
+  /* margin: 1rem; */
+  /* height: 3rem; */
+}
+
 .sidebar--menu img:hover,
-.sidebar--button:hover {
+.sidebar--button--hover:hover {
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
@@ -233,7 +221,7 @@ body {
 }
 
 .panelCollapsed {
-  animation: panelCollapseAnimation 0.55s ease-in-out;
+  animation: panelCollapseAnimation 0.5s ease-in-out;
   animation-fill-mode: forwards;
 }
 
