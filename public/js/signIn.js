@@ -21,7 +21,7 @@ let URL = window.location.href.split("/", 3).join("/");
 
 signInPasswordErrorPrompt.style.display = "none";
 
-let selector = "signIn";
+let selector = "signUp";
 let signInPasswordRevealed = "hidden";
 let signUpPasswordRevealed = "hidden";
 let signUpConfirmPasswordRevealed = "hidden";
@@ -133,4 +133,15 @@ signInForm.addEventListener("submit", async (event) => {
       }
       window.location.href = res.path;
     });
+});
+
+document.querySelector(".registration-details").display = "none";
+signUpForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+    document.querySelector(".container").classList.add("container-clip-state");
+    
+  document.querySelector(".registration-details").display = "initial";
+  document
+    .querySelector(".registration-details")
+    .classList.add("registration-details-visible");
 });
