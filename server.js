@@ -135,8 +135,8 @@ async function login(req, res, next) {
 async function authenticate(req, res, next) {
   let token = req.cookies.WorkoutLoggerToken;
   if (!token) {
-    return next();
     console.log("Token not found");
+    return next();
   } else {
     console.log("Token found .... attempting to verify");
     try {
