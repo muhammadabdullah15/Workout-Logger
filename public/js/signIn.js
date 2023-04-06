@@ -37,11 +37,13 @@ function updateSelector() {
     signInButtonSelector.classList.add("selectorButtonSelected");
     signUpForm.classList.remove("selected-form");
     signInForm.classList.add("selected-form");
+    document.title = "Sign In";
   } else if (selector == "signUp") {
     signInButtonSelector.classList.remove("selectorButtonSelected");
     signUpButtonSelector.classList.add("selectorButtonSelected");
     signInForm.classList.remove("selected-form");
     signUpForm.classList.add("selected-form");
+    document.title = "Sign Up";
   }
 }
 
@@ -138,8 +140,8 @@ signInForm.addEventListener("submit", async (event) => {
 document.querySelector(".registration-details").display = "none";
 signUpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-    document.querySelector(".container").classList.add("container-clip-state");
-    
+  document.querySelector(".container").classList.add("container-clip-state");
+
   document.querySelector(".registration-details").display = "initial";
   document
     .querySelector(".registration-details")
