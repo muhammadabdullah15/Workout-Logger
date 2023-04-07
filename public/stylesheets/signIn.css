@@ -299,13 +299,12 @@ button {
 .step-content {
   display: flex;
   flex-direction: column;
-}
-
-#step1 .step-content {
   justify-content: center;
   align-items: center;
   text-align: center;
+}
 
+#step1 .step-content {
   margin-top: auto;
   margin-bottom: -4rem;
 }
@@ -314,13 +313,31 @@ button {
   display: none;
 }
 
-#step2 .step-content {
-  justify-content: center;
-  align-items: center;
+#step2 h2 {
+  width: 100%;
   text-align: center;
 }
 
+#step2 .step-content {
+  flex-direction: row;
+  height: 13rem;
+  margin-top: 2rem;
+}
+
 #step2 .step-content-img {
+  padding: 1rem;
+  width: 30%;
+  margin: 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+#step2 .step-content-img:hover {
+  animation: HoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+#step4 .step-content-img {
   height: 10rem;
   width: 10rem;
   margin: 1.5rem;

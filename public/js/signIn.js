@@ -141,7 +141,7 @@ document.querySelector(".registration-details").display = "none";
 const steps = document.querySelectorAll(".step");
 
 signUpForm.addEventListener("submit", async (event) => {
-  updateStep(2);
+  updateStep(1);
   event.preventDefault();
   document.querySelector(".container").classList.add("container-clip-state");
   document.querySelector(".registration-details").display = "initial";
@@ -153,25 +153,31 @@ signUpForm.addEventListener("submit", async (event) => {
     .classList.add("registration-details-container-animation");
 });
 
-function updateStep(newStep) {
+activeStep = 2;
+function updateStep() {
+  console.log(`Active step; ${activeStep}`);
   steps.forEach((element) => {
     element.style.display = "none";
   });
 
-  document.getElementById(`step${newStep}`).style.display = "flex";
+  document.getElementById(`step${activeStep}`).style.display = "flex";
 }
 
 var leftButtons = document.querySelectorAll(".left-arrow");
 for (i = 0; i < leftButtons.length; i++) {
   leftButtons[i].addEventListener("click", function () {
-    updateStep(i - 1);
+    activeStep = activeStep - 1;
+    // console.log(`p: new step set: ${activeStep}`);
+    updateStep();
   });
 }
 
 var rightButtons = document.querySelectorAll(".right-arrow");
 for (i = 0; i < rightButtons.length; i++) {
   rightButtons[i].addEventListener("click", function () {
-    updateStep(i);
+    activeStep = activeStep + 1;
+    // console.log(`n: new step set: ${activeStep}`);
+    updateStep();
   });
 }
 document.getElementById("weightInput").step = 0.5;
