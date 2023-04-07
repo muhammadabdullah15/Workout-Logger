@@ -138,12 +138,43 @@ signInForm.addEventListener("submit", async (event) => {
 });
 
 document.querySelector(".registration-details").display = "none";
+const steps = document.querySelectorAll(".step");
+
 signUpForm.addEventListener("submit", async (event) => {
+  updateStep(1);
   event.preventDefault();
   document.querySelector(".container").classList.add("container-clip-state");
-
   document.querySelector(".registration-details").display = "initial";
   document
     .querySelector(".registration-details")
     .classList.add("registration-details-visible");
+  document
+    .querySelector(".registration-details-container")
+    .classList.add("registration-details-container-animation");
 });
+
+function updateStep(newStep) {
+  steps.forEach((element) => {
+    element.style.display = "none";
+  });
+
+  document.getElementById(`step${newStep}`).style.display = "flex";
+}
+
+var leftButtons = document.querySelectorAll(".left-arrow");
+for (i = 0; i < leftButtons.length; i++) {
+  leftButtons[i].addEventListener("click", function () {
+    updateStep(i - 1);
+  });
+}
+
+var rightButtons = document.querySelectorAll(".right-arrow");
+for (i = 0; i < rightButtons.length; i++) {
+  rightButtons[i].addEventListener("click", function () {
+    updateStep(i);
+  });
+}
+
+// setTimeout(function () {
+//   console.log("delayed");
+// });
