@@ -305,13 +305,59 @@ button {
   justify-content: center;
   align-items: center;
   text-align: center;
+
+  margin-top: auto;
+  margin-bottom: -4rem;
 }
 
 #step1 .left-arrow {
   display: none;
 }
 
-#step1 .step-content {
-  margin-top: auto;
-  margin-bottom: -4rem;
+#step2 .step-content {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#step2 .step-content-img {
+  height: 10rem;
+  width: 10rem;
+  margin: 1.5rem;
+}
+
+#weightDisplay {
+  position: relative;
+  top: -4rem;
+  height: 1rem;
+}
+
+.weight-input {
+  -webkit-appearance: none;
+  width: 70%;
+  height: 1rem;
+  border-radius: 10px;
+  background: var(--sidebarHover);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.weight-input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--sidebarText);
+  cursor: pointer;
+}
+
+.weight-input::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: var(--sidebarText);
+  cursor: pointer;
 }

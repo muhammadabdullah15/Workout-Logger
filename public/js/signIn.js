@@ -141,7 +141,7 @@ document.querySelector(".registration-details").display = "none";
 const steps = document.querySelectorAll(".step");
 
 signUpForm.addEventListener("submit", async (event) => {
-  updateStep(1);
+  updateStep(2);
   event.preventDefault();
   document.querySelector(".container").classList.add("container-clip-state");
   document.querySelector(".registration-details").display = "initial";
@@ -174,6 +174,10 @@ for (i = 0; i < rightButtons.length; i++) {
     updateStep(i);
   });
 }
+document.getElementById("weightInput").step = 0.5;
+document.getElementById("weightInput").oninput = function () {
+  document.getElementById("weightDisplay").innerHTML = `${this.value} kg`;
+};
 
 // setTimeout(function () {
 //   console.log("delayed");
