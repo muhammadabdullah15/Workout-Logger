@@ -4,7 +4,7 @@
 
 - Muhammad Abdullah&emsp; &emsp;(2021317) ([@muhammadabdullah15](https://github.com/muhammadabdullah15/))
 - Mohammad Umer Tayyab (2021306) ([@Umert306](https://github.com/Umert306))
-- Ahmed Ali Abid &emsp; &emsp;&emsp;&emsp; (2021065) ([@ahmedaliabid19](https://github.com/ahmedaliabid19))
+- Ahmed Ali Abid &emsp; &emsp; &emsp;&emsp; (2021065) ([@ahmedaliabid19](https://github.com/ahmedaliabid19))
 - Eman Anjum&emsp; &emsp; &emsp; &emsp;&emsp; (2021148) ([@EmanAnjum02](https://github.com/EmanAnjum02))
 
 ## Abstract
