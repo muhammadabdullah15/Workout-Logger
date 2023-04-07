@@ -333,6 +333,7 @@ button {
 }
 
 .weight-input {
+  appearance: none;
   -webkit-appearance: none;
   width: 70%;
   height: 1rem;
