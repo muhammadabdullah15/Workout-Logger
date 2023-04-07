@@ -194,9 +194,9 @@ button {
   }
 }
 
-/* .registration-details{
-  background-color: var(--sidebar);
-} */
+.registration-details {
+  display: none;
+}
 
 .registration-details-visible {
   position: fixed;
@@ -313,7 +313,8 @@ button {
   display: none;
 }
 
-#step2 h2 {
+#step2 h2,
+#step3 h2 {
   width: 100%;
   text-align: center;
 }
@@ -335,6 +336,59 @@ button {
 #step2 .step-content-img:hover {
   animation: HoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
+}
+
+#step3 .step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 17rem;
+}
+
+.calender-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  width: 70%;
+  border-radius: 15px;
+}
+
+.calender-container img {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.5rem;
+  margin: 1rem;
+}
+.calender-container input {
+  width: calc(70%-rem);
+  margin: 0;
+}
+
+.calender-container:hover {
+  animation: HoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+#dobInput {
+  background: transparent;
+  z-index: 4;
+}
+
+#dobInput::-webkit-calendar-picker-indicator {
+  /* FIX THIS */
+  background: transparent;
+  color: transparent;
+  cursor: pointer;
+  height: 2.7rem;
+  position: absolute;
+  bottom: 0;
+  left: 34%;
+  right: 0;
+  top: 46.6%;
+  width: 31.8%;
 }
 
 #step4 .step-content-img {

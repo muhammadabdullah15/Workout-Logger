@@ -153,7 +153,7 @@ signUpForm.addEventListener("submit", async (event) => {
     .classList.add("registration-details-container-animation");
 });
 
-activeStep = 2;
+activeStep = 3;
 function updateStep() {
   console.log(`Active step; ${activeStep}`);
   steps.forEach((element) => {
@@ -184,6 +184,11 @@ document.getElementById("weightInput").step = 0.5;
 document.getElementById("weightInput").oninput = function () {
   document.getElementById("weightDisplay").innerHTML = `${this.value} kg`;
 };
+
+let currentDate = new Date().toJSON().slice(0, 10);
+const dobInput = document.getElementById("dobInput");
+dobInput.max = currentDate;
+dobInput.value = currentDate;
 
 // setTimeout(function () {
 //   console.log("delayed");
