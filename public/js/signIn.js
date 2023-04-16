@@ -143,7 +143,7 @@ document.querySelector(".registration-details").display = "none";
 const steps = document.querySelectorAll(".step");
 
 signUpForm.addEventListener("submit", async (event) => {
-  updateStep(1);
+  updateStep();
   event.preventDefault();
   document.querySelector(".container").classList.add("container-clip-state");
   document.querySelector(".registration-details").display = "initial";
@@ -155,7 +155,7 @@ signUpForm.addEventListener("submit", async (event) => {
     .classList.add("registration-details-container-animation");
 });
 
-activeStep = 5;
+activeStep = 1;
 function updateStep() {
   console.log(`Active step; ${activeStep}`);
   steps.forEach((element) => {
@@ -239,4 +239,8 @@ unitSelectorInches.onclick = function () {
     unitSelectorInches.classList.add("unit-selector-selected");
     updateHeightDisplay(heightInput.value);
   }
+};
+
+finishSignUpButton.onclick = function () {
+  console.log("SIGN UP ");
 };
