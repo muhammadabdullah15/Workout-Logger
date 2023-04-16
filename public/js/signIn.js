@@ -21,7 +21,7 @@ let URL = window.location.href.split("/", 3).join("/");
 
 signInPasswordErrorPrompt.style.display = "none";
 
-let selector = "signUp";
+let selector = "signIn";
 let signInPasswordRevealed = "hidden";
 let signUpPasswordRevealed = "hidden";
 let signUpConfirmPasswordRevealed = "hidden";
@@ -246,5 +246,6 @@ unitSelectorInches.onclick = function () {
 //FINISH SIGN UP
 
 finishSignUpButton.onclick = function () {
-  console.log("SIGN UP ");
+  //register user logic
+  location.reload();
 };
