@@ -138,26 +138,30 @@ signInForm.addEventListener("submit", async (event) => {
 });
 
 //REG FORM
-
-document.querySelector(".registration-details").display = "none";
+const registrationDetails = document.querySelector(".registration-details");
 const steps = document.querySelectorAll(".step");
+const leftButtons = document.querySelectorAll(".left-arrow");
+const rightButtons = document.querySelectorAll(".right-arrow");
+const formContainer = document.querySelector(".container");
+const registrationDetailsContainer = document.querySelector(
+  ".registration-details-container"
+);
+let activeStep = 1;
+
+registrationDetails.display = "none";
 
 signUpForm.addEventListener("submit", async (event) => {
-  updateStep();
   event.preventDefault();
-  document.querySelector(".container").classList.add("container-clip-state");
-  document.querySelector(".registration-details").display = "initial";
-  document
-    .querySelector(".registration-details")
-    .classList.add("registration-details-visible");
-  document
-    .querySelector(".registration-details-container")
-    .classList.add("registration-details-container-animation");
+  updateStep();
+  formContainer.classList.add("container-clip-state");
+  registrationDetails.display = "initial";
+  registrationDetails.classList.add("registration-details-visible");
+  registrationDetailsContainer.classList.add(
+    "registration-details-container-animation"
+  );
 });
 
-activeStep = 1;
 function updateStep() {
-  console.log(`Active step; ${activeStep}`);
   steps.forEach((element) => {
     element.style.display = "none";
   });
@@ -165,20 +169,16 @@ function updateStep() {
   document.getElementById(`step${activeStep}`).style.display = "flex";
 }
 
-var leftButtons = document.querySelectorAll(".left-arrow");
 for (i = 0; i < leftButtons.length; i++) {
   leftButtons[i].addEventListener("click", function () {
     activeStep = activeStep - 1;
-    // console.log(`p: new step set: ${activeStep}`);
     updateStep();
   });
 }
 
-var rightButtons = document.querySelectorAll(".right-arrow");
 for (i = 0; i < rightButtons.length; i++) {
   rightButtons[i].addEventListener("click", function () {
     activeStep = activeStep + 1;
-    // console.log(`n: new step set: ${activeStep}`);
     updateStep();
   });
 }
@@ -191,10 +191,12 @@ dobInput.max = currentDate;
 dobInput.value = currentDate;
 
 //WEIGHT
+const weightInput = document.getElementById("weightInput");
+const weightDisplay = document.getElementById("weightDisplay");
 
-document.getElementById("weightInput").step = 0.5;
-document.getElementById("weightInput").oninput = function () {
-  document.getElementById("weightDisplay").innerHTML = `${this.value} kg`;
+weightInput.step = 0.5;
+weightInput.oninput = function () {
+  weightDisplay.innerHTML = `${this.value} kg`;
 };
 
 // HEIGHT
@@ -240,6 +242,8 @@ unitSelectorInches.onclick = function () {
     updateHeightDisplay(heightInput.value);
   }
 };
+
+//FINISH SIGN UP
 
 finishSignUpButton.onclick = function () {
   console.log("SIGN UP ");
