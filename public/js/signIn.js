@@ -137,6 +137,8 @@ signInForm.addEventListener("submit", async (event) => {
     });
 });
 
+//REG FORM
+
 document.querySelector(".registration-details").display = "none";
 const steps = document.querySelectorAll(".step");
 
@@ -153,7 +155,7 @@ signUpForm.addEventListener("submit", async (event) => {
     .classList.add("registration-details-container-animation");
 });
 
-activeStep = 3;
+activeStep = 5;
 function updateStep() {
   console.log(`Active step; ${activeStep}`);
   steps.forEach((element) => {
@@ -180,16 +182,61 @@ for (i = 0; i < rightButtons.length; i++) {
     updateStep();
   });
 }
-document.getElementById("weightInput").step = 0.5;
-document.getElementById("weightInput").oninput = function () {
-  document.getElementById("weightDisplay").innerHTML = `${this.value} kg`;
-};
+
+//DOB
 
 let currentDate = new Date().toJSON().slice(0, 10);
 const dobInput = document.getElementById("dobInput");
 dobInput.max = currentDate;
 dobInput.value = currentDate;
 
-// setTimeout(function () {
-//   console.log("delayed");
-// });
+//WEIGHT
+
+document.getElementById("weightInput").step = 0.5;
+document.getElementById("weightInput").oninput = function () {
+  document.getElementById("weightDisplay").innerHTML = `${this.value} kg`;
+};
+
+// HEIGHT
+const heightInput = document.getElementById("heightInput");
+const heightDisplay = document.getElementById("heightDisplay");
+const unitSelectorCm = document.getElementById("unitSelectorCm");
+const unitSelectorInches = document.getElementById("unitSelectorInches");
+
+let selectedUnit = "cm";
+unitSelectorCm.classList.add("unit-selector-selected");
+heightInput.step = 0.1;
+
+heightInput.oninput = function () {
+  updateHeightDisplay(this.value);
+};
+
+function updateHeightDisplay(value) {
+  if (selectedUnit == "cm") {
+    heightDisplay.innerHTML = `${value} cm`;
+  } else if (selectedUnit == "inch") {
+    heightDisplay.innerHTML = `${Math.floor(Math.round(value / 2.54) / 12)}' ${
+      Math.round(value / 2.54) % 12
+    }"`;
+  }
+}
+
+unitSelectorCm.onclick = function () {
+  if (selectedUnit == "inch") {
+    selectedUnit = "cm";
+    heightInput.step = 0.1;
+    unitSelectorInches.classList.remove("unit-selector-selected");
+    unitSelectorCm.classList.add("unit-selector-selected");
+    updateHeightDisplay(heightInput.value);
+  }
+};
+
+unitSelectorInches.onclick = function () {
+  if (selectedUnit == "cm") {
+    selectedUnit = "inch";
+    heightInput.step = 0.3;
+    unitSelectorCm.classList.remove("unit-selector-selected");
+    unitSelectorInches.classList.add("unit-selector-selected");
+    updateHeightDisplay(heightInput.value);
+  }
+};

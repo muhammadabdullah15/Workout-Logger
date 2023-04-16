@@ -224,8 +224,28 @@
         </div>
 
         <div class="step" id="step5">
+          <h2>Enter your height</h2>
           <div class="step-content">
-            <h4>Enter your height</h4>
+            <div class="ruler-container">
+              <img src="/ruler.svg" alt="" />
+              <div id="heightDisplay">150 cm</div>
+            </div>
+            <div class="ruler-input-container">
+              <input
+                type="range"
+                class="height-input"
+                name="Height"
+                id="heightInput"
+                value="150"
+                min="120"
+                max="220"
+              />
+              <div class="ruler-input-container-unit-selector">
+                <div id="unitSelectorInches" class="unit-selector">Inches</div>
+                &nbsp / &nbsp
+                <div id="unitSelectorCm" class="unit-selector">Cm</div>
+              </div>
+            </div>
           </div>
           <div class="step-next-previous-options">
             <img
