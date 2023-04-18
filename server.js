@@ -58,7 +58,7 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   if (res.locals.error) {
     res.send({ path: "/signIn", error: res.locals.error });
   } else {
-    console.log("Login Successful");
+    console.log("Login Successful....Redirecting");
     res.send({ path: "/" });
   }
 });
