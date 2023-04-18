@@ -248,3 +248,9 @@ body {
   width: 20rem;
   margin-bottom: 1rem;
 }
+
+#map {
+  width: 20rem;
+  height: 20rem;
+  border: 1px solid black;
+}

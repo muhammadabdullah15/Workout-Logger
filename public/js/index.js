@@ -28,7 +28,7 @@ const signOutButton = document.getElementById("signOutButton");
 authenticateUser();
 
 let sidebarState = "expanded";
-let focusedPanel = "profile";
+let focusedPanel = "workout";
 
 const testButton = document.getElementById("testButton");
 
