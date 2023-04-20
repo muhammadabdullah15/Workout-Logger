@@ -96,8 +96,30 @@
           </div>
           <button class="form__btn">OK</button>
         </form>
+        <div class="workout-form-container">
+          <div id="workoutForm">
+            <!-- <div class="workout-form-row"> -->
+            <img id="closeFormButton" src="/x.svg" alt="close" />
+            <!-- </div> -->
+            <div class="workout-form-row">
+              <input
+                type="range"
+                class="workout-type-input"
+                name="Type"
+                id="workoutTypeInput"
+                min="1"
+                max="3"
+                value="2"
+                step="1"
+              />
+              <div id="workoutTypeLabel">Running</div>
+            </div>
+          </div>
+        </div>
         <div id="map"></div>
-        <div class="popup show-popup" id="popup">Click on the map to add a waypoint</div>
+        <div class="popup show-popup" id="popup">
+          Click on the map to add a waypoint
+        </div>
       </div>
     </div>
 

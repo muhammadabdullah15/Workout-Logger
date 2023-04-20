@@ -9,6 +9,26 @@ const inputCadence = document.querySelector(".form__input--cadence");
 const inputElevation = document.querySelector(".form__input--elevation");
 // let workoutEditEl;
 
+const workoutFormContainer = document.querySelector(".workout-form-container");
+const closeFormButton = document.getElementById("closeFormButton");
+const popup = document.getElementById("popup");
+// workoutFormContainer.classList.add("hide-workout-form");
+workoutFormContainer.style.display = "none";
+
+showWorkoutForm();
+
+function showWorkoutForm() {
+  popup.style.display = "none";
+  workoutFormContainer.style.display = "flex";
+  workoutFormContainer.classList.add("show-workout-form");
+}
+
+closeFormButton.onclick = function () {
+  popup.style.display = "flex";
+  workoutFormContainer.classList.remove("show-workout-form");
+  workoutFormContainer.style.display = "none";
+};
+
 let map, mapEvent, editId;
 
 class Workout {
@@ -127,6 +147,7 @@ class App {
     // Handling clicks on map
     map.on("click", (e) => {
       console.log("CLICK: ", e);
+      showWorkoutForm();
       //   this._showForm(e);
       //--------------------------------------SHOW FIELDS FOR DATA INPUT------------------------------------
       editId = "";
