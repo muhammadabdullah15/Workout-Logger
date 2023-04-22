@@ -356,42 +356,58 @@ body {
 
 .workout-form-row {
   width: 100%;
-  /* display: block; */
-  margin: 1rem;
+  /* height: 3rem; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.3rem;
+  margin-top: 0.6rem;
+}
+
+.workout-type-option {
+  width: 25%;
+  margin: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.workout-type-input {
-  /* margin: 1rem; */
-  appearance: none;
-  -webkit-appearance: none;
-  width: 50%;
-  height: 1rem;
   border-radius: 10px;
-  background: var(--sidebarHover);
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
+  cursor: pointer;
+  /* border: 1px solid red; */
 }
 
-.workout-type-input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: var(--sidebarText);
+.workout-type-option img {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.3rem;
+}
+
+#intensity img {
+  width: 2rem;
+  height: 2rem;
+  margin: 1rem;
+  padding: 0.2rem;
+  border-radius: 10px;
   cursor: pointer;
 }
 
-.workout-type-input::-moz-range-thumb {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  background: var(--sidebarText);
-  cursor: pointer;
+#intensity img:hover,
+.workout-type-option:hover {
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+#intensityLabel {
+  width: 17%;
+  text-align: center;
+}
+
+.workout-form-row-header {
+  /* margin-top: 2.5rem; */
+  /* margin-bottom: 1rem; */
+  width: 100%;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
 }

@@ -98,21 +98,42 @@
         </form>
         <div class="workout-form-container">
           <div id="workoutForm">
-            <!-- <div class="workout-form-row"> -->
             <img id="closeFormButton" src="/x.svg" alt="close" />
-            <!-- </div> -->
+
+            <div class="workout-form-row-header">Workout Type</div>
             <div class="workout-form-row">
-              <input
-                type="range"
-                class="workout-type-input"
-                name="Type"
-                id="workoutTypeInput"
-                min="1"
-                max="3"
-                value="2"
-                step="1"
+              <div class="workout-type-option">
+                <img src="/person-simple-walk.svg" alt="Walking" />
+                Walking
+              </div>
+              <div class="workout-type-option">
+                <img src="/person-simple-run.svg" alt="Running" />
+                Running
+              </div>
+              <div class="workout-type-option">
+                <img src="/person-simple-bike.svg" alt="Cycling" />
+                Cycling
+              </div>
+            </div>
+
+            <div class="workout-form-row-header">Workout Intensity</div>
+            <div class="workout-form-row" id="intensity">
+              <img
+                id="intensityInputDecrease"
+                src="/remove-outline.svg"
+                alt="Decrease Intensity"
               />
-              <div id="workoutTypeLabel">Running</div>
+              <div id="intensityLabel">Medium</div>
+              <img
+                id="intensityInputIncrease"
+                src="/add-outline.svg"
+                alt="Increase Intensity"
+              />
+            </div>
+
+            <div class="workout-form-row-header">Workout Duration</div>
+            <div class="workout-form-row">
+              <input type="time" name="Time" id="" />
             </div>
           </div>
         </div>

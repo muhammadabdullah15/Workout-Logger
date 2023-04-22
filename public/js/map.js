@@ -12,6 +12,10 @@ const inputElevation = document.querySelector(".form__input--elevation");
 const workoutFormContainer = document.querySelector(".workout-form-container");
 const closeFormButton = document.getElementById("closeFormButton");
 const popup = document.getElementById("popup");
+const intensityDecrease = document.getElementById("intensityInputDecrease");
+const intensityIncrease = document.getElementById("intensityInputIncrease");
+const intensityLabel = document.getElementById("intensityLabel");
+let intensity = "Medium";
 // workoutFormContainer.classList.add("hide-workout-form");
 workoutFormContainer.style.display = "none";
 
@@ -27,6 +31,18 @@ closeFormButton.onclick = function () {
   popup.style.display = "flex";
   workoutFormContainer.classList.remove("show-workout-form");
   workoutFormContainer.style.display = "none";
+};
+
+intensityIncrease.onclick = function () {
+  if (intensity == "Low") intensity = "Medium";
+  else if (intensity == "Medium") intensity = "High";
+  intensityLabel.innerHTML = intensity;
+};
+
+intensityDecrease.onclick = function () {
+  if (intensity == "Medium") intensity = "Low";
+  else if (intensity == "High") intensity = "Medium";
+  intensityLabel.innerHTML = intensity;
 };
 
 let map, mapEvent, editId;
