@@ -28,7 +28,7 @@ const signOutButton = document.getElementById("signOutButton");
 authenticateUser();
 
 let sidebarState = "expanded";
-let focusedPanel = "workout";
+let focusedPanel = "meal";
 
 const testButton = document.getElementById("testButton");
 
@@ -180,16 +180,17 @@ workoutButton.onclick = function () {
 };
 
 mealButton.onclick = function () {
+  getMealData();
   if (focusedPanel == "meal") return;
   focusedPanel = "meal";
   updatePanels();
 };
 
-waterButton.onclick = function () {
-  if (focusedPanel == "water") return;
-  focusedPanel = "water";
-  updatePanels();
-};
+// waterButton.onclick = function () {
+//   if (focusedPanel == "water") return;
+//   focusedPanel = "water";
+//   updatePanels();
+// };
 
 socialButton.onclick = function () {
   if (focusedPanel == "social") return;
@@ -217,4 +218,38 @@ signOutButton.onclick = function () {
 testButton.onclick = function () {
   // runTestQuery();
   getTestData();
+};
+
+//Meal plan db data
+const mealPlanSelect = document.getElementById("mealplanChangeInput");
+
+async function getMealData() {
+  let data;
+  console.log("GET MEAL DATA OUTPUT");
+  try {
+    const res = await fetch("/getMealPlans", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+    data = await res.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+
+  for (const key in data) {
+    const option = document.createElement("option");
+    const optionText = document.createTextNode(data[key].m_name);
+
+    option.appendChild(optionText);
+    option.value = data[key].m_id;
+    mealPlanSelect.appendChild(option);
+  }
+}
+
+changeMealPlanButton.onclick = function () {
+  console.log(mealPlanSelect.value);
 };

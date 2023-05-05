@@ -16,13 +16,16 @@
 
   /* --panel: #fbfef9; */
   /* --panel: #33a1fd; */
-  --panel: #9399a3;
+
+  /* --panel: #9399a3; */
+  --panel: #d5d6d7;
+
   --panelText: black;
 }
 
 body {
   color: white;
-  background-color: red;
+  background-color: white;
 }
 
 .sidebar {
@@ -197,6 +200,8 @@ body {
 
 .panel-Heading {
   width: 100%;
+  margin: 1rem;
+  font-size: 1.5rem;
   text-align: center;
 }
 
@@ -257,11 +262,6 @@ body {
 
 .form {
   display: none;
-}
-
-.panel-content {
-  height: 100vh;
-  width: 100%;
 }
 
 .popup {
@@ -410,4 +410,88 @@ body {
   font-size: 1.3rem;
   font-weight: 800;
   text-align: center;
+}
+
+.panel-content {
+  padding: 1rem;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-row {
+  width: 100%;
+  border: 1px solid red;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5rem;
+}
+
+.panel-column {
+  border: 1px solid green;
+  width: 20%;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.panel-column-label {
+  width: 80%;
+  align-items: start;
+}
+
+.panel-label-container {
+  display: flex;
+  flex-direction: row;
+  height: 1.5rem;
+}
+
+.panel-label {
+  width: 10rem;
+}
+
+#mealplanChangeInput {
+  /* border: 1px solid black; */
+  width: 30%;
+  height: 2rem;
+  border-radius: 10px;
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  margin-bottom: 0.3rem;
+}
+
+#changeMealPlanButton {
+  color: var(--sidebarText);
+  background-color: #44474a;
+  border-radius: 10px;
+  width: 30%;
+  height: 2rem;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+
+  /* margin: 0.3rem auto; */
+
+  padding: 0 0.5rem;
+}
+
+#changeMealPlanButton:hover {
+  animation: panelButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes panelButtonHoverAnimation {
+  0% {
+    background-color: #44474a;
+  }
+  100% {
+    background-color: var(--sidebar);
+  }
 }

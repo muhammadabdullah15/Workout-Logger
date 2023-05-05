@@ -63,6 +63,13 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   }
 });
 
+app.post("/getMealPlans", async (req, res) => {
+  const queryText = "SELECT * FROM Mealplan";
+  const data = await runQuery(queryText);
+  //   console.log(data);
+  res.json(data);
+});
+
 //0938281026 :)
 
 async function runQuery(queryText) {

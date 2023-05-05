@@ -42,10 +42,10 @@
         <img class="buttonImages" src="/meal.svg" alt="mealplan" />
       </button>
 
-      <button class="sidebar--button" id="waterButton">
+      <!-- <button class="sidebar--button" id="waterButton">
         <div class="buttonText">Water Intake</div>
         <img class="buttonImages" src="/water-glass.svg" alt="water" />
-      </button>
+      </button> -->
 
       <button class="sidebar--button" id="socialButton">
         <div class="buttonText">Social</div>
@@ -60,99 +60,131 @@
 
     <div class="panel" id="workout">
       <!-- <div class="panel-Heading">Workout</div> -->
+      <!-- <div class="panel-content"> -->
+      <form class="form hidden">
+        <div class="form__row">
+          <label class="form__label">Type</label>
+          <select class="form__input form__input--type">
+            <option value="running">Running</option>
+            <option value="cycling">Cycling</option>
+          </select>
+        </div>
+        <div class="form__row">
+          <label class="form__label">Distance</label>
+          <input class="form__input form__input--distance" placeholder="km" />
+        </div>
+        <div class="form__row">
+          <label class="form__label">Duration</label>
+          <input class="form__input form__input--duration" placeholder="min" />
+        </div>
+        <div class="form__row">
+          <label class="form__label">Cadence</label>
+          <input
+            class="form__input form__input--cadence"
+            placeholder="step/min"
+          />
+        </div>
+        <div class="form__row form__row--hidden">
+          <label class="form__label">Elev Gain</label>
+          <input
+            class="form__input form__input--elevation"
+            placeholder="meters"
+          />
+        </div>
+        <button class="form__btn">OK</button>
+      </form>
+      <div class="workout-form-container">
+        <div id="workoutForm">
+          <img id="closeFormButton" src="/x.svg" alt="close" />
+
+          <div class="workout-form-row-header">Workout Type</div>
+          <div class="workout-form-row">
+            <div class="workout-type-option">
+              <img src="/person-simple-walk.svg" alt="Walking" />
+              Walking
+            </div>
+            <div class="workout-type-option">
+              <img src="/person-simple-run.svg" alt="Running" />
+              Running
+            </div>
+            <div class="workout-type-option">
+              <img src="/person-simple-bike.svg" alt="Cycling" />
+              Cycling
+            </div>
+          </div>
+
+          <div class="workout-form-row-header">Workout Intensity</div>
+          <div class="workout-form-row" id="intensity">
+            <img
+              id="intensityInputDecrease"
+              src="/remove-outline.svg"
+              alt="Decrease Intensity"
+            />
+            <div id="intensityLabel">Medium</div>
+            <img
+              id="intensityInputIncrease"
+              src="/add-outline.svg"
+              alt="Increase Intensity"
+            />
+          </div>
+
+          <div class="workout-form-row-header">Workout Duration</div>
+          <div class="workout-form-row">
+            <input type="time" name="Time" id="" />
+          </div>
+        </div>
+      </div>
+      <div id="map"></div>
+      <div class="popup show-popup" id="popup">
+        Click on the map to add a waypoint
+      </div>
+      <!-- </div> -->
+    </div>
+
+    <div class="panel" id="meal">
+      <div class="panel-Heading">My Mealplan</div>
       <div class="panel-content">
-        <form class="form hidden">
-          <div class="form__row">
-            <label class="form__label">Type</label>
-            <select class="form__input form__input--type">
-              <option value="running">Running</option>
-              <option value="cycling">Cycling</option>
-            </select>
-          </div>
-          <div class="form__row">
-            <label class="form__label">Distance</label>
-            <input class="form__input form__input--distance" placeholder="km" />
-          </div>
-          <div class="form__row">
-            <label class="form__label">Duration</label>
-            <input
-              class="form__input form__input--duration"
-              placeholder="min"
-            />
-          </div>
-          <div class="form__row">
-            <label class="form__label">Cadence</label>
-            <input
-              class="form__input form__input--cadence"
-              placeholder="step/min"
-            />
-          </div>
-          <div class="form__row form__row--hidden">
-            <label class="form__label">Elev Gain</label>
-            <input
-              class="form__input form__input--elevation"
-              placeholder="meters"
-            />
-          </div>
-          <button class="form__btn">OK</button>
-        </form>
-        <div class="workout-form-container">
-          <div id="workoutForm">
-            <img id="closeFormButton" src="/x.svg" alt="close" />
-
-            <div class="workout-form-row-header">Workout Type</div>
-            <div class="workout-form-row">
-              <div class="workout-type-option">
-                <img src="/person-simple-walk.svg" alt="Walking" />
-                Walking
-              </div>
-              <div class="workout-type-option">
-                <img src="/person-simple-run.svg" alt="Running" />
-                Running
-              </div>
-              <div class="workout-type-option">
-                <img src="/person-simple-bike.svg" alt="Cycling" />
-                Cycling
-              </div>
+        <div class="panel-row">
+          <div class="panel-column">Current Mealplan</div>
+          <div class="panel-column panel-column-label">
+            <div class="panel-label-container">
+              <div class="panel-label">Name:</div>
+              <div class="panel-label-value" id="mealPlanName">Weight Loss</div>
             </div>
-
-            <div class="workout-form-row-header">Workout Intensity</div>
-            <div class="workout-form-row" id="intensity">
-              <img
-                id="intensityInputDecrease"
-                src="/remove-outline.svg"
-                alt="Decrease Intensity"
-              />
-              <div id="intensityLabel">Medium</div>
-              <img
-                id="intensityInputIncrease"
-                src="/add-outline.svg"
-                alt="Increase Intensity"
-              />
+            <div class="panel-label-container">
+              <div class="panel-label">Daily Calories:</div>
+              <div class="panel-label-value" id="mealPlanCalories">500</div>
             </div>
-
-            <div class="workout-form-row-header">Workout Duration</div>
-            <div class="workout-form-row">
-              <input type="time" name="Time" id="" />
+            <div class="panel-label-container">
+              <div class="panel-label">Type:</div>
+              <div class="panel-label-value" id="mealPlanType">Weight Loss</div>
+            </div>
+            <div class="panel-label-container">
+              <div class="panel-label">Following Since:</div>
+              <div class="panel-label-value" id="mealPlanDate">
+                May 5th 2023
+              </div>
             </div>
           </div>
         </div>
-        <div id="map"></div>
-        <div class="popup show-popup" id="popup">
-          Click on the map to add a waypoint
+        <div class="panel-row">
+          <div class="panel-column">Change Mealplan</div>
+          <div class="panel-column panel-column-label">
+            <select
+              name="mealplan"
+              id="mealplanChangeInput"
+              placeholder="Mealplan"
+            ></select>
+            <div id="changeMealPlanButton">Update</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="panel" id="meal">
-      <div class="panel-Heading">Mealplans</div>
-      <div class="panel-content"></div>
-    </div>
-
-    <div class="panel" id="water">
+    <!-- <div class="panel" id="water">
       <div class="panel-Heading">Water Intake</div>
       <div class="panel-content"></div>
-    </div>
+    </div> -->
 
     <div class="panel" id="social">
       <div class="panel-Heading">Social</div>

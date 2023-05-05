@@ -19,7 +19,7 @@ let intensity = "Medium";
 // workoutFormContainer.classList.add("hide-workout-form");
 workoutFormContainer.style.display = "none";
 
-showWorkoutForm();
+// showWorkoutForm();
 
 function showWorkoutForm() {
   popup.style.display = "none";

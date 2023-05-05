@@ -75,3 +75,14 @@ INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_birth_date,u_hei
 
 SELECT * FROM Users;
 
+
+
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Low Carb', 900, 'Weight Loss');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('High Protein', 3000, 'Weight Gain');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Vegetarian', 1200, 'Healthy');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Gluten-Free', 1200, 'Allergic');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Keto', 1500, 'Healthy');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Paleo', 1800, 'Healthy');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('High Fiber', 2000, 'Weight Loss');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Low Sodium', 1700, 'Health Condition');
+INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Balanced', 2500, 'Healthy');
