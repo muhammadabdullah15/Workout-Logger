@@ -1,11 +1,12 @@
-CREATE TABLE Mealplan(
+    CREATE TABLE Mealplan(
 	m_id SERIAL,
 	m_name VARCHAR(25) NOT NULL,
-	daily_calories INT CHECK(daily_calories > 100 AND daily_calories < 5000) NOT NULL,
-	type VARCHAR(25) NOT NULL,
+	m_daily_calories INT CHECK(daily_calories > 100 AND daily_calories < 5000) NOT NULL,
+	m_type VARCHAR(25) NOT NULL,
 	
 	CONSTRAINT mealplan_pk_m_id PRIMARY KEY(m_id)
 );
+
 
 CREATE TABLE Challenge(
 	c_id SERIAL ,
@@ -27,6 +28,7 @@ CREATE TABLE Workout(
 	CONSTRAINT workout_pk_w_id PRIMARY KEY(w_id)
 );
 
+
 CREATE TABLE Users(
 	u_id SERIAL,
 	u_first_name VARCHAR(20) NOT NULL,
@@ -40,7 +42,7 @@ CREATE TABLE Users(
 	u_weight NUMERIC(5,2) CHECK(u_height > 30) NOT NULL,
 	u_body_fat_percent NUMERIC(5,2) CHECK(u_body_fat_percent > 5 AND u_body_fat_percent < 70), 
 	u_body_type VARCHAR(20) NOT NULL,
-	joining_date DATE CHECK(joining_date > '1960-01-01' AND joining_date <= CURRENT_DATE) NOT NULL,
+    u_mealplan_joining_date DATE CHECK(joining_date > '1960-01-01' AND joining_date <= CURRENT_DATE),
 	m_id INT,
 	
 	CONSTRAINT user_pk_u_id PRIMARY KEY(u_id),
@@ -71,7 +73,7 @@ CREATE TABLE Participates(
 
 --TEST QUERIES
 INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_birth_date,u_height,u_weight,u_body_type) VALUES
-('f1','l1','e1','p1','2003-01-01',150,70,'b1');
+('f1','l1','e1','$2b$10$G7IL1/mp/MV8g.RHNwtBnuqNRx/D6NkmvwVXTB.syg342Sx7WjgQS','2003-01-01',150,70,'b1');
 
 SELECT * FROM Users;
 

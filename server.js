@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
 const { pool } = require("./db");
+const { Console } = require("console");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -23,7 +24,7 @@ app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 app.post("/query", async (req, res) => {
   const queryText = req.body.query;
   const data = await runQuery(queryText);
-  console.log(data);
+  //   console.log(data);
   res.json(data);
 });
 
@@ -63,11 +64,40 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   }
 });
 
-app.post("/getMealPlans", async (req, res) => {
+app.get("/getUserMealPlanData", authenticate, async (req, res) => {
+  const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
+  //   console.log(queryText1);
+  let data = await runQuery(queryText1);
+  if (data[0].m_id != null) {
+    const queryText2 = `SELECT m_name,m_daily_calories,m_type FROM Mealplan WHERE m_id=${data[0].m_id}`;
+    const mealPlanData = await runQuery(queryText2);
+
+    data = {
+      ...data[0],
+      ...mealPlanData[0],
+    };
+  }
+
+  res.json(data);
+});
+
+app.get("/getMealPlansData", async (req, res) => {
   const queryText = "SELECT * FROM Mealplan";
   const data = await runQuery(queryText);
-  //   console.log(data);
   res.json(data);
+});
+
+app.post("/updateUserMealplan", authenticate, async (req, res) => {
+  const m_id = req.body.m_id;
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth() + 1;
+  const day = currentDate.getDate();
+  const formattedDate = `${year}-${month}-${day}`;
+  const queryText = `UPDATE Users SET m_id='${m_id}',u_mealplan_joining_date='${formattedDate}' WHERE u_id='${res.locals.id}'`;
+  console.log(queryText);
+  await runQuery(queryText);
+  res.json("Successfully changed");
 });
 
 //0938281026 :)

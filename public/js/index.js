@@ -180,7 +180,7 @@ workoutButton.onclick = function () {
 };
 
 mealButton.onclick = function () {
-  getMealData();
+  updateMealData();
   if (focusedPanel == "meal") return;
   focusedPanel = "meal";
   updatePanels();
@@ -222,20 +222,47 @@ testButton.onclick = function () {
 
 //Meal plan db data
 const mealPlanSelect = document.getElementById("mealplanChangeInput");
+const mealPlanNameLabel = document.getElementById("mealPlanName");
+const mealPlanCaloriesLabel = document.getElementById("mealPlanCalories");
+const mealPlanTypeLabel = document.getElementById("mealPlanType");
+const mealPlanDateLabel = document.getElementById("mealPlanDate");
 
-async function getMealData() {
+async function updateMealData() {
+  //user based mealplan data
   let data;
-  console.log("GET MEAL DATA OUTPUT");
+
   try {
-    const res = await fetch("/getMealPlans", {
-      method: "POST",
+    const res = await fetch("/getUserMealPlanData", {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({}),
     });
     data = await res.json();
-    console.log(data);
+    // console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+
+  console.log(data);
+  if (data.m_id != null) {
+    mealPlanNameLabel.innerHTML = data.m_name;
+    mealPlanCaloriesLabel.innerHTML = data.m_daily_calories;
+    mealPlanTypeLabel.innerHTML = data.m_type;
+    mealPlanDateLabel.innerHTML = data.u_mealplan_joining_date.substring(0, 10);
+  }
+
+  //mealplan data options
+  data = null;
+  try {
+    const res = await fetch("/getMealPlansData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = await res.json();
+    // console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -251,5 +278,22 @@ async function getMealData() {
 }
 
 changeMealPlanButton.onclick = function () {
-  console.log(mealPlanSelect.value);
+  // console.log(mealPlanSelect.value);
+  updateMealplan();
 };
+
+async function updateMealplan() {
+  try {
+    const res = await fetch("/updateUserMealplan", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ m_id: mealPlanSelect.value }),
+    });
+    data = await res.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
