@@ -38,6 +38,7 @@ body {
 }
 
 .form {
+  /* border: 1px solid white; */
   margin-left: 5rem;
   display: flex;
   width: 30rem;
@@ -135,10 +136,12 @@ button {
 
 .password-field {
   display: flex;
-  width: 80%;
+  /* width: 80%; */
+  width: 100%;
   height: 2rem;
   margin: 0.5rem;
   border-radius: 10px;
+  /* border: 1px solid red; */
 }
 
 .password-field input {
@@ -570,4 +573,26 @@ button {
     background-color: var(--panel);
     color: var(--panelText);
   }
+}
+
+.input-field {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  /* border: 1px solid white; */
+}
+
+.input-field input {
+  width: 100%;
+  /* border: 1px solid red; */
+}
+
+.input-field img {
+  cursor: pointer;
+  size: 1rem;
+}
+
+.input-field #signUpLastNameInput,
+.input-field #signUpFirstNameInput {
+  width: 88.4%;
 }

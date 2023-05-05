@@ -15,24 +15,38 @@
         <button id="signInButtonSelector">Sign In</button>
         <button id="signUpButtonSelector">Sign Up</button>
       </div>
-
       <form class="form" id="signInForm">
-        <input
-          id="signInEmailInput"
-          class="hover-animation"
-          type="text"
-          placeholder="Email"
-        />
-        <div class="password-field hover-animation">
+        <div class="input-field">
           <input
-            id="signInPasswordInput"
-            type="password"
-            placeholder="Password"
+            id="signInEmailInput"
+            class="hover-animation"
+            type="text"
+            placeholder="Email"
           />
           <img
-            id="signInPasswordReveal"
-            src="/eye-outline.svg"
-            alt="Show Password"
+            src="/warning-circle.svg"
+            id="signInEmailWarning"
+            alt="invalid input"
+          />
+        </div>
+
+        <div class="input-field">
+          <div class="password-field hover-animation">
+            <input
+              id="signInPasswordInput"
+              type="password"
+              placeholder="Password"
+            />
+            <img
+              id="signInPasswordReveal"
+              src="/eye-outline.svg"
+              alt="Show Password"
+            />
+          </div>
+          <img
+            src="/warning-circle.svg"
+            id="signInPasswordWarning"
+            alt="invalid input"
           />
         </div>
 
@@ -51,50 +65,77 @@
       </form>
 
       <form class="form" id="signUpForm">
-        <input
-          id="signUpEmailInput"
-          class="hover-animation"
-          type="text"
-          placeholder="Email"
-        />
-
-        <input
-          id="signUpFirstNameInput"
-          class="hover-animation"
-          type="text"
-          placeholder="First Name"
-        />
-
-        <input
-          id="signUpLastNameInput"
-          class="hover-animation"
-          type="text"
-          placeholder="Last Name"
-        />
-
-        <div class="password-field hover-animation">
+        <div class="input-field">
           <input
-            id="signUpPasswordInput"
-            type="password"
-            placeholder="Password"
+            id="signUpEmailInput"
+            class="hover-animation"
+            type="text"
+            placeholder="Email"
           />
           <img
-            id="signUpPasswordReveal"
-            src="/eye-outline.svg"
-            alt="Show Password"
+            src="/warning-circle.svg"
+            id="signUpEmailWarning"
+            alt="invalid input"
           />
         </div>
 
-        <div class="password-field hover-animation">
+        <div class="input-field">
           <input
-            id="signUpConfirmPasswordInput"
-            type="password"
-            placeholder="Confirm Password"
+            id="signUpFirstNameInput"
+            class="hover-animation"
+            type="text"
+            placeholder="First Name"
           />
+          <!-- <img src="/warning-circle.svg" id="Warning" alt="invalid input" /> -->
+        </div>
+
+        <div class="input-field">
+          <input
+            id="signUpLastNameInput"
+            class="hover-animation"
+            type="text"
+            placeholder="Last Name"
+          />
+          <!-- <img src="/warning-circle.svg" id="Warning" alt="invalid input" /> -->
+        </div>
+
+        <div class="input-field">
+          <div class="password-field hover-animation">
+            <input
+              id="signUpPasswordInput"
+              type="password"
+              placeholder="Password"
+            />
+            <img
+              id="signUpPasswordReveal"
+              src="/eye-outline.svg"
+              alt="Show Password"
+            />
+          </div>
           <img
-            id="signUpConfirmPasswordReveal"
-            src="/eye-outline.svg"
-            alt="Show Password"
+            src="/warning-circle.svg"
+            id="signUpPasswordWarning"
+            alt="invalid input"
+          />
+        </div>
+
+        <div class="input-field">
+          <div class="password-field hover-animation">
+            <input
+              id="signUpConfirmPasswordInput"
+              type="password"
+              placeholder="Confirm Password"
+            />
+            <img
+              id="signUpConfirmPasswordReveal"
+              src="/eye-outline.svg"
+              alt="Show Password"
+            />
+          </div>
+          <img
+            src="/warning-circle.svg"
+            id="signUpConfirmPasswordWarning"
+            alt="invalid input"
           />
         </div>
 

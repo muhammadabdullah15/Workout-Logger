@@ -137,6 +137,42 @@ signInForm.addEventListener("submit", async (event) => {
     });
 });
 
+//Handling data entered is correct
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+//warning images
+const signInEmailWarning = document.getElementById("signInEmailWarning");
+const signInPasswordWarning = document.getElementById("signInPasswordWarning");
+const signUpEmailWarning = document.getElementById("signUpEmailWarning");
+const signUpPasswordWarning = document.getElementById("signUpPasswordWarning");
+const signUpConfirmPasswordWarning = document.getElementById(
+  "signUpConfirmPasswordWarning"
+);
+
+signInEmailWarning.style.opacity = 0;
+signInPasswordWarning.style.opacity = 0;
+signUpEmailWarning.style.opacity = 0;
+signUpPasswordWarning.style.opacity = 0;
+signUpConfirmPasswordWarning.style.opacity = 0;
+
+signUpEmailInput.addEventListener("input", function () {
+  const email = signUpEmailInput.value.trim();
+
+  if (signUpEmailInput.value == "") {
+    displayInvalidWarning("signUpEmailWarning", true);
+  } else if (!emailRegex.test(email)) {
+    displayInvalidWarning("signUpEmailWarning", false);
+  } else {
+    displayInvalidWarning("signUpEmailWarning", true);
+  }
+});
+
+function displayInvalidWarning(id, isValid) {
+  if (!isValid) document.getElementById(id).style.opacity = 1;
+  else document.getElementById(id).style.opacity = 0;
+}
+//End of handling
+
 //REG FORM
 const registrationDetails = document.querySelector(".registration-details");
 const steps = document.querySelectorAll(".step");
