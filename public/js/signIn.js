@@ -3,6 +3,9 @@ const signUpButtonSelector = document.getElementById("signUpButtonSelector");
 const signInPasswordReveal = document.getElementById("signInPasswordReveal");
 const signInPasswordInput = document.getElementById("signInPasswordInput");
 const signInEmailInput = document.getElementById("signInEmailInput");
+const signUpButton = document.getElementById("signUpButton");
+const signUpLastNameInput = document.getElementById("signUpLastNameInput");
+const signUpFirstNameInput = document.getElementById("signUpFirstNameInput");
 const signInPasswordErrorPrompt = document.getElementById(
   "signInPasswordErrorPrompt"
 );
@@ -88,7 +91,6 @@ signUpPasswordReveal.onclick = function () {
 };
 
 signUpConfirmPasswordReveal.onclick = function () {
-  console.log("toggle");
   if (signUpConfirmPasswordRevealed == "revealed") {
     signUpConfirmPasswordRevealed = "hidden";
     signUpConfirmPasswordReveal.src = URL + "/eye-outline.svg";
@@ -139,11 +141,20 @@ signInForm.addEventListener("submit", async (event) => {
 
 //Handling data entered is correct
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const containsUpperCase = /[A-Z]/;
+const containsLowerCase = /[a-z]/;
+const containsNumber = /[0-9]/;
+const containsSpecialChar = /[@$!%*?&]/;
+let passwordStrength = 0;
 
 //warning images
 const signInEmailWarning = document.getElementById("signInEmailWarning");
 const signInPasswordWarning = document.getElementById("signInPasswordWarning");
 const signUpEmailWarning = document.getElementById("signUpEmailWarning");
+const signUpFirstNameWarning = document.getElementById(
+  "signUpFirstNameWarning"
+);
+const signUpLastNameWarning = document.getElementById("signUpLastNameWarning");
 const signUpPasswordWarning = document.getElementById("signUpPasswordWarning");
 const signUpConfirmPasswordWarning = document.getElementById(
   "signUpConfirmPasswordWarning"
@@ -152,25 +163,72 @@ const signUpConfirmPasswordWarning = document.getElementById(
 signInEmailWarning.style.opacity = 0;
 signInPasswordWarning.style.opacity = 0;
 signUpEmailWarning.style.opacity = 0;
+signUpFirstNameWarning.style.opacity = 0;
+signUpLastNameWarning.style.opacity = 0;
 signUpPasswordWarning.style.opacity = 0;
 signUpConfirmPasswordWarning.style.opacity = 0;
 
 signUpEmailInput.addEventListener("input", function () {
-  const email = signUpEmailInput.value.trim();
+  if (
+    signUpEmailInput.value == "" ||
+    emailRegex.test(signUpEmailInput.value.trim())
+  )
+    displayInvalidWarning("signUpEmailWarning", true);
+  else displayInvalidWarning("signUpEmailWarning", false);
+});
 
-  if (signUpEmailInput.value == "") {
-    displayInvalidWarning("signUpEmailWarning", true);
-  } else if (!emailRegex.test(email)) {
-    displayInvalidWarning("signUpEmailWarning", false);
-  } else {
-    displayInvalidWarning("signUpEmailWarning", true);
-  }
+signUpPasswordInput.addEventListener("input", function () {
+  const password = signUpPasswordInput.value.trim();
+
+  if (containsUpperCase.test(password)) passwordStrength++;
+  if (containsLowerCase.test(password)) passwordStrength++;
+  if (containsNumber.test(password)) passwordStrength++;
+  if (containsSpecialChar.test(password)) passwordStrength++;
+
+  if (signUpPasswordInput.value == "")
+    displayInvalidWarning("signUpPasswordWarning", true);
+  else if (password.length < 8 || passwordStrength < 3)
+    displayInvalidWarning("signUpPasswordWarning", false);
+  else displayInvalidWarning("signUpPasswordWarning", true);
+});
+
+signUpConfirmPasswordInput.addEventListener("input", function () {
+  if (signUpPasswordInput.value != signUpConfirmPasswordInput.value)
+    displayInvalidWarning("signUpConfirmPasswordWarning", false);
+  else displayInvalidWarning("signUpConfirmPasswordWarning", true);
+});
+
+signUpFirstNameInput.addEventListener("input", function () {
+  if (signUpFirstNameInput.value.length >= 3)
+    displayInvalidWarning("signUpFirstNameWarning", true);
+  else displayInvalidWarning("signUpFirstNameWarning", false);
+});
+
+signUpLastNameInput.addEventListener("input", function () {
+  if (signUpLastNameInput.value.length >= 3)
+    displayInvalidWarning("signUpLastNameWarning", true);
+  else displayInvalidWarning("signUpLastNameWarning", false);
 });
 
 function displayInvalidWarning(id, isValid) {
-  if (!isValid) document.getElementById(id).style.opacity = 1;
-  else document.getElementById(id).style.opacity = 0;
+  if (!isValid) {
+    document.getElementById(id).style.opacity = 1;
+  } else document.getElementById(id).style.opacity = 0;
 }
+
+function checkInputsValidity() {
+  if (
+    emailRegex.test(signUpEmailInput.value.trim()) &&
+    signUpPasswordInput.value.length >= 8 &&
+    passwordStrength >= 3 &&
+    signUpPasswordInput.value == signUpConfirmPasswordInput.value &&
+    signUpFirstNameInput.value.length >= 3 &&
+    signUpLastNameInput.value.length >= 3
+  )
+    return true;
+  return false;
+}
+
 //End of handling
 
 //REG FORM
@@ -188,6 +246,12 @@ registrationDetails.display = "none";
 
 signUpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  if (!checkInputsValidity()) {
+    //Add error or something
+    return;
+  }
+
   updateStep();
   formContainer.classList.add("container-clip-state");
   registrationDetails.display = "initial";

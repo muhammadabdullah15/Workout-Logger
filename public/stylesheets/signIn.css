@@ -591,8 +591,3 @@ button {
   cursor: pointer;
   size: 1rem;
 }
-
-.input-field #signUpLastNameInput,
-.input-field #signUpFirstNameInput {
-  width: 88.4%;
-}
