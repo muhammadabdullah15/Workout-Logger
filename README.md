@@ -31,23 +31,10 @@ Node Js
 
 Clone/Download repository  
 Go to directory and open terminal  
-Execute the following commands to setup:
+Execute the following commands to initialize and download packages:
 
 ```bash
-  # To initialize:
   npm init
-
-  # To install required packages:
-  npm i bcrypt
-  npm i cookie-parser
-  npm i dotenv
-  npm i express
-  npm i google-auth-library
-  npm i jsonwebtoken
-  npm i nodemon
-  npm i path
-  npm i ejs
-  npm i pg
 ```
 
 ## Running
