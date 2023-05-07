@@ -41,12 +41,14 @@ function updateSelector() {
     signUpForm.classList.remove("selected-form");
     signInForm.classList.add("selected-form");
     document.title = "Sign In";
+    signInEmailInput.focus();
   } else if (selector == "signUp") {
     signInButtonSelector.classList.remove("selectorButtonSelected");
     signUpButtonSelector.classList.add("selectorButtonSelected");
     signInForm.classList.remove("selected-form");
     signUpForm.classList.add("selected-form");
     document.title = "Sign Up";
+    signUpEmailInput.focus();
   }
 }
 
@@ -284,7 +286,6 @@ for (i = 0; i < rightButtons.length; i++) {
 }
 
 //DOB
-
 let currentDate = new Date().toJSON().slice(0, 10);
 const dobInput = document.getElementById("dobInput");
 dobInput.max = currentDate;
