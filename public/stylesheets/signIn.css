@@ -21,11 +21,22 @@
 }
 
 body {
-  background-color: var(--panel);
+  /* background-color: var(--panel); */
+  background-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.4) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    url("/running.jpg");
+
+  /* background-image: url("/running.jpg"); */
+  background-position: center;
+  background-size: cover;
+  /* background-repeat: no-repeat; */
 }
 
 .container {
-  clip-path: polygon(0 0, 65% 0, 26% 100%, 0% 100%, 0 0);
+  clip-path: polygon(0 0, 65% 0, 30% 100%, 0% 100%, 0 0);
   width: 100%;
   /* clip-path: polygon(0 0, 100% 0, 40% 100%, 0% 100%, 0 0); */
   /* width: 65%; */
@@ -110,8 +121,8 @@ input:focus {
 }
 
 button {
-  width: 80%;
-  height: 2rem;
+  width: 60%;
+  height: 2.2rem;
   background-color: transparent;
   border-radius: 10px;
   border: none;
