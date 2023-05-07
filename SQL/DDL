@@ -40,8 +40,8 @@ CREATE TABLE Users(
 	u_birth_date DATE CHECK(u_birth_date > '1960-01-01' AND u_birth_date < CURRENT_DATE) NOT NULL,
 	u_height NUMERIC(5,2) CHECK(u_height > 50) NOT NULL,
 	u_weight NUMERIC(5,2) CHECK(u_height > 30) NOT NULL,
-	u_body_fat_percent NUMERIC(5,2) CHECK(u_body_fat_percent > 5 AND u_body_fat_percent < 70), 
-	u_body_type VARCHAR(20) NOT NULL,
+	-- u_body_fat_percent NUMERIC(5,2) CHECK(u_body_fat_percent > 5 AND u_body_fat_percent < 70), 
+	-- u_body_type VARCHAR(20) NOT NULL,
     u_mealplan_joining_date DATE CHECK(joining_date > '1960-01-01' AND joining_date <= CURRENT_DATE),
 	m_id INT,
 	
@@ -72,8 +72,8 @@ CREATE TABLE Participates(
 );
 
 --TEST QUERIES
-INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_birth_date,u_height,u_weight,u_body_type) VALUES
-('f1','l1','e1','$2b$10$G7IL1/mp/MV8g.RHNwtBnuqNRx/D6NkmvwVXTB.syg342Sx7WjgQS','2003-01-01',150,70,'b1');
+INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_gender,u_birth_date,u_height,u_weight) VALUES
+('f1','l1','e1','$2b$10$G7IL1/mp/MV8g.RHNwtBnuqNRx/D6NkmvwVXTB.syg342Sx7WjgQS','M','2003-01-01',150,70);
 
 SELECT * FROM Users;
 
