@@ -64,6 +64,8 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   }
 });
 
+app.post("/signUp", async (req, res) => {});
+
 app.get("/getUserMealPlanData", authenticate, async (req, res) => {
   const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
   //   console.log(queryText1);

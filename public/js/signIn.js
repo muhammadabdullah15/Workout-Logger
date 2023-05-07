@@ -11,8 +11,9 @@ const signInPasswordReveal = document.getElementById("signInPasswordReveal");
 const signInPasswordInput = document.getElementById("signInPasswordInput");
 const signInEmailInput = document.getElementById("signInEmailInput");
 
-const signUpLastNameInput = document.getElementById("signUpLastNameInput");
 const signUpFirstNameInput = document.getElementById("signUpFirstNameInput");
+const signUpMiddleNameInput = document.getElementById("signUpMiddleNameInput");
+const signUpLastNameInput = document.getElementById("signUpLastNameInput");
 const signUpPasswordInput = document.getElementById("signUpPasswordInput");
 const signUpEmailInput = document.getElementById("signUpEmailInput");
 
@@ -373,7 +374,44 @@ unitSelectorInches.onclick = function () {
 };
 
 //FINISH SIGN UP
-finishSignUpButton.onclick = function () {
+finishSignUpButton.onclick = async function () {
   //register user query, redirect to sign in
-  // location.reload();
+  const email = signUpEmailInput.value.trim();
+  const firstName = signUpFirstNameInput.value.trim();
+  const lastName = signUpLastNameInput.value.trim();
+  const middleName = signUpMiddleNameInput.value.trim();
+  const password = signUpPasswordInput.value;
+  const gender = genderInputMale.classList.contains("step-content-img-selected")
+    ? "M"
+    : "F";
+  const DOB = dobInput.value;
+  const weight = weightInput.value;
+  const height = heightInput.value;
+
+  //console.log(email,firstName,middleName,lastName,password,gender,DOB,weight,height);
+
+  const result = await fetch("/signUp", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      firstName,
+      lastName,
+      password,
+      gender,
+      DOB,
+      weight,
+      height,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.error) {
+        alert("Error registering user");
+        return;
+      }
+      window.location.href = res.path;
+    });
 };
