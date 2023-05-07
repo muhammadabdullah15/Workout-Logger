@@ -55,6 +55,8 @@ let URL = window.location.href.split("/", 3).join("/");
 const dobInput = document.getElementById("dobInput");
 const weightInput = document.getElementById("weightInput");
 const heightInput = document.getElementById("heightInput");
+const genderInputFemale = document.getElementById("genderInputFemale");
+const genderInputMale = document.getElementById("genderInputMale");
 
 //REGISTRATION FORM LABELS/DISPLAYS
 const weightDisplay = document.getElementById("weightDisplay");
@@ -83,8 +85,8 @@ signUpLastNameWarning.style.opacity = 0;
 signUpPasswordWarning.style.opacity = 0;
 signUpConfirmPasswordWarning.style.opacity = 0;
 
-let activeStep = 1;
 registrationDetails.display = "none";
+let activeStep = 1;
 let currentDate = new Date().toJSON().slice(0, 10);
 let selectedUnit = "cm";
 
@@ -307,6 +309,21 @@ for (i = 0; i < rightButtons.length; i++) {
   });
 }
 
+//GENDER
+rightButtons[1].style.display = "none";
+
+genderInputFemale.onclick = function () {
+  genderInputMale.classList.remove("step-content-img-selected");
+  genderInputFemale.classList.add("step-content-img-selected");
+  rightButtons[1].style.display = "initial";
+};
+
+genderInputMale.onclick = function () {
+  genderInputFemale.classList.remove("step-content-img-selected");
+  genderInputMale.classList.add("step-content-img-selected");
+  rightButtons[1].style.display = "initial";
+};
+
 //DOB
 dobInput.max = currentDate;
 dobInput.value = currentDate;
@@ -358,5 +375,5 @@ unitSelectorInches.onclick = function () {
 //FINISH SIGN UP
 finishSignUpButton.onclick = function () {
   //register user query, redirect to sign in
-  location.reload();
+  // location.reload();
 };

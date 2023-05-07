@@ -351,6 +351,11 @@ button {
   animation-fill-mode: forwards;
 }
 
+#step2 .step-content-img-selected {
+  animation: HoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
 #step3 .step-content {
   display: flex;
   flex-direction: column;
