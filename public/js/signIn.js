@@ -1,27 +1,70 @@
+//FORMS
+const signInForm = document.getElementById("signInForm");
+const signUpForm = document.getElementById("signUpForm");
+
+//FORM SELECTORS
 const signInButtonSelector = document.getElementById("signInButtonSelector");
 const signUpButtonSelector = document.getElementById("signUpButtonSelector");
+
+//FORM INPUT ELEMENTS
 const signInPasswordReveal = document.getElementById("signInPasswordReveal");
 const signInPasswordInput = document.getElementById("signInPasswordInput");
 const signInEmailInput = document.getElementById("signInEmailInput");
-const signUpButton = document.getElementById("signUpButton");
+
 const signUpLastNameInput = document.getElementById("signUpLastNameInput");
 const signUpFirstNameInput = document.getElementById("signUpFirstNameInput");
-const signInPasswordErrorPrompt = document.getElementById(
-  "signInPasswordErrorPrompt"
+const signUpPasswordInput = document.getElementById("signUpPasswordInput");
+const signUpEmailInput = document.getElementById("signUpEmailInput");
+
+const signUpButton = document.getElementById("signUpButton");
+
+const registrationDetails = document.querySelector(".registration-details");
+const steps = document.querySelectorAll(".step");
+const leftButtons = document.querySelectorAll(".left-arrow");
+const rightButtons = document.querySelectorAll(".right-arrow");
+const formContainer = document.querySelector(".container");
+const registrationDetailsContainer = document.querySelector(
+  ".registration-details-container"
 );
 
+//PASSWORD REVEAL ELEMENTS
 const signUpPasswordReveal = document.getElementById("signUpPasswordReveal");
 const signUpConfirmPasswordReveal = document.getElementById(
   "signUpConfirmPasswordReveal"
 );
-const signUpPasswordInput = document.getElementById("signUpPasswordInput");
-const signUpEmailInput = document.getElementById("signUpEmailInput");
 
-const signInForm = document.getElementById("signInForm");
-const signUpForm = document.getElementById("signUpForm");
+//ERROR PROMPTS AND WARNING ELEMENTS
+const signInPasswordErrorPrompt = document.getElementById(
+  "signInPasswordErrorPrompt"
+);
+const signInEmailWarning = document.getElementById("signInEmailWarning");
+const signInPasswordWarning = document.getElementById("signInPasswordWarning");
+const signUpEmailWarning = document.getElementById("signUpEmailWarning");
+const signUpFirstNameWarning = document.getElementById(
+  "signUpFirstNameWarning"
+);
+const signUpLastNameWarning = document.getElementById("signUpLastNameWarning");
+const signUpPasswordWarning = document.getElementById("signUpPasswordWarning");
+const signUpConfirmPasswordWarning = document.getElementById(
+  "signUpConfirmPasswordWarning"
+);
 
 let URL = window.location.href.split("/", 3).join("/");
 
+//REGISTRATION FORM INPUTS
+const dobInput = document.getElementById("dobInput");
+const weightInput = document.getElementById("weightInput");
+const heightInput = document.getElementById("heightInput");
+
+//REGISTRATION FORM LABELS/DISPLAYS
+const weightDisplay = document.getElementById("weightDisplay");
+const heightDisplay = document.getElementById("heightDisplay");
+
+//REGISTRATION FORM SELECTORS
+const unitSelectorCm = document.getElementById("unitSelectorCm");
+const unitSelectorInches = document.getElementById("unitSelectorInches");
+
+//INITIALIZATION
 signInPasswordErrorPrompt.style.display = "none";
 
 let selector = "signIn";
@@ -32,6 +75,20 @@ let signUpConfirmPasswordRevealed = "hidden";
 signUpButtonSelector.classList.add("hover-animation");
 updateSelector();
 
+signInEmailWarning.style.opacity = 0;
+signInPasswordWarning.style.opacity = 0;
+signUpEmailWarning.style.opacity = 0;
+signUpFirstNameWarning.style.opacity = 0;
+signUpLastNameWarning.style.opacity = 0;
+signUpPasswordWarning.style.opacity = 0;
+signUpConfirmPasswordWarning.style.opacity = 0;
+
+let activeStep = 1;
+registrationDetails.display = "none";
+let currentDate = new Date().toJSON().slice(0, 10);
+let selectedUnit = "cm";
+
+//FORM SELECTOR AND SUBMIT BUTTONS
 function updateSelector() {
   signInForm.reset();
   signUpForm.reset();
@@ -141,34 +198,13 @@ signInForm.addEventListener("submit", async (event) => {
     });
 });
 
-//Handling data entered is correct
+//DATA VALIDITY CHECKS
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const containsUpperCase = /[A-Z]/;
 const containsLowerCase = /[a-z]/;
 const containsNumber = /[0-9]/;
 const containsSpecialChar = /[@$!%*?&]/;
 let passwordStrength = 0;
-
-//warning images
-const signInEmailWarning = document.getElementById("signInEmailWarning");
-const signInPasswordWarning = document.getElementById("signInPasswordWarning");
-const signUpEmailWarning = document.getElementById("signUpEmailWarning");
-const signUpFirstNameWarning = document.getElementById(
-  "signUpFirstNameWarning"
-);
-const signUpLastNameWarning = document.getElementById("signUpLastNameWarning");
-const signUpPasswordWarning = document.getElementById("signUpPasswordWarning");
-const signUpConfirmPasswordWarning = document.getElementById(
-  "signUpConfirmPasswordWarning"
-);
-
-signInEmailWarning.style.opacity = 0;
-signInPasswordWarning.style.opacity = 0;
-signUpEmailWarning.style.opacity = 0;
-signUpFirstNameWarning.style.opacity = 0;
-signUpLastNameWarning.style.opacity = 0;
-signUpPasswordWarning.style.opacity = 0;
-signUpConfirmPasswordWarning.style.opacity = 0;
 
 signUpEmailInput.addEventListener("input", function () {
   if (
@@ -231,21 +267,7 @@ function checkInputsValidity() {
   return false;
 }
 
-//End of handling
-
-//REG FORM
-const registrationDetails = document.querySelector(".registration-details");
-const steps = document.querySelectorAll(".step");
-const leftButtons = document.querySelectorAll(".left-arrow");
-const rightButtons = document.querySelectorAll(".right-arrow");
-const formContainer = document.querySelector(".container");
-const registrationDetailsContainer = document.querySelector(
-  ".registration-details-container"
-);
-let activeStep = 1;
-
-registrationDetails.display = "none";
-
+//USER REGISTRATION FORM
 signUpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
@@ -286,27 +308,16 @@ for (i = 0; i < rightButtons.length; i++) {
 }
 
 //DOB
-let currentDate = new Date().toJSON().slice(0, 10);
-const dobInput = document.getElementById("dobInput");
 dobInput.max = currentDate;
 dobInput.value = currentDate;
 
 //WEIGHT
-const weightInput = document.getElementById("weightInput");
-const weightDisplay = document.getElementById("weightDisplay");
-
 weightInput.step = 0.5;
 weightInput.oninput = function () {
   weightDisplay.innerHTML = `${this.value} kg`;
 };
 
 // HEIGHT
-const heightInput = document.getElementById("heightInput");
-const heightDisplay = document.getElementById("heightDisplay");
-const unitSelectorCm = document.getElementById("unitSelectorCm");
-const unitSelectorInches = document.getElementById("unitSelectorInches");
-
-let selectedUnit = "cm";
 unitSelectorCm.classList.add("unit-selector-selected");
 heightInput.step = 0.1;
 
@@ -345,8 +356,7 @@ unitSelectorInches.onclick = function () {
 };
 
 //FINISH SIGN UP
-
 finishSignUpButton.onclick = function () {
-  //register user logic
+  //register user query, redirect to sign in
   location.reload();
 };
