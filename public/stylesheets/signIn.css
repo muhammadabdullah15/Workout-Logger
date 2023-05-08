@@ -609,3 +609,14 @@ button {
 #signUpMiddleNameInput {
   width: 89.5%;
 }
+
+/* Target all form elements that have been auto-filled */
+/* input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  background-color: red !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--sidebar) inset !important;
+  box-shadow: 0 0 0px 1000px var(--sidebar) inset !important;
+  color: blue !important;
+  border: none !important;
+} */

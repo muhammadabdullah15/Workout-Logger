@@ -64,11 +64,40 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   }
 });
 
-app.post("/signUp", async (req, res) => {});
+app.post("/signUp", async (req, res) => {
+  const email = req.body.email;
+  const firstName = req.body.firstName;
+  const middleName = req.body.middleName;
+  const lastName = req.body.lastName;
+  const password = req.body.password;
+  const gender = req.body.gender;
+  const DOB = req.body.DOB;
+  const weight = req.body.weight;
+  const height = req.body.height;
+
+  //try-catch?
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const queryText = `INSERT INTO Users(u_first_name,u_middle_name,u_last_name,u_email,u_password,u_gender,u_birth_date,u_height,u_weight) VALUES
+('${firstName}',${
+    middleName.length === 0 ? "NULL" : `'${middleName}'`
+  },'${lastName}','${email}','${hashedPassword}','${gender}','${DOB}',${height},${weight});
+`;
+  await runQuery(queryText);
+  console.log("Registration Successful....Redirecting");
+  res.send({ path: "/signIn" });
+});
+
+app.post("/checkEmailExists", async (req, res) => {
+  const email = req.body.email;
+  const queryText = `SELECT u_email FROM users WHERE u_email= '${email}';`;
+  const data = await runQuery(queryText);
+  if (data.length > 0) res.json(true);
+  else res.json(false);
+});
 
 app.get("/getUserMealPlanData", authenticate, async (req, res) => {
   const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
-  //   console.log(queryText1);
   let data = await runQuery(queryText1);
   if (data[0].m_id != null) {
     const queryText2 = `SELECT m_name,m_daily_calories,m_type FROM Mealplan WHERE m_id=${data[0].m_id}`;

@@ -209,6 +209,19 @@ const containsNumber = /[0-9]/;
 const containsSpecialChar = /[@$!%*?&]/;
 let passwordStrength = 0;
 
+async function checkEmailExists() {
+  const email = signUpEmailInput.value.trim();
+
+  const result = await fetch("/checkEmailExists", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  }).then((res) => res.json());
+  return result;
+}
+
 signUpEmailInput.addEventListener("input", function () {
   if (
     signUpEmailInput.value == "" ||
@@ -273,6 +286,11 @@ function checkInputsValidity() {
 //USER REGISTRATION FORM
 signUpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
+
+  if (await checkEmailExists()) {
+    displayInvalidWarning("signUpEmailWarning", false);
+    return;
+  }
 
   if (!checkInputsValidity()) {
     //Add error or something
@@ -373,9 +391,7 @@ unitSelectorInches.onclick = function () {
   }
 };
 
-//FINISH SIGN UP
 finishSignUpButton.onclick = async function () {
-  //register user query, redirect to sign in
   const email = signUpEmailInput.value.trim();
   const firstName = signUpFirstNameInput.value.trim();
   const lastName = signUpLastNameInput.value.trim();
@@ -388,8 +404,6 @@ finishSignUpButton.onclick = async function () {
   const weight = weightInput.value;
   const height = heightInput.value;
 
-  //console.log(email,firstName,middleName,lastName,password,gender,DOB,weight,height);
-
   const result = await fetch("/signUp", {
     method: "POST",
     headers: {
@@ -398,6 +412,7 @@ finishSignUpButton.onclick = async function () {
     body: JSON.stringify({
       email,
       firstName,
+      middleName,
       lastName,
       password,
       gender,
