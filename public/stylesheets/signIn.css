@@ -21,7 +21,6 @@
 }
 
 body {
-  /* background-color: var(--panel); */
   background-image: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.4) 0%,
@@ -30,9 +29,9 @@ body {
     url("/running.jpg");
 
   /* background-image: url("/running.jpg"); */
-  background-position: center;
+  background-position: 2rem;
+  background-position-x: 7rem;
   background-size: cover;
-  /* background-repeat: no-repeat; */
 }
 
 .container {
