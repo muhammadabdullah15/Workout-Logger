@@ -11,7 +11,7 @@ let updateMealPlanButtons;
 authenticateUser();
 
 let sidebarState = "expanded";
-let focusedPanel = "workout";
+let focusedPanel = "profile";
 
 extendButton.style.display = "none";
 updatePanels();
@@ -48,9 +48,10 @@ function updateSidebar() {
       element.classList.add("panelCollapsedAnimation");
     });
 
-    sidebarButtons.forEach((element) => {
-      element.classList.remove("sidebar--button--hover");
-    });
+    for (let i = 0; i < sidebarButtons.length - 1; i++) {
+      sidebarButtons[i].classList.remove("sidebar--button--hover");
+    }
+
     sidebarButtonImages.forEach((element) => {
       element.classList.add("sidebar--button--hover");
     });
@@ -76,9 +77,10 @@ function updateSidebar() {
     sidebarMenu.classList.add("sidebarTitleExtended");
     sidebarMenu.classList.remove("sidebarTitleCollapsed");
 
-    sidebarButtons.forEach((element) => {
-      element.classList.add("sidebar--button--hover");
-    });
+    for (let i = 0; i < sidebarButtons.length - 1; i++) {
+      sidebarButtons[i].classList.add("sidebar--button--hover");
+    }
+
     sidebarButtonImages.forEach((element) => {
       element.classList.remove("sidebar--button--hover");
     });

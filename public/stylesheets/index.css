@@ -166,12 +166,6 @@ body {
   margin-bottom: -0.3rem;
 }
 
-.sidebar--profileText {
-  font-weight: 200;
-  width: 80%;
-  text-align: center;
-}
-
 .sidebar--menu img:hover,
 .sidebar--button--hover:hover {
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
@@ -251,13 +245,6 @@ body {
     left: 4rem;
     width: calc(100% - 4rem);
   }
-}
-
-.tempDisplays {
-  height: 1rem;
-  font-size: 1rem;
-  width: 20rem;
-  margin-bottom: 1rem;
 }
 
 #map {
@@ -521,12 +508,39 @@ body {
   }
 }
 
-/* .panel-column-description-enroll-button {
-  height: 3.5rem;
-  width: 14rem;
-  border-radius: 15px;
+#profileButton,
+#signOutButton {
+  height: 3rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--sidebar);
-} */
+  border-radius: 10px;
+}
+
+#signOutButton {
+  width: 2.6rem;
+  padding: 0.45rem;
+}
+
+#profileButton:hover,
+#signOutButton:hover {
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.panel-column-title img {
+  height: 5rem;
+}
+
+.panel-column-description-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.panel-column-description-detail {
+  margin: 0.5rem;
+  text-align: center;
+  width: 12%;
+  /* border: 1px solid yellow; */
+}

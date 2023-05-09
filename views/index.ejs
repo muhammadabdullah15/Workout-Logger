@@ -43,7 +43,7 @@
       </button>
 
       <button class="sidebar--button" id="mealButton">
-        <div class="buttonText">Meal-Plan</div>
+        <div class="buttonText">Meal Plan</div>
         <img class="buttonImages" src="/meal.svg" alt="mealplan" />
       </button>
 
@@ -52,9 +52,16 @@
         <img class="buttonImages" src="/social.svg" alt="social" />
       </button>
 
-      <button class="sidebar--button" id="profileButton">
-        <div class="sidebar--profileText buttonText">My Profile</div>
-        <img class="buttonImages" src="/user-circle.svg" alt="workout" />
+      <button class="sidebar--button">
+        <div class="sidebar--profileText buttonText" id="profileButton">
+          My Profile
+        </div>
+        <img
+          class="buttonImages"
+          id="signOutButton"
+          src="/sign-out.svg"
+          alt="workout"
+        />
       </button>
     </div>
 
@@ -148,28 +155,7 @@
 
     <div class="panel" id="meal">
       <div class="panel-Heading">My Meal-Plan</div>
-      <div class="panel-content" id="userMealPlanData">
-        <!-- <div class="panel-row">
-          <div class="panel-column-title">Low Carb</div>
-          <div class="panel-column-description">
-            This meal plan is perfect for weight loss with its low-calorie
-            intake and low-carbohydrate content.
-          </div>
-        </div> -->
-
-        <!-- <div class="panel-row">
-          <div class="panel-column-title">${data.m_name}</div>
-          <div class="panel-column-description">
-            ${data.m_description}
-            <br /><br />
-            <div class="bold">Daily Calories: ${data.m_daily_calories}</div>
-            <br /><br />
-            <div class="bold">
-              Following Since: ${data.u_mealplan_joining_date}
-            </div>
-          </div>
-        </div> -->
-      </div>
+      <div class="panel-content" id="userMealPlanData"></div>
 
       <div class="panel-Heading">Available Meal-Plans</div>
       <div class="panel-Description">
@@ -185,8 +171,32 @@
 
     <div class="panel" id="profile">
       <div class="panel-Heading">My Profile</div>
-      <div class="panel-content">
-        <button id="testButton">Test DB</button>
+      <div class="panel-content" id="">
+        <div class="panel-row">
+          <div class="panel-column-title">
+            <img src="/identification-card.svg" alt="Details" />
+          </div>
+          <div class="panel-column-description">
+            <div class="panel-column-description-container">
+              <div class="panel-column-description-detail">First Name</div>
+              <div class="panel-column-description-detail">Middle Name</div>
+              <div class="panel-column-description-detail">Last Name</div>
+            </div>
+          </div>
+        </div>
+        <div class="panel-row">
+          <div class="panel-column-title">
+            <img src="/key.svg" alt="Details" />
+          </div>
+          <div class="panel-column-description">
+            <div class="panel-column-description-container">
+              <div class="panel-column-description-detail">Password</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <button id="testButton">Test DB</button>
         <button id="signOutButton">Log Out</button>
 
         <h5><br />First Name</h5>
@@ -202,8 +212,7 @@
         <h5>Weight</h5>
         <div class="tempDisplays" id="u_weight"></div>
         <h5>Body Type</h5>
-        <div class="tempDisplays" id="u_body_type"></div>
-      </div>
+        <div class="tempDisplays" id="u_body_type"></div> -->
     </div>
 
     <script src="/index.js"></script>
