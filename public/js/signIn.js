@@ -1,23 +1,4 @@
-//FORMS
-const signInForm = document.getElementById("signInForm");
-const signUpForm = document.getElementById("signUpForm");
-
-//FORM SELECTORS
-const signInButtonSelector = document.getElementById("signInButtonSelector");
-const signUpButtonSelector = document.getElementById("signUpButtonSelector");
-
-//FORM INPUT ELEMENTS
-const signInPasswordReveal = document.getElementById("signInPasswordReveal");
-const signInPasswordInput = document.getElementById("signInPasswordInput");
-const signInEmailInput = document.getElementById("signInEmailInput");
-
-const signUpFirstNameInput = document.getElementById("signUpFirstNameInput");
-const signUpMiddleNameInput = document.getElementById("signUpMiddleNameInput");
-const signUpLastNameInput = document.getElementById("signUpLastNameInput");
-const signUpPasswordInput = document.getElementById("signUpPasswordInput");
-const signUpEmailInput = document.getElementById("signUpEmailInput");
-
-const signUpButton = document.getElementById("signUpButton");
+//FORM ELEMENTS
 
 const registrationDetails = document.querySelector(".registration-details");
 const steps = document.querySelectorAll(".step");
@@ -28,49 +9,13 @@ const registrationDetailsContainer = document.querySelector(
   ".registration-details-container"
 );
 
-//PASSWORD REVEAL ELEMENTS
-const signUpPasswordReveal = document.getElementById("signUpPasswordReveal");
-const signUpConfirmPasswordReveal = document.getElementById(
-  "signUpConfirmPasswordReveal"
-);
-
-//ERROR PROMPTS AND WARNING ELEMENTS
-const signInPasswordErrorPrompt = document.getElementById(
-  "signInPasswordErrorPrompt"
-);
-const signInEmailWarning = document.getElementById("signInEmailWarning");
-const signInPasswordWarning = document.getElementById("signInPasswordWarning");
-const signUpEmailWarning = document.getElementById("signUpEmailWarning");
-const signUpFirstNameWarning = document.getElementById(
-  "signUpFirstNameWarning"
-);
-const signUpLastNameWarning = document.getElementById("signUpLastNameWarning");
-const signUpPasswordWarning = document.getElementById("signUpPasswordWarning");
-const signUpConfirmPasswordWarning = document.getElementById(
-  "signUpConfirmPasswordWarning"
-);
-
 let URL = window.location.href.split("/", 3).join("/");
 
-//REGISTRATION FORM INPUTS
-const dobInput = document.getElementById("dobInput");
-const weightInput = document.getElementById("weightInput");
-const heightInput = document.getElementById("heightInput");
-const genderInputFemale = document.getElementById("genderInputFemale");
-const genderInputMale = document.getElementById("genderInputMale");
-
-//REGISTRATION FORM LABELS/DISPLAYS
-const weightDisplay = document.getElementById("weightDisplay");
-const heightDisplay = document.getElementById("heightDisplay");
-
-//REGISTRATION FORM SELECTORS
-const unitSelectorCm = document.getElementById("unitSelectorCm");
-const unitSelectorInches = document.getElementById("unitSelectorInches");
-
 //INITIALIZATION
-signInPasswordErrorPrompt.style.display = "none";
+signInPasswordErrorPrompt.style.opacity = 0;
+signUpPasswordErrorPrompt.style.opacity = 0;
 
-let selector = "signIn";
+let selector = "signUp";
 let signInPasswordRevealed = "hidden";
 let signUpPasswordRevealed = "hidden";
 let signUpConfirmPasswordRevealed = "hidden";
@@ -194,7 +139,7 @@ signInForm.addEventListener("submit", async (event) => {
     .then((res) => res.json())
     .then((res) => {
       if (res.error) {
-        signInPasswordErrorPrompt.style.display = "initial";
+        signInPasswordErrorPrompt.style.opacity = 1;
         return;
       }
       window.location.href = res.path;
@@ -230,9 +175,56 @@ signUpEmailInput.addEventListener("input", function () {
     displayInvalidWarning("signUpEmailWarning", true);
   else displayInvalidWarning("signUpEmailWarning", false);
 });
+signUpEmailWarning.addEventListener("mouseover", function () {
+  if (this.style.opacity == 1) {
+    this.innerHTML = "Invalid email format!";
+    this.style.cursor = "pointer";
+    signUpEmailWarningMessage.style.display = "flex";
+  }
+});
+signUpEmailWarning.addEventListener("mouseout", function () {
+  this.style.cursor = "default";
+  signUpEmailWarningMessage.style.display = "none";
+});
+
+signUpFirstNameInput.addEventListener("input", function () {
+  if (signUpFirstNameInput.value.length >= 3)
+    displayInvalidWarning("signUpFirstNameWarning", true);
+  else displayInvalidWarning("signUpFirstNameWarning", false);
+});
+signUpFirstNameWarning.addEventListener("mouseover", function () {
+  if (this.style.opacity == 1) {
+    this.style.cursor = "pointer";
+    signUpFirstNameWarningMessage.style.display = "flex";
+  }
+});
+signUpFirstNameWarning.addEventListener("mouseout", function () {
+  this.style.cursor = "default";
+  signUpFirstNameWarningMessage.style.display = "none";
+});
+
+signUpLastNameInput.addEventListener("input", function () {
+  if (signUpLastNameInput.value.length >= 3)
+    displayInvalidWarning("signUpLastNameWarning", true);
+  else displayInvalidWarning("signUpLastNameWarning", false);
+});
+signUpLastNameWarning.addEventListener("mouseover", function () {
+  if (this.style.opacity == 1) {
+    this.style.cursor = "pointer";
+    signUpLastNameWarningMessage.style.display = "flex";
+  }
+});
+signUpLastNameWarning.addEventListener("mouseout", function () {
+  this.style.cursor = "default";
+  signUpLastNameWarningMessage.style.display = "none";
+});
 
 signUpPasswordInput.addEventListener("input", function () {
-  const password = signUpPasswordInput.value.trim();
+  const password = signUpPasswordInput.value;
+
+  if (password == signUpConfirmPasswordInput.value) {
+    displayInvalidWarning("signUpConfirmPasswordWarning", true);
+  }
 
   if (containsUpperCase.test(password)) passwordStrength++;
   if (containsLowerCase.test(password)) passwordStrength++;
@@ -245,23 +237,31 @@ signUpPasswordInput.addEventListener("input", function () {
     displayInvalidWarning("signUpPasswordWarning", false);
   else displayInvalidWarning("signUpPasswordWarning", true);
 });
+signUpPasswordWarning.addEventListener("mouseover", function () {
+  if (this.style.opacity == 1) {
+    this.style.cursor = "pointer";
+    signUpPasswordWarningMessage.style.display = "flex";
+  }
+});
+signUpPasswordWarning.addEventListener("mouseout", function () {
+  this.style.cursor = "default";
+  signUpPasswordWarningMessage.style.display = "none";
+});
 
 signUpConfirmPasswordInput.addEventListener("input", function () {
   if (signUpPasswordInput.value != signUpConfirmPasswordInput.value)
     displayInvalidWarning("signUpConfirmPasswordWarning", false);
   else displayInvalidWarning("signUpConfirmPasswordWarning", true);
 });
-
-signUpFirstNameInput.addEventListener("input", function () {
-  if (signUpFirstNameInput.value.length >= 3)
-    displayInvalidWarning("signUpFirstNameWarning", true);
-  else displayInvalidWarning("signUpFirstNameWarning", false);
+signUpConfirmPasswordWarning.addEventListener("mouseover", function () {
+  if (this.style.opacity == 1) {
+    this.style.cursor = "pointer";
+    signUpConfirmPasswordWarningMessage.style.display = "flex";
+  }
 });
-
-signUpLastNameInput.addEventListener("input", function () {
-  if (signUpLastNameInput.value.length >= 3)
-    displayInvalidWarning("signUpLastNameWarning", true);
-  else displayInvalidWarning("signUpLastNameWarning", false);
+signUpConfirmPasswordWarning.addEventListener("mouseout", function () {
+  this.style.cursor = "default";
+  signUpConfirmPasswordWarningMessage.style.display = "none";
 });
 
 function displayInvalidWarning(id, isValid) {
@@ -287,13 +287,15 @@ function checkInputsValidity() {
 signUpForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  if (await checkEmailExists()) {
-    displayInvalidWarning("signUpEmailWarning", false);
+  if (!checkInputsValidity()) {
+    signUpPasswordErrorPrompt.style.opacity = 1;
     return;
   }
 
-  if (!checkInputsValidity()) {
-    //Add error or something
+  if (await checkEmailExists()) {
+    signUpPasswordErrorPrompt.style.display = "initial";
+    displayInvalidWarning("signUpEmailWarning", false);
+    signUpEmailWarningMessage.innerHTML = "Email already exists";
     return;
   }
 
