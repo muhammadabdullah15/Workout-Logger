@@ -15,7 +15,7 @@ let URL = window.location.href.split("/", 3).join("/");
 signInPasswordErrorPrompt.style.opacity = 0;
 signUpPasswordErrorPrompt.style.opacity = 0;
 
-let selector = "signUp";
+let selector = "signIn";
 let signInPasswordRevealed = "hidden";
 let signUpPasswordRevealed = "hidden";
 let signUpConfirmPasswordRevealed = "hidden";
