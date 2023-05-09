@@ -610,7 +610,7 @@ select:-webkit-autofill {
   background-color: red !important;
   -webkit-box-shadow: 0 0 0px 1000px var(--sidebar) inset !important;
   box-shadow: 0 0 0px 1000px var(--sidebar) inset !important;
-  color: blue !important;
+  color: white !important;
   border: none !important;
 } */
 
@@ -628,7 +628,7 @@ select:-webkit-autofill {
   height: 2rem;
   width: 11rem;
   font-size: 0.8rem;
-  font-weight: 300;
+  font-weight: 500;
   background-color: var(--sidebarHover);
   border-radius: 6px;
   /* line-break: loose; */
