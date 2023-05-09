@@ -3,13 +3,13 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
-const { OAuth2Client } = require("google-auth-library");
+// const { OAuth2Client } = require("google-auth-library");
 // const gClient = new OAuth2Client ()
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
 const { pool } = require("./db");
-const { Console } = require("console");
+// const { Console } = require("console");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,26 +20,7 @@ app.use(express.static(path.join(__dirname, "/public/js")));
 app.use(express.static(path.join(__dirname, "/public/images")));
 app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 
-//Change for specific queries
-app.post("/query", async (req, res) => {
-  const queryText = req.body.query;
-  const data = await runQuery(queryText);
-  //   console.log(data);
-  res.json(data);
-});
-
-app.post("/testGetData", async (req, res) => {
-  const signedInUserId = 1;
-  const queryText =
-    "SELECT u_first_name,u_last_name,u_email,u_birth_date,u_height,u_weight,u_body_type FROM Users WHERE u_id='" +
-    signedInUserId +
-    "'";
-  const data = await runQuery(queryText);
-  //   console.log(data);
-  generateToken(signedInUserId);
-  res.json(data);
-});
-
+//AUTH BASED CALLS
 app.get("/login", authenticate, async (req, res, next) => {
   if (res.locals.id) {
     console.log(`User ${res.locals.id} authenticated`);
@@ -64,6 +45,7 @@ app.post("/login", authenticate, login, async (req, res, next) => {
   }
 });
 
+//USER REGISTRATION CALLS
 app.post("/signUp", async (req, res) => {
   const email = req.body.email;
   const firstName = req.body.firstName;
@@ -96,6 +78,7 @@ app.post("/checkEmailExists", async (req, res) => {
   else res.json(false);
 });
 
+//MEAL PANEL CALLS
 app.get("/getUserMealPlanData", authenticate, async (req, res) => {
   const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
   let data = await runQuery(queryText1);
@@ -133,6 +116,7 @@ app.post("/updateUserMealPlan", authenticate, async (req, res) => {
 
 //0938281026 :)
 
+//UTILITY FUNCTIONS FOR CALLS
 async function runQuery(queryText) {
   const { rows } = await pool.query(queryText);
   return rows;

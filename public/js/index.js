@@ -102,49 +102,6 @@ async function authenticateUser() {
   });
 }
 
-async function runTestQuery() {
-  try {
-    const res = await fetch("/query", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: "SELECT * FROM Users",
-      }),
-    });
-    const data = await res.json();
-    console.log("TEST QUERY BUTTON OUTPUT");
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getTestData() {
-  console.log("GET DATA OUTPUT");
-  try {
-    const res = await fetch("/testGetData", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({}),
-    });
-    const data = await res.json();
-    console.log(data);
-    u_first_name.innerText = data[0].u_first_name;
-    u_last_name.innerText = data[0].u_last_name;
-    u_email.innerText = data[0].u_email;
-    u_birth_date.innerText = data[0].u_birth_date;
-    u_weight.innerText = data[0].u_weight;
-    u_height.innerText = data[0].u_height;
-    u_body_type.innerText = data[0].u_body_type;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 collapseButton.onclick = function () {
   sidebarState = "collapsed";
   updateSidebar();
@@ -194,11 +151,6 @@ signOutButton.onclick = function () {
       window.location.href = response.url;
     }
   });
-};
-
-testButton.onclick = function () {
-  // runTestQuery();
-  getTestData();
 };
 
 async function getUserMealPlanData() {
