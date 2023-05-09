@@ -435,7 +435,7 @@ body {
   /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
-  margin: 0.5rem;
+  margin: 0.65rem;
   /* width: 100%; */
   background-color: var(--sidebar);
   border-radius: 15px;
