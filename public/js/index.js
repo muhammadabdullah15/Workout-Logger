@@ -6,35 +6,17 @@ const panels = document.querySelectorAll(".panel");
 
 let URL = window.location.href.split("/", 3).join("/");
 
-//TEST LABELS
-const u_first_name = document.getElementById("u_first_name");
-const u_last_name = document.getElementById("u_last_name");
-const u_email = document.getElementById("u_email");
-const u_birth_date = document.getElementById("u_birth_date");
-const u_height = document.getElementById("u_height");
-const u_weight = document.getElementById("u_weight");
-const u_body_type = document.getElementById("u_body_type");
-//TEST LABELS END
-
-const collapseButton = document.getElementById("collapseButton");
-const extendButton = document.getElementById("extendButton");
-const workoutButton = document.getElementById("workoutButton");
-const mealButton = document.getElementById("mealButton");
-const workoutHistoryButton = document.getElementById("workoutHistoryButton");
-const socialButton = document.getElementById("socialButton");
-const profileButton = document.getElementById("profileButton");
-const signOutButton = document.getElementById("signOutButton");
+let updateMealPlanButtons;
 
 authenticateUser();
 
 let sidebarState = "expanded";
-let focusedPanel = "meal";
-
-const testButton = document.getElementById("testButton");
+let focusedPanel = "workout";
 
 extendButton.style.display = "none";
 updatePanels();
 updateSidebar();
+getMealPlanData();
 
 function updatePanels() {
   panels.forEach((element) => {
@@ -180,7 +162,6 @@ workoutButton.onclick = function () {
 };
 
 mealButton.onclick = function () {
-  updateMealData();
   if (focusedPanel == "meal") return;
   focusedPanel = "meal";
   updatePanels();
@@ -220,15 +201,7 @@ testButton.onclick = function () {
   getTestData();
 };
 
-//Meal plan db data
-const mealPlanSelect = document.getElementById("mealplanChangeInput");
-const mealPlanNameLabel = document.getElementById("mealPlanName");
-const mealPlanCaloriesLabel = document.getElementById("mealPlanCalories");
-const mealPlanTypeLabel = document.getElementById("mealPlanType");
-const mealPlanDateLabel = document.getElementById("mealPlanDate");
-
-async function updateMealData() {
-  //user based mealplan data
+async function getUserMealPlanData() {
   let data;
 
   try {
@@ -239,23 +212,34 @@ async function updateMealData() {
       },
     });
     data = await res.json();
-    // console.log(data);
   } catch (error) {
     console.log(error);
   }
 
-  console.log(data);
-  if (data.m_id != null) {
-    mealPlanNameLabel.innerHTML = data.m_name;
-    mealPlanCaloriesLabel.innerHTML = data.m_daily_calories;
-    mealPlanTypeLabel.innerHTML = data.m_type;
-    mealPlanDateLabel.innerHTML = data.u_mealplan_joining_date.substring(0, 10);
-  }
+  let html = "";
+  html += `<div class="panel-row">
+              <div class="panel-column-title">${data.m_name}</div>
+              <div class="panel-column-description">
+                  ${data.m_description}
+                <br><br><div class="bold">Daily Calories: ${
+                  data.m_daily_calories
+                }</div>
+                <br><div class="bold">Following Since: ${data.u_mealplan_joining_date.substring(
+                  0,
+                  10
+                )}</div>
+              </div>
+            </div>`;
 
-  //mealplan data options
-  data = null;
+  userMealPlanData.insertAdjacentHTML("afterbegin", html);
+  return data.m_name;
+}
+
+async function getMealPlanData() {
+  const userMealName = await getUserMealPlanData();
+  let data;
   try {
-    const res = await fetch("/getMealPlansData", {
+    const res = await fetch("/getMealPlanData", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -267,33 +251,46 @@ async function updateMealData() {
     console.log(error);
   }
 
+  let html = "";
   for (const key in data) {
-    const option = document.createElement("option");
-    const optionText = document.createTextNode(data[key].m_name);
+    if (data[key].m_name == userMealName) continue;
+    html += `<div class="panel-row">
+        <div class="panel-column-description-enroll" id="${data[key].m_id}">
+            Select Meal Plan
+      </div>
+      <div class="panel-column-title">${data[key].m_name}</div>
+          <div class="panel-column-description">
+            ${data[key].m_description}
+            <br><br><div class="bold">Daily Calories: ${data[key].m_daily_calories}</div>
+            </div>
+        </div>`;
+  }
+  mealPlanData.insertAdjacentHTML("afterbegin", html);
 
-    option.appendChild(optionText);
-    option.value = data[key].m_id;
-    mealPlanSelect.appendChild(option);
+  updateMealPlanButtons = document.querySelectorAll(
+    ".panel-column-description-enroll"
+  );
+
+  for (i = 0; i < updateMealPlanButtons.length; i++) {
+    updateMealPlanButtons[i].addEventListener("click", function () {
+      updateMealplan(this.id);
+    });
   }
 }
 
-changeMealPlanButton.onclick = function () {
-  // console.log(mealPlanSelect.value);
-  updateMealplan();
-};
-
-async function updateMealplan() {
+async function updateMealplan(id) {
   try {
-    const res = await fetch("/updateUserMealplan", {
+    const res = await fetch("/updateUserMealPlan", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ m_id: mealPlanSelect.value }),
+      body: JSON.stringify({ m_id: id }),
     });
     data = await res.json();
     console.log(data);
   } catch (error) {
     console.log(error);
   }
+  location.reload();
 }

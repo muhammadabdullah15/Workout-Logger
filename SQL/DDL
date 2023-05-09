@@ -88,3 +88,15 @@ INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Paleo', 1800, 'Heal
 INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('High Fiber', 2000, 'Weight Loss');
 INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Low Sodium', 1700, 'Health Condition');
 INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Balanced', 2500, 'Healthy');
+
+ALTER TABLE Mealplan ADD COLUMN m_description VARCHAR(250);
+
+UPDATE Mealplan SET description = 'This meal plan is designed to help you achieve your weight loss goals by providing a low-calorie and low-carb diet with delicious and healthy food options.' WHERE m_name = 'Low Carb';
+UPDATE Mealplan SET description = 'This meal plan is designed to help you gain weight and build muscle by providing a high protein diet with plenty of delicious food options.' WHERE m_name = 'High Protein';
+UPDATE Mealplan SET description = 'This vegetarian meal plan is perfect for those who want to enjoy a healthy and balanced diet without meat.' WHERE m_name = 'Vegetarian';
+UPDATE Mealplan SET description = 'This gluten-free meal plan is designed to help you manage your gluten allergy or sensitivity by providing delicious and healthy food options without any gluten-containing ingredients.' WHERE m_name = 'Gluten-Free';
+UPDATE Mealplan SET description = 'This healthy meal plan is designed to promote ketosis, a metabolic state for burning fat, by providing a high-fat and low-carb diet with plenty of delicious food options.' WHERE m_name = 'Keto';
+UPDATE Mealplan SET description = 'This healthy meal plan is based on the diet of our hunter-gatherer ancestors and includes whole, unprocessed foods for optimal health and nutrition.' WHERE m_name = 'Paleo';
+UPDATE Mealplan SET description = 'This meal plan is designed to help you lose weight by providing a high-fiber diet that keeps you feeling full and satisfied.' WHERE m_name = 'High Fiber';
+UPDATE Mealplan SET description = 'This meal plan is designed to help you manage your blood pressure and kidney function by providing a low-sodium diet with plenty of delicious food options.' WHERE m_name = 'Low Sodium';
+UPDATE Mealplan SET description = 'This healthy meal plan provides a balanced mix of macronutrients and calories for optimal health and nutrition.' WHERE m_name = 'Balanced';

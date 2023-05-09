@@ -43,7 +43,7 @@
       </button>
 
       <button class="sidebar--button" id="mealButton">
-        <div class="buttonText">Meal Plan</div>
+        <div class="buttonText">Meal-Plan</div>
         <img class="buttonImages" src="/meal.svg" alt="mealplan" />
       </button>
 
@@ -147,41 +147,35 @@
     </div>
 
     <div class="panel" id="meal">
-      <div class="panel-Heading">My Mealplan</div>
-      <div class="panel-content">
-        <div class="panel-row">
-          <div class="panel-column">Current Mealplan</div>
-          <div class="panel-column panel-column-label">
-            <div class="panel-label-container">
-              <div class="panel-label">Name:</div>
-              <div class="panel-label-value" id="mealPlanName">(N/A)</div>
-            </div>
-            <div class="panel-label-container">
-              <div class="panel-label">Daily Calories:</div>
-              <div class="panel-label-value" id="mealPlanCalories"></div>
-            </div>
-            <div class="panel-label-container">
-              <div class="panel-label">Type:</div>
-              <div class="panel-label-value" id="mealPlanType"></div>
-            </div>
-            <div class="panel-label-container">
-              <div class="panel-label">Following Since:</div>
-              <div class="panel-label-value" id="mealPlanDate"></div>
+      <div class="panel-Heading">My Meal-Plan</div>
+      <div class="panel-content" id="userMealPlanData">
+        <!-- <div class="panel-row">
+          <div class="panel-column-title">Low Carb</div>
+          <div class="panel-column-description">
+            This meal plan is perfect for weight loss with its low-calorie
+            intake and low-carbohydrate content.
+          </div>
+        </div> -->
+
+        <!-- <div class="panel-row">
+          <div class="panel-column-title">${data.m_name}</div>
+          <div class="panel-column-description">
+            ${data.m_description}
+            <br /><br />
+            <div class="bold">Daily Calories: ${data.m_daily_calories}</div>
+            <br /><br />
+            <div class="bold">
+              Following Since: ${data.u_mealplan_joining_date}
             </div>
           </div>
-        </div>
-        <div class="panel-row">
-          <div class="panel-column">Change Mealplan</div>
-          <div class="panel-column panel-column-label">
-            <select
-              name="mealplan"
-              id="mealplanChangeInput"
-              placeholder="Mealplan"
-            ></select>
-            <div id="changeMealPlanButton">Update</div>
-          </div>
-        </div>
+        </div> -->
       </div>
+
+      <div class="panel-Heading">Available Meal-Plans</div>
+      <div class="panel-Description">
+        Select from these meal-plans as per your goals and calorie requirements
+      </div>
+      <div class="panel-content" id="mealPlanData"></div>
     </div>
 
     <div class="panel" id="social">

@@ -100,7 +100,7 @@ app.get("/getUserMealPlanData", authenticate, async (req, res) => {
   const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
   let data = await runQuery(queryText1);
   if (data[0].m_id != null) {
-    const queryText2 = `SELECT m_name,m_daily_calories,m_type FROM Mealplan WHERE m_id=${data[0].m_id}`;
+    const queryText2 = `SELECT m_name,m_daily_calories,m_type,m_description FROM Mealplan WHERE m_id=${data[0].m_id}`;
     const mealPlanData = await runQuery(queryText2);
 
     data = {
@@ -112,13 +112,13 @@ app.get("/getUserMealPlanData", authenticate, async (req, res) => {
   res.json(data);
 });
 
-app.get("/getMealPlansData", async (req, res) => {
+app.get("/getMealPlanData", async (req, res) => {
   const queryText = "SELECT * FROM Mealplan";
   const data = await runQuery(queryText);
   res.json(data);
 });
 
-app.post("/updateUserMealplan", authenticate, async (req, res) => {
+app.post("/updateUserMealPlan", authenticate, async (req, res) => {
   const m_id = req.body.m_id;
   const currentDate = new Date();
   const year = currentDate.getFullYear();
