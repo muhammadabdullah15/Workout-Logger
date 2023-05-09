@@ -20,7 +20,7 @@ const collapseButton = document.getElementById("collapseButton");
 const extendButton = document.getElementById("extendButton");
 const workoutButton = document.getElementById("workoutButton");
 const mealButton = document.getElementById("mealButton");
-const waterButton = document.getElementById("waterButton");
+const workoutHistoryButton = document.getElementById("workoutHistoryButton");
 const socialButton = document.getElementById("socialButton");
 const profileButton = document.getElementById("profileButton");
 const signOutButton = document.getElementById("signOutButton");
@@ -186,11 +186,11 @@ mealButton.onclick = function () {
   updatePanels();
 };
 
-// waterButton.onclick = function () {
-//   if (focusedPanel == "water") return;
-//   focusedPanel = "water";
-//   updatePanels();
-// };
+workoutHistoryButton.onclick = function () {
+  if (focusedPanel == "workoutHistory") return;
+  focusedPanel = "workoutHistory";
+  updatePanels();
+};
 
 socialButton.onclick = function () {
   if (focusedPanel == "social") return;
