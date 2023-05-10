@@ -79,6 +79,7 @@ app.post("/checkEmailExists", async (req, res) => {
 });
 
 //MEAL PANEL CALLS
+//combine the queries?
 app.get("/getUserMealPlanData", authenticate, async (req, res) => {
   const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
   let data = await runQuery(queryText1);
@@ -121,6 +122,12 @@ app.post("/unfollowUserMealPlan", authenticate, async (req, res) => {
   res.json("Successfully changed");
 });
 
+//PROFILE PANEL CALLS
+app.get("/getUserProfileData", authenticate, async (req, res) => {
+  const queryText = `SELECT u_first_name,u_middle_name,u_last_name,u_email,u_birth_date,u_height,u_weight FROM Users WHERE u_id='${res.locals.id}'`;
+  let data = await runQuery(queryText);
+  res.json(data[0]);
+});
 //0938281026 :)
 
 //UTILITY FUNCTIONS FOR CALLS

@@ -17,6 +17,7 @@ extendButton.style.display = "none";
 updatePanels();
 updateSidebar();
 getMealPlanData();
+getUserProfileData();
 
 function updatePanels() {
   panels.forEach((element) => {
@@ -41,8 +42,6 @@ function updatePanels() {
 
 function updateSidebar() {
   if (sidebarState == "collapsed") {
-    console.log("Collapse");
-
     panels.forEach((element) => {
       element.classList.remove("panelExpandedAnimation");
       element.classList.add("panelCollapsedAnimation");
@@ -65,8 +64,6 @@ function updateSidebar() {
     collapseButton.style.display = "none";
     extendButton.style.display = "initial";
   } else if (sidebarState == "expanded") {
-    console.log("Expand");
-
     sidebar.classList.remove("sidebarCollapsed");
     sidebar.classList.add("sidebarExpanded");
 
@@ -93,7 +90,6 @@ function updateSidebar() {
 }
 
 async function authenticateUser() {
-  console.log("authenticating");
   fetch("/login", {
     method: "GET",
     credentials: "same-origin",
@@ -155,6 +151,7 @@ signOutButton.onclick = function () {
   });
 };
 
+//MEAL PANE:
 async function getUserMealPlanData() {
   let data;
 
@@ -286,4 +283,42 @@ async function unfollowMealplan() {
     console.log(error);
   }
   location.reload();
+}
+
+//PROFILE PANEL
+async function getUserProfileData() {
+  let data;
+
+  try {
+    const res = await fetch("/getUserProfileData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = await res.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+
+  profileNameLabel.innerHTML = `Welcome, <div class="bold">${data.u_first_name} ${data.u_last_name}</div>`;
+  userProfileEmail.innerHTML = data.u_email;
+  userProfileFirstName.innerHTML = data.u_first_name;
+  userProfileMiddleName.innerHTML =
+    data.u_middle_name == null ? "-" : data.u_middle_name;
+  userProfileLastName.innerHTML = data.u_last_name;
+  userProfileDOB.innerHTML = new Date(data.u_birth_date)
+    .toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    })
+    .replace(/\b(\d{1,2})(st|nd|rd|th)\b/g, "$1<sup>$2</sup>");
+  userProfileHeight.innerHTML = `${Math.trunc(data.u_height)} cm  (${Math.floor(
+    data.u_height / 2.54 / 12
+  )}'${Math.round(
+    data.u_height / 2.54 - Math.floor(data.u_height / 2.54 / 12) * 12
+  )}")`;
+  userProfileWeight.innerHTML = Math.trunc(data.u_weight);
 }

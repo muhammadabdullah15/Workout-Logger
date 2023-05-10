@@ -170,7 +170,7 @@
     </div>
 
     <div class="panel" id="profile">
-      <div class="panel-Heading">My Profile</div>
+      <!-- <div class="panel-Heading">My Profile</div> -->
       <div class="panel-content" id="profileContent">
         <div
           class="panel-row panel-row-auto-height panel-row-top-border-radius"
@@ -178,8 +178,20 @@
           <div
             class="panel-column-title panel-row-top-border-radius"
             id="profileNameLabel"
-          >
-            Welcome John Doe
+          ></div>
+        </div>
+
+        <div class="panel-row panel-row-auto-height">
+          <div class="panel-column-title">
+            <img src="/mail-outline.svg" alt="Details" />
+          </div>
+          <div class="panel-column-description">
+            <div class="panel-column-description-container">
+              <div class="panel-column-description-label">Email :</div>
+              <div class="panel-column-description-data" id="userProfileEmail">
+                abd@example.com
+              </div>
+            </div>
           </div>
         </div>
 
@@ -189,38 +201,39 @@
           </div>
           <div class="panel-column-description">
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">First Name</div>
+              <div class="panel-column-description-label">First Name :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileFirstName"
+              ></div>
             </div>
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Middle Name</div>
+              <div class="panel-column-description-label">Middle Name :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileMiddleName"
+              ></div>
             </div>
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Last Name</div>
+              <div class="panel-column-description-label">Last Name :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileLastName"
+              ></div>
             </div>
           </div>
         </div>
 
-        <div class="panel-row panel-row-auto-height">
-          <div class="panel-column-title">
-            <img src="/mail-outline.svg" alt="Details" />
-          </div>
-          <div class="panel-column-description">
-            <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Email</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel-row panel-row-auto-height">
+        <!-- <div class="panel-row panel-row-auto-height">
           <div class="panel-column-title">
             <img src="/key.svg" alt="Details" />
           </div>
           <div class="panel-column-description">
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Password</div>
+              <div class="panel-column-description-label">Password</div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="panel-row panel-row-auto-height">
           <div class="panel-column-title">
@@ -228,7 +241,11 @@
           </div>
           <div class="panel-column-description">
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Date of birth</div>
+              <div class="panel-column-description-label">Date of birth :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileDOB"
+              ></div>
             </div>
           </div>
         </div>
@@ -239,18 +256,28 @@
           </div>
           <div class="panel-column-description">
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Height</div>
+              <div class="panel-column-description-label">Height :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileHeight"
+              ></div>
             </div>
           </div>
         </div>
 
-        <div class="panel-row panel-row-auto-height">
-          <div class="panel-column-title">
+        <div
+          class="panel-row panel-row-auto-height panel-row-bottom-border-radius"
+        >
+          <div class="panel-column-title panel-row-bottom-left-border-radius">
             <img src="/scale-outline.svg" alt="Details" />
           </div>
           <div class="panel-column-description">
             <div class="panel-column-description-container">
-              <div class="panel-colum-description-label">Weight</div>
+              <div class="panel-column-description-label">Weight :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileWeight"
+              ></div>
             </div>
           </div>
         </div>
