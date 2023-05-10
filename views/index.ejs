@@ -66,8 +66,6 @@
     </div>
 
     <div class="panel" id="workout">
-      <!-- <div class="panel-Heading">Workout</div> -->
-      <!-- <div class="panel-content"> -->
       <form class="form hidden">
         <div class="form__row">
           <label class="form__label">Type</label>
@@ -101,44 +99,98 @@
         <button class="form__btn">OK</button>
       </form>
       <div class="workout-form-container">
-        <div id="workoutForm">
-          <img id="closeFormButton" src="/x.svg" alt="close" />
+        <div class="workout-form" id="workoutForm">
+          <img id="closeWorkoutFormButton" src="/x.svg" alt="close" />
 
-          <div class="workout-form-row-header">Workout Type</div>
           <div class="workout-form-row">
-            <div class="workout-type-option">
-              <img src="/person-simple-walk.svg" alt="Walking" />
-              Walking
-            </div>
-            <div class="workout-type-option">
-              <img src="/person-simple-run.svg" alt="Running" />
-              Running
-            </div>
-            <div class="workout-type-option">
-              <img src="/person-simple-bike.svg" alt="Cycling" />
-              Cycling
+            <div class="workout-form-row-title-container">Workout Type</div>
+            <div class="workout-form-row-content-container" id="typeContainer">
+              <div
+                class="workout-form-row-content hover-animation"
+                id="workoutFormTypeWalkingButton"
+              >
+                <img src="/person-simple-walk.svg" alt="Walking" /> Walking
+              </div>
+              <div
+                class="workout-form-row-content hover-animation"
+                id="workoutFormTypeRunningButton"
+              >
+                <img src="/person-simple-run.svg" alt="Running" /> Running
+              </div>
+              <div
+                class="workout-form-row-content hover-animation"
+                id="workoutFormTypeCyclingButton"
+              >
+                <img src="/person-simple-bike.svg" alt="Cycling" /> Cycling
+              </div>
             </div>
           </div>
 
-          <div class="workout-form-row-header">Workout Intensity</div>
-          <div class="workout-form-row" id="intensity">
-            <img
-              id="intensityInputDecrease"
-              src="/remove-outline.svg"
-              alt="Decrease Intensity"
-            />
-            <div id="intensityLabel">Medium</div>
-            <img
-              id="intensityInputIncrease"
-              src="/add-outline.svg"
-              alt="Increase Intensity"
-            />
-          </div>
-
-          <div class="workout-form-row-header">Workout Duration</div>
           <div class="workout-form-row">
-            <input type="time" name="Time" id="" />
+            <div class="workout-form-row-title-container">Duration</div>
+            <div
+              class="workout-form-row-content-container"
+              id="durationContainer"
+            >
+              <div
+                class="workout-form-row-content"
+                id="workoutFormRowMinuteDurationContent"
+              >
+                10
+                <div class="bold">hours</div>
+                20
+                <div class="bold">minutes</div>
+              </div>
+              <div
+                class="workout-form-row-content"
+                id="workoutFormRowDurationControls"
+              >
+                <img
+                  src="/caret-up.svg"
+                  class="hover-animation"
+                  alt="Increase duration"
+                  id="increaseMinuteButton"
+                />
+                <img
+                  src="/caret-down.svg"
+                  class="hover-animation"
+                  alt="Decrease duration"
+                  id="decreaseMinuteButton"
+                />
+              </div>
+            </div>
           </div>
+
+          <div class="workout-form-row">
+            <div class="workout-form-row-title-container">
+              Workout Intensity
+            </div>
+            <div
+              class="workout-form-row-content-container"
+              id="intensityContainer"
+            >
+              <div
+                class="workout-form-row-content hover-animation"
+                id="decreaseIntensityButton"
+              >
+                <img src="/remove-outline.svg" alt="Increase intensity" />
+              </div>
+              <div
+                class="workout-form-row-content"
+                id="workoutFormIntensityLabel"
+              >
+                <div class="bold">Medium</div>
+              </div>
+              <div
+                class="workout-form-row-content hover-animation"
+                id="increaseIntensityButton"
+              >
+                <img src="/add-outline.svg" alt="Increase intensity" />
+              </div>
+            </div>
+          </div>
+
+          <div class="workout-form-row" id="addWorkoutButton">Add Workout</div>
         </div>
       </div>
       <div id="map"></div>
@@ -170,7 +222,6 @@
     </div>
 
     <div class="panel" id="profile">
-      <!-- <div class="panel-Heading">My Profile</div> -->
       <div class="panel-content" id="profileContent">
         <div
           class="panel-row panel-row-auto-height panel-row-top-border-radius"
@@ -188,9 +239,10 @@
           <div class="panel-column-description">
             <div class="panel-column-description-container">
               <div class="panel-column-description-label">Email :</div>
-              <div class="panel-column-description-data" id="userProfileEmail">
-                abd@example.com
-              </div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileEmail"
+              ></div>
             </div>
           </div>
         </div>

@@ -306,7 +306,7 @@ body {
   /* opacity: 0.5; */
 }
 
-.show-workout-form {
+.workout-form-visible {
   animation: showFormAnimation 0.4s ease-in-out;
   animation-fill-mode: forwards;
 }
@@ -320,20 +320,18 @@ body {
   }
 }
 
-#workoutForm {
-  /* opacity: 1; */
+.workout-form {
   border-radius: 15px;
-  padding: 1rem;
+  padding: 1.3rem;
   width: 30%;
-  height: 65%;
+  /* height: 67%; */
   background-color: var(--sidebar);
   color: var(--sidebarText);
   display: flex;
   flex-direction: column;
-  /* border: 1px solid rebeccapurple; */
 }
 
-#closeFormButton {
+#closeWorkoutFormButton {
   margin-left: auto;
   margin-right: 0;
   height: 3rem;
@@ -342,68 +340,144 @@ body {
   border-radius: 10px;
 }
 
-#closeFormButton:hover {
+#closeWorkoutFormButton:hover {
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
 
 .workout-form-row {
   width: 100%;
-  /* height: 3rem; */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  /* margin-bottom: 2.3rem; */
-  /* margin-top: 0.6rem; */
-  margin: 1rem 0;
-}
-
-.workout-type-option {
-  width: 25%;
-  margin: 0 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
-  cursor: pointer;
-  /* border: 1px solid red; */
 }
 
-.workout-type-option img {
-  width: 3rem;
-  height: 3rem;
-  padding: 0.3rem;
+.workout-form-row-title-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-top: 2rem;
 }
 
-#intensity img {
-  width: 2rem;
-  height: 2rem;
-  margin: 1rem;
+.workout-form-row-title {
+  text-align: center;
+}
+
+#workoutFormRowMinuteDurationContent {
+  width: 51%;
+}
+
+#increaseMinuteButton,
+#decreaseMinuteButton {
+  height: 2.1rem;
+  width: 2.1rem;
   padding: 0.2rem;
-  border-radius: 10px;
-  cursor: pointer;
 }
 
-#intensity img:hover,
-.workout-type-option:hover {
+.workout-form-row-content-container {
+  display: flex;
+  width: 100%;
+  margin: 0.2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.workout-form-row-content {
+  margin: 0 auto;
+  padding: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.workout-form-row-content img {
+  border-radius: 15px;
+}
+
+.hover-animation:hover,
+.workout-form-row-content img:hover {
+  cursor: pointer;
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
 
-#intensityLabel {
-  width: 17%;
-  text-align: center;
+#typeContainer {
+  width: 82%;
 }
 
-.workout-form-row-header {
-  /* margin-top: 2.5rem; */
-  /* margin-bottom: 1rem; */
-  width: 100%;
-  font-size: 1.3rem;
-  font-weight: 800;
-  text-align: center;
+#workoutFormTypeWalkingButton,
+#workoutFormTypeRunningButton,
+#workoutFormTypeCyclingButton {
+  width: 5rem;
+  height: 5rem;
+  padding: 0.2rem;
+}
+
+#workoutFormTypeWalkingButton img,
+#workoutFormTypeRunningButton img,
+#workoutFormTypeCyclingButton img {
+  margin-bottom: 0.2rem;
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+#durationContainer {
+  width: 80%;
+}
+
+#durationContainer .workout-form-row-content {
+  margin: 0;
+}
+
+#intensityContainer {
+  width: 45%;
+}
+
+#workoutFormIntensityLabel {
+  width: 41%;
+}
+
+#increaseIntensityButton,
+#decreaseIntensityButton {
+  height: 2.5rem;
+  width: 2.5rem;
+  padding: 0.3rem;
+}
+
+.workout-form-row:first-of-type .workout-form-row-title-container {
+  margin-top: 0;
+}
+
+.workout-form-row:last-of-type {
+  height: 3rem;
+  font-weight: 500;
+  margin-top: 2rem;
+  font-size: 1.2rem;
+  background-color: var(--sidebarHover);
+  border-radius: 15px;
+}
+
+#addWorkoutButton:hover {
+  cursor: pointer;
+  animation: sidebarButtonHoverAnimationDark 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes sidebarButtonHoverAnimationDark {
+  0% {
+    background-color: var(--sidebarHover);
+  }
+  100% {
+    background-color: var(--sidebarDark);
+  }
 }
 
 #workout,
