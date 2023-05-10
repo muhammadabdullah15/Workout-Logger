@@ -171,7 +171,25 @@ async function getUserMealPlanData() {
   }
 
   let html = "";
+
+  if (!data.m_name) {
+    html += `<div class="panel-row">
+              <div class="panel-column-description" style="width:100%;">
+                <div style="text-align: center; width:100%;">
+                    You are not currently following any meal plan
+                    <br><br>
+                    <div class="bold">Select a meal plan below</div>
+                </div>
+              </div>
+            </div>`;
+    userMealPlanData.insertAdjacentHTML("afterbegin", html);
+    return null;
+  }
+
   html += `<div class="panel-row">
+            <div class="panel-column-description-unenroll" id="unfollowPlanButton">
+                Unfollow Meal Plan
+            </div>
               <div class="panel-column-title">${data.m_name}</div>
               <div class="panel-column-description">
                   ${data.m_description}
@@ -186,6 +204,11 @@ async function getUserMealPlanData() {
             </div>`;
 
   userMealPlanData.insertAdjacentHTML("afterbegin", html);
+
+  unfollowPlanButton.addEventListener("click", function () {
+    unfollowMealplan();
+  });
+
   return data.m_name;
 }
 
@@ -242,7 +265,23 @@ async function updateMealplan(id) {
       body: JSON.stringify({ m_id: id }),
     });
     data = await res.json();
-    console.log(data);
+    // console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+  location.reload();
+}
+
+async function unfollowMealplan() {
+  try {
+    const res = await fetch("/unfollowUserMealPlan", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+    data = await res.json();
   } catch (error) {
     console.log(error);
   }

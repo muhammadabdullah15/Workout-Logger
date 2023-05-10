@@ -114,6 +114,13 @@ app.post("/updateUserMealPlan", authenticate, async (req, res) => {
   res.json("Successfully changed");
 });
 
+app.post("/unfollowUserMealPlan", authenticate, async (req, res) => {
+  const queryText = `UPDATE Users SET m_id=NULL,u_mealplan_joining_date=NULL WHERE u_id='${res.locals.id}'`;
+  console.log(queryText);
+  await runQuery(queryText);
+  res.json("Successfully changed");
+});
+
 //0938281026 :)
 
 //UTILITY FUNCTIONS FOR CALLS
