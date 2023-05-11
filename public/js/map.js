@@ -9,42 +9,6 @@ const inputCadence = document.querySelector(".form__input--cadence");
 const inputElevation = document.querySelector(".form__input--elevation");
 // let workoutEditEl;
 
-const workoutFormContainer = document.querySelector(".workout-form-container");
-const closeFormButton = document.getElementById("closeFormButton");
-const popup = document.getElementById("popup");
-const intensityDecrease = document.getElementById("intensityInputDecrease");
-const intensityIncrease = document.getElementById("intensityInputIncrease");
-const intensityLabel = document.getElementById("intensityLabel");
-let intensity = "Medium";
-// workoutFormContainer.classList.add("hide-workout-form");
-workoutFormContainer.style.display = "none";
-
-// showWorkoutForm();
-
-function showWorkoutForm() {
-  popup.style.display = "none";
-  workoutFormContainer.style.display = "flex";
-  workoutFormContainer.classList.add("show-workout-form");
-}
-
-closeFormButton.onclick = function () {
-  popup.style.display = "flex";
-  workoutFormContainer.classList.remove("show-workout-form");
-  workoutFormContainer.style.display = "none";
-};
-
-intensityIncrease.onclick = function () {
-  if (intensity == "Low") intensity = "Medium";
-  else if (intensity == "Medium") intensity = "High";
-  intensityLabel.innerHTML = intensity;
-};
-
-intensityDecrease.onclick = function () {
-  if (intensity == "Medium") intensity = "Low";
-  else if (intensity == "High") intensity = "Medium";
-  intensityLabel.innerHTML = intensity;
-};
-
 let map, mapEvent, editId;
 
 class Workout {

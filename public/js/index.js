@@ -11,7 +11,7 @@ let updateMealPlanButtons;
 authenticateUser();
 
 let sidebarState = "expanded";
-let focusedPanel = "profile";
+let focusedPanel = "workout";
 
 extendButton.style.display = "none";
 updatePanels();
@@ -151,7 +151,129 @@ signOutButton.onclick = function () {
   });
 };
 
-//MEAL PANE:
+//WORKOUT PANEL
+
+//WORKOUT FORM
+addWorkoutButton.style.display = "none";
+const workoutFormContainer = document.querySelector(".workout-form-container");
+let intensity = "Medium";
+let duration = 1;
+updateDurationLabel();
+// workoutFormContainer.classList.add("hide-workout-form");
+workoutFormContainer.style.display = "none";
+
+showWorkoutForm();
+
+function showWorkoutForm() {
+  popup.style.display = "none";
+  workoutFormContainer.style.display = "flex";
+  workoutFormContainer.classList.add("workout-form-visible");
+}
+
+closeWorkoutFormButton.onclick = function () {
+  popup.style.display = "flex";
+  workoutFormContainer.classList.remove("workout-form-visible");
+  workoutFormContainer.style.display = "none";
+};
+
+document.addEventListener("keydown", function (event) {
+  if (workoutFormContainer.classList.contains("workout-form-visible")) {
+    if (event.key === "Escape") {
+      popup.style.display = "flex";
+      workoutFormContainer.classList.remove("workout-form-visible");
+      workoutFormContainer.style.display = "none";
+    }
+  }
+});
+
+workoutFormTypeWalkingButton.onclick = function () {
+  workoutFormTypeWalkingButton.classList.add("workout-form-type-selected");
+  workoutFormTypeRunningButton.classList.remove("workout-form-type-selected");
+  workoutFormTypeCyclingButton.classList.remove("workout-form-type-selected");
+  addWorkoutButton.style.display = "flex";
+};
+
+workoutFormTypeRunningButton.onclick = function () {
+  workoutFormTypeRunningButton.classList.add("workout-form-type-selected");
+  workoutFormTypeWalkingButton.classList.remove("workout-form-type-selected");
+  workoutFormTypeCyclingButton.classList.remove("workout-form-type-selected");
+  addWorkoutButton.style.display = "flex";
+};
+
+workoutFormTypeCyclingButton.onclick = function () {
+  workoutFormTypeCyclingButton.classList.add("workout-form-type-selected");
+  workoutFormTypeWalkingButton.classList.remove("workout-form-type-selected");
+  workoutFormTypeRunningButton.classList.remove("workout-form-type-selected");
+  addWorkoutButton.style.display = "flex";
+};
+
+var increaseDurationInterval, decreaseDurationInterval;
+
+increaseDurationButton.addEventListener("mousedown", function () {
+  increaseDurationInterval = setInterval(function () {
+    duration = duration + 1;
+    updateDurationLabel();
+  }, 150);
+});
+
+increaseDurationButton.addEventListener("mouseup", function () {
+  clearInterval(increaseDurationInterval);
+});
+
+increaseDurationButton.addEventListener("mouseout", function () {
+  clearInterval(increaseDurationInterval);
+});
+
+decreaseDurationButton.addEventListener("mousedown", function () {
+  decreaseDurationInterval = setInterval(function () {
+    if (duration > 1) {
+      duration = duration - 1;
+      updateDurationLabel();
+    }
+  }, 150);
+});
+
+increaseIntensityButton.onclick = function () {
+  if (intensity == "Low") intensity = "Medium";
+  else if (intensity == "Medium") intensity = "High";
+  workoutFormIntensityLabel.innerHTML = `<div class="bold">${intensity}</div>`;
+};
+
+decreaseIntensityButton.onclick = function () {
+  if (intensity == "Medium") intensity = "Low";
+  else if (intensity == "High") intensity = "Medium";
+  workoutFormIntensityLabel.innerHTML = `<div class="bold">${intensity}</div>`;
+};
+
+decreaseDurationButton.addEventListener("mouseup", function () {
+  clearInterval(decreaseDurationInterval);
+});
+
+decreaseDurationButton.addEventListener("mouseout", function () {
+  clearInterval(decreaseDurationInterval);
+});
+
+function updateDurationLabel() {
+  const hours = Math.floor(duration / 60);
+  const mins = duration % 60;
+  workoutFormRowMinuteDurationContent.innerHTML = "";
+
+  if (hours > 0) {
+    workoutFormRowMinuteDurationContent.innerHTML += `${hours}`;
+    if (hours > 1)
+      workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> hours </div>`;
+    else
+      workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> hour </div>`;
+  }
+  workoutFormRowMinuteDurationContent.innerHTML += `${mins}`;
+
+  if (mins > 1)
+    workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> minutes</div>`;
+  else
+    workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> minute</div>`;
+}
+
+//MEAL PANEL
 async function getUserMealPlanData() {
   let data;
 
@@ -297,7 +419,6 @@ async function getUserProfileData() {
       },
     });
     data = await res.json();
-    console.log(data);
   } catch (error) {
     console.log(error);
   }

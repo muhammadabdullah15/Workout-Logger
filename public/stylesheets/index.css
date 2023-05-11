@@ -310,7 +310,7 @@ body {
   animation: showFormAnimation 0.4s ease-in-out;
   animation-fill-mode: forwards;
 }
-
+    
 @keyframes showFormAnimation {
   0% {
     opacity: 0;
@@ -369,7 +369,8 @@ body {
 }
 
 #workoutFormRowMinuteDurationContent {
-  width: 51%;
+  width: 45%;
+  /* width: auto; */
 }
 
 #increaseMinuteButton,
@@ -405,6 +406,11 @@ body {
 .hover-animation:hover,
 .workout-form-row-content img:hover {
   cursor: pointer;
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.workout-form-type-selected {
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
