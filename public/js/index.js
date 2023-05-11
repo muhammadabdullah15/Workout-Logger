@@ -162,8 +162,6 @@ updateDurationLabel();
 // workoutFormContainer.classList.add("hide-workout-form");
 workoutFormContainer.style.display = "none";
 
-showWorkoutForm();
-
 function showWorkoutForm() {
   popup.style.display = "none";
   workoutFormContainer.style.display = "flex";

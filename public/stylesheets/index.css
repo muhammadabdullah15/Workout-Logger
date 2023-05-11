@@ -298,7 +298,7 @@ body {
   /* background-color: var(--sidebar); */
   background-color: rgba(0, 0, 0, 0.5);
 
-  /* opacity: 0; */
+  opacity: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -310,7 +310,7 @@ body {
   animation: showFormAnimation 0.4s ease-in-out;
   animation-fill-mode: forwards;
 }
-    
+
 @keyframes showFormAnimation {
   0% {
     opacity: 0;
