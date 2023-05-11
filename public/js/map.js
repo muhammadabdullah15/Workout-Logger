@@ -1,19 +1,23 @@
-"use strict";
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
-// const form = document.querySelector(".form");
-// const containerWorkouts = document.querySelector(".workouts");
-// const inputType = document.querySelector(".form__input--type");
-// const inputDistance = document.querySelector(".form__input--distance");
-// const inputDuration = document.querySelector(".form__input--duration");
-// const inputCadence = document.querySelector(".form__input--cadence");
-// const inputElevation = document.querySelector(".form__input--elevation");
-// let workoutEditEl;
-
-let map, mapEvent, editId;
+let map, mapEvent;
 
 class Workout {
   date = new Date();
-  id = (Date.now() + "").slice(-10);
+  //   id = (Date.now() + "").slice(-10);
   clicks = 0;
   type = "";
 
@@ -27,21 +31,6 @@ class Workout {
   }
 
   _setDescription() {
-    const months = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)} on ${
       months[this.date.getMonth()]
     } ${this.date.getDate()}`;
@@ -57,11 +46,14 @@ class App {
     this._workouts = [];
     this.mapZoomLevel = 15;
     this._getPosition();
+    // this._renderStoredWorkouts();
+
     // render all stored workouts
+    // this.savedWorkouts = await getUserWorkouts();
+    // console.log(this.savedWorkouts);
 
     addWorkoutButton.addEventListener("click", (e) => {
       e.preventDefault();
-      console.log("New");
       this._newWorkout(e);
     });
   }
@@ -120,8 +112,6 @@ class App {
   }
 
   _renderWorkoutMarker(workout) {
-    console.log("marker: " + workout);
-
     L.marker(workout.coords)
       .addTo(map)
       .bindPopup(
@@ -135,9 +125,9 @@ class App {
       )
       .setPopupContent(
         `${
-          workout.type == "walking"
+          workout.type == "Walking"
             ? "🚶"
-            : workout.type == "running"
+            : workout.type == "Running"
             ? "🏃‍♂️"
             : "🚴‍♀️"
         } ${workout.description}`
