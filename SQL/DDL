@@ -100,3 +100,9 @@ UPDATE Mealplan SET description = 'This healthy meal plan is based on the diet o
 UPDATE Mealplan SET description = 'This meal plan is designed to help you lose weight by providing a high-fiber diet that keeps you feeling full and satisfied.' WHERE m_name = 'High Fiber';
 UPDATE Mealplan SET description = 'This meal plan is designed to help you manage your blood pressure and kidney function by providing a low-sodium diet with plenty of delicious food options.' WHERE m_name = 'Low Sodium';
 UPDATE Mealplan SET description = 'This healthy meal plan provides a balanced mix of macronutrients and calories for optimal health and nutrition.' WHERE m_name = 'Balanced';
+
+INSERT INTO Workout (w_name, w_cpm_low, w_cpm_medium, w_cpm_high)
+VALUES 
+	('Walking', 3.5, 4.3, 5.0),
+	('Running', 8.0, 10.0, 12.0),
+	('Cycling', 5.5, 7.0, 8.5);
