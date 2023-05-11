@@ -3,13 +3,13 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
-const { OAuth2Client } = require("google-auth-library");
+// const { OAuth2Client } = require("google-auth-library");
 // const gClient = new OAuth2Client ()
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
 const { pool } = require("./db");
-const { Console } = require("console");
+// const { Console } = require("console");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -24,6 +24,7 @@ app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 app.get("/login", authenticate, async (req, res, next) => {
   if (res.locals.id) {
     console.log(`User ${res.locals.id} authenticated`);
+    res.send("User Authenticated");
   } else {
     console.log("Session expired");
     res.redirect("/signIn");
@@ -229,6 +230,7 @@ async function authenticate(req, res, next) {
       return next();
     } catch (error) {
       console.error("Error verifying token:", error.message);
+      //   res.redirect("/signIn");
       return next();
     }
   }

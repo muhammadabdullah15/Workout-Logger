@@ -17,9 +17,11 @@ extendButton.style.display = "none";
 updatePanels();
 updateSidebar();
 
-getUserWorkouts();
-getMealPlanData();
-getUserProfileData();
+function getData() {
+  getUserWorkouts();
+  getMealPlanData();
+  getUserProfileData();
+}
 
 function updatePanels() {
   panels.forEach((element) => {
@@ -98,7 +100,7 @@ async function authenticateUser() {
   }).then((response) => {
     if (response.redirected) {
       window.location.href = response.url;
-    }
+    } else getData();
   });
 }
 
@@ -154,13 +156,12 @@ signOutButton.onclick = function () {
 };
 
 //WORKOUT PANEL
-addWorkoutButton.style.display = "none";
 const workoutFormContainer = document.querySelector(".workout-form-container");
+addWorkoutButton.style.display = "none";
+workoutFormContainer.style.display = "none";
 let workoutType, workoutIntensity, workoutDuration;
 var increaseDurationInterval, decreaseDurationInterval;
 updateDurationLabel();
-// workoutFormContainer.classList.add("hide-workout-form");
-workoutFormContainer.style.display = "none";
 
 closeWorkoutFormButton.onclick = function () {
   hideWorkoutForm();
@@ -246,6 +247,14 @@ decreaseDurationButton.addEventListener("mousedown", function () {
   }, 150);
 });
 
+decreaseDurationButton.addEventListener("mouseup", function () {
+  clearInterval(decreaseDurationInterval);
+});
+
+decreaseDurationButton.addEventListener("mouseout", function () {
+  clearInterval(decreaseDurationInterval);
+});
+
 increaseIntensityButton.onclick = function () {
   if (workoutIntensity == "Low") workoutIntensity = "Medium";
   else if (workoutIntensity == "Medium") workoutIntensity = "High";
@@ -257,14 +266,6 @@ decreaseIntensityButton.onclick = function () {
   else if (workoutIntensity == "High") workoutIntensity = "Medium";
   workoutFormIntensityLabel.innerHTML = `<div class="bold">${workoutIntensity}</div>`;
 };
-
-decreaseDurationButton.addEventListener("mouseup", function () {
-  clearInterval(decreaseDurationInterval);
-});
-
-decreaseDurationButton.addEventListener("mouseout", function () {
-  clearInterval(decreaseDurationInterval);
-});
 
 function updateDurationLabel() {
   const hours = Math.floor(workoutDuration / 60);
@@ -333,8 +334,8 @@ async function getUserWorkouts() {
     console.log(error);
   }
 
-  //Also push to workout details
-  data.forEach((obj, i) => {
+  //Also push to workout history panel
+  data.forEach((obj) => {
     const desc = `${obj.w_name[0].toUpperCase()}${obj.w_name.slice(1)} on ${
       months[new Date(obj.wo_workout_date).getMonth()]
     } ${new Date(obj.wo_workout_date).getDate()}`;
