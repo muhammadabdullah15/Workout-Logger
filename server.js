@@ -9,7 +9,7 @@ const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
 const { pool } = require("./db");
-// const { Console } = require("console");
+const { Console } = require("console");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, "/public/js")));
 app.use(express.static(path.join(__dirname, "/public/images")));
 app.use(express.static(path.join(__dirname, "/public/stylesheets")));
 
-//AUTH BASED CALLS
+//AUTHENTICATION BASED CALLS
 app.get("/login", authenticate, async (req, res, next) => {
   if (res.locals.id) {
     console.log(`User ${res.locals.id} authenticated`);
@@ -79,21 +79,10 @@ app.post("/checkEmailExists", async (req, res) => {
 });
 
 //MEAL PANEL CALLS
-//combine the queries?
 app.get("/getUserMealPlanData", authenticate, async (req, res) => {
-  const queryText1 = `SELECT m_id,u_mealplan_joining_date FROM Users WHERE u_id='${res.locals.id}'`;
-  let data = await runQuery(queryText1);
-  if (data[0].m_id != null) {
-    const queryText2 = `SELECT m_name,m_daily_calories,m_type,m_description FROM Mealplan WHERE m_id=${data[0].m_id}`;
-    const mealPlanData = await runQuery(queryText2);
-
-    data = {
-      ...data[0],
-      ...mealPlanData[0],
-    };
-  }
-
-  res.json(data);
+  const queryText = `SELECT Users.m_id,u_mealplan_joining_date,m_name,m_daily_calories,m_type,m_description FROM Mealplan,Users WHERE Users.m_id = Mealplan.m_id AND Users.u_id='${res.locals.id}';`;
+  const data = await runQuery(queryText);
+  res.json(data[0]);
 });
 
 app.get("/getMealPlanData", async (req, res) => {
@@ -125,9 +114,10 @@ app.post("/unfollowUserMealPlan", authenticate, async (req, res) => {
 //PROFILE PANEL CALLS
 app.get("/getUserProfileData", authenticate, async (req, res) => {
   const queryText = `SELECT u_first_name,u_middle_name,u_last_name,u_email,u_birth_date,u_height,u_weight FROM Users WHERE u_id='${res.locals.id}'`;
-  let data = await runQuery(queryText);
+  const data = await runQuery(queryText);
   res.json(data[0]);
 });
+
 //0938281026 :)
 
 //UTILITY FUNCTIONS FOR CALLS
@@ -201,7 +191,7 @@ async function login(req, res, next) {
 }
 
 async function authenticate(req, res, next) {
-  let token = req.cookies.WorkoutLoggerToken;
+  const token = req.cookies.WorkoutLoggerToken;
   if (!token) {
     console.log("Token not found");
     return next();
