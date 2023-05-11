@@ -76,10 +76,6 @@ CREATE TABLE Participates(
 INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_gender,u_birth_date,u_height,u_weight) VALUES
 ('f1','l1','e1','$2b$10$G7IL1/mp/MV8g.RHNwtBnuqNRx/D6NkmvwVXTB.syg342Sx7WjgQS','M','2003-01-01',150,70);
 
-SELECT * FROM Users;
-
-
-
 INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Low Carb', 900, 'Weight Loss');
 INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('High Protein', 3000, 'Weight Gain');
 INSERT INTO Mealplan (m_name, daily_calories, type) VALUES ('Vegetarian', 1200, 'Healthy');
