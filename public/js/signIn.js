@@ -293,7 +293,7 @@ signUpForm.addEventListener("submit", async (event) => {
   }
 
   if (await checkEmailExists()) {
-    signUpPasswordErrorPrompt.style.display = "initial";
+    signUpPasswordErrorPrompt.style.opacity = 1;
     displayInvalidWarning("signUpEmailWarning", false);
     signUpEmailWarningMessage.innerHTML = "Email already exists";
     return;
