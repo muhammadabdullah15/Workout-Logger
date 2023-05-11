@@ -50,11 +50,13 @@ CREATE TABLE Users(
 );
 
 CREATE TABLE Works_out(
+    wo_id SERIAL PRIMARY KEY;
 	u_id INT NOT NULL,
 	w_id INT NOT NULL,
-	intensity CHAR NOT NULL,
-	coordinates VARCHAR(255) NOT NULL,
-	duration INT CHECK(duration > 0) NOT NULL,
+	wo_intensity CHAR NOT NULL,
+	wo_coordinates VARCHAR(255) NOT NULL,
+	wo_duration INT CHECK(duration > 0) NOT NULL,
+    wo_workout_date DATE NOT NULL,
 	
 	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES Users(u_id),
 	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id)
