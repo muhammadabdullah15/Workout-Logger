@@ -80,21 +80,27 @@ app.post("/checkEmailExists", async (req, res) => {
 
 //WORKOUT PANEL CALLS
 app.post("/addNewWorkout", authenticate, async (req, res) => {
-  const type =
-    req.body.type == "Walking" ? 1 : req.body.type == "Running" ? 2 : 3;
+  const type = req.body.type;
   const intensity =
     req.body.intensity == "Low"
       ? "l"
       : req.body.intensity == "Medium"
       ? "m"
       : "h";
-  const coordinates = req.body.coordinates[0] + "," + req.body.coordinates[1];
+  const coordinates = req.body.coordinates;
   const duration = req.body.duration;
+  const date = req.body.date;
 
-  const queryText = `INSERT INTO Works_out(u_id,w_id,intensity,coordinates,duration) VALUES
-    ('${res.locals.id}','${type}','${intensity}','${coordinates}','${duration}')`;
+  const queryText = `INSERT INTO Works_out(u_id,w_id,wo_intensity,wo_coordinates,wo_duration,wo_workout_date) VALUES
+    ('${res.locals.id}','${type}','${intensity}','${coordinates}','${duration}','${date}')`;
 
   await runQuery(queryText);
+});
+
+app.get("/getUserWorkoutsData", authenticate, async (req, res) => {
+  const queryText = `SELECT w_name,wo_intensity,wo_coordinates,wo_duration,wo_workout_date FROM Works_out,Workout WHERE Works_out.w_id = Workout.w_id AND u_id='${res.locals.id}';`;
+  const data = await runQuery(queryText);
+  res.json(data);
 });
 
 //MEAL PANEL CALLS

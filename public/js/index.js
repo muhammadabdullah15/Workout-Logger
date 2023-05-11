@@ -16,6 +16,8 @@ let focusedPanel = "workout";
 extendButton.style.display = "none";
 updatePanels();
 updateSidebar();
+
+getUserWorkouts();
 getMealPlanData();
 getUserProfileData();
 
@@ -152,8 +154,6 @@ signOutButton.onclick = function () {
 };
 
 //WORKOUT PANEL
-
-//WORKOUT FORM
 addWorkoutButton.style.display = "none";
 const workoutFormContainer = document.querySelector(".workout-form-container");
 let workoutType, workoutIntensity, workoutDuration;
@@ -289,10 +289,20 @@ function updateDurationLabel() {
 async function saveNewWorkout(workout) {
   console.log(workout);
 
-  const type = workout.type;
-  const intensity = workout.intensity;
-  const coordinates = workout.coords;
+  const type =
+    workout.type == "Walking" ? 1 : workout.type == "Running" ? 2 : 3;
+  const intensity =
+    workout.intensity == "Low"
+      ? "l"
+      : workout.intensity == "Medium"
+      ? "m"
+      : "h";
+  const coordinates = workout.coords[0] + "," + workout.coords[1];
+  console.log(coordinates);
   const duration = workout.duration;
+  const date = `${String(workout.date.getFullYear())}-${String(
+    workout.date.getMonth() + 1
+  ).padStart(2, "0")}-${String(workout.date.getDate()).padStart(2, "0")}`;
 
   await fetch("/addNewWorkout", {
     method: "POST",
@@ -304,8 +314,37 @@ async function saveNewWorkout(workout) {
       intensity,
       coordinates,
       duration,
+      date,
     }),
   }).then((res) => res.json());
+}
+
+async function getUserWorkouts() {
+  let data;
+  try {
+    const res = await fetch("/getUserWorkoutsData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+
+  //Also push to workout details
+  data.forEach((obj, i) => {
+    const desc = `${obj.w_name[0].toUpperCase()}${obj.w_name.slice(1)} on ${
+      months[new Date(obj.wo_workout_date).getMonth()]
+    } ${new Date(obj.wo_workout_date).getDate()}`;
+
+    app._renderWorkoutMarker({
+      coords: obj.wo_coordinates.split(","),
+      type: obj.w_name,
+      description: desc,
+    });
+  });
 }
 
 //MEAL PANEL
