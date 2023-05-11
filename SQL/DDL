@@ -52,13 +52,12 @@ CREATE TABLE Users(
 CREATE TABLE Works_out(
 	u_id INT NOT NULL,
 	w_id INT NOT NULL,
-	intensity VARCHAR(25),
-	location VARCHAR(50) NOT NULL,
-	duration TIME CHECK(duration > '00:05:00' AND duration < '10:00:00') NOT NULL,
+	intensity CHAR NOT NULL,
+	coordinates VARCHAR(255) NOT NULL,
+	duration INT CHECK(duration > 0) NOT NULL,
 	
 	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES Users(u_id),
 	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id)
-
 );
 
 CREATE TABLE Participates(

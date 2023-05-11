@@ -3,7 +3,7 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
-// const { OAuth2Client } = require("google-auth-library");
+const { OAuth2Client } = require("google-auth-library");
 // const gClient = new OAuth2Client ()
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
@@ -26,7 +26,7 @@ app.get("/login", authenticate, async (req, res, next) => {
     console.log(`User ${res.locals.id} authenticated`);
   } else {
     console.log("Session expired");
-    res.redirect("signIn");
+    res.redirect("/signIn");
   }
 });
 
@@ -76,6 +76,25 @@ app.post("/checkEmailExists", async (req, res) => {
   const data = await runQuery(queryText);
   if (data.length > 0) res.json(true);
   else res.json(false);
+});
+
+//WORKOUT PANEL CALLS
+app.post("/addNewWorkout", authenticate, async (req, res) => {
+  const type =
+    req.body.type == "Walking" ? 1 : req.body.type == "Running" ? 2 : 3;
+  const intensity =
+    req.body.intensity == "Low"
+      ? "l"
+      : req.body.intensity == "Medium"
+      ? "m"
+      : "h";
+  const coordinates = req.body.coordinates[0] + "," + req.body.coordinates[1];
+  const duration = req.body.duration;
+
+  const queryText = `INSERT INTO Works_out(u_id,w_id,intensity,coordinates,duration) VALUES
+    ('${res.locals.id}','${type}','${intensity}','${coordinates}','${duration}')`;
+
+  await runQuery(queryText);
 });
 
 //MEAL PANEL CALLS

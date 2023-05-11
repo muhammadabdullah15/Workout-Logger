@@ -156,23 +156,37 @@ signOutButton.onclick = function () {
 //WORKOUT FORM
 addWorkoutButton.style.display = "none";
 const workoutFormContainer = document.querySelector(".workout-form-container");
-let intensity = "Medium";
-let duration = 1;
+let workoutType, workoutIntensity, workoutDuration;
+var increaseDurationInterval, decreaseDurationInterval;
 updateDurationLabel();
 // workoutFormContainer.classList.add("hide-workout-form");
 workoutFormContainer.style.display = "none";
 
+closeWorkoutFormButton.onclick = function () {
+  hideWorkoutForm();
+};
+
 function showWorkoutForm() {
   popup.style.display = "none";
+  addWorkoutButton.style.display = "none";
+  workoutFormTypeWalkingButton.classList.remove("workout-form-type-selected");
+  workoutFormTypeRunningButton.classList.remove("workout-form-type-selected");
+  workoutFormTypeCyclingButton.classList.remove("workout-form-type-selected");
+  workoutIntensity = "Medium";
+  workoutDuration = 1;
+  workoutType = "";
+  workoutFormIntensityLabel.innerHTML = `<div class="bold">${workoutIntensity}</div>`;
+  updateDurationLabel();
+  console.log(workoutIntensity, workoutDuration, workoutType);
   workoutFormContainer.style.display = "flex";
   workoutFormContainer.classList.add("workout-form-visible");
 }
 
-closeWorkoutFormButton.onclick = function () {
+function hideWorkoutForm() {
   popup.style.display = "flex";
   workoutFormContainer.classList.remove("workout-form-visible");
   workoutFormContainer.style.display = "none";
-};
+}
 
 document.addEventListener("keydown", function (event) {
   if (workoutFormContainer.classList.contains("workout-form-visible")) {
@@ -185,6 +199,7 @@ document.addEventListener("keydown", function (event) {
 });
 
 workoutFormTypeWalkingButton.onclick = function () {
+  workoutType = "Walking";
   workoutFormTypeWalkingButton.classList.add("workout-form-type-selected");
   workoutFormTypeRunningButton.classList.remove("workout-form-type-selected");
   workoutFormTypeCyclingButton.classList.remove("workout-form-type-selected");
@@ -192,6 +207,7 @@ workoutFormTypeWalkingButton.onclick = function () {
 };
 
 workoutFormTypeRunningButton.onclick = function () {
+  workoutType = "Running";
   workoutFormTypeRunningButton.classList.add("workout-form-type-selected");
   workoutFormTypeWalkingButton.classList.remove("workout-form-type-selected");
   workoutFormTypeCyclingButton.classList.remove("workout-form-type-selected");
@@ -199,17 +215,16 @@ workoutFormTypeRunningButton.onclick = function () {
 };
 
 workoutFormTypeCyclingButton.onclick = function () {
+  workoutType = "Cycling";
   workoutFormTypeCyclingButton.classList.add("workout-form-type-selected");
   workoutFormTypeWalkingButton.classList.remove("workout-form-type-selected");
   workoutFormTypeRunningButton.classList.remove("workout-form-type-selected");
   addWorkoutButton.style.display = "flex";
 };
 
-var increaseDurationInterval, decreaseDurationInterval;
-
 increaseDurationButton.addEventListener("mousedown", function () {
   increaseDurationInterval = setInterval(function () {
-    duration = duration + 1;
+    workoutDuration = workoutDuration + 1;
     updateDurationLabel();
   }, 150);
 });
@@ -224,23 +239,23 @@ increaseDurationButton.addEventListener("mouseout", function () {
 
 decreaseDurationButton.addEventListener("mousedown", function () {
   decreaseDurationInterval = setInterval(function () {
-    if (duration > 1) {
-      duration = duration - 1;
+    if (workoutDuration > 1) {
+      workoutDuration = workoutDuration - 1;
       updateDurationLabel();
     }
   }, 150);
 });
 
 increaseIntensityButton.onclick = function () {
-  if (intensity == "Low") intensity = "Medium";
-  else if (intensity == "Medium") intensity = "High";
-  workoutFormIntensityLabel.innerHTML = `<div class="bold">${intensity}</div>`;
+  if (workoutIntensity == "Low") workoutIntensity = "Medium";
+  else if (workoutIntensity == "Medium") workoutIntensity = "High";
+  workoutFormIntensityLabel.innerHTML = `<div class="bold">${workoutIntensity}</div>`;
 };
 
 decreaseIntensityButton.onclick = function () {
-  if (intensity == "Medium") intensity = "Low";
-  else if (intensity == "High") intensity = "Medium";
-  workoutFormIntensityLabel.innerHTML = `<div class="bold">${intensity}</div>`;
+  if (workoutIntensity == "Medium") workoutIntensity = "Low";
+  else if (workoutIntensity == "High") workoutIntensity = "Medium";
+  workoutFormIntensityLabel.innerHTML = `<div class="bold">${workoutIntensity}</div>`;
 };
 
 decreaseDurationButton.addEventListener("mouseup", function () {
@@ -252,8 +267,8 @@ decreaseDurationButton.addEventListener("mouseout", function () {
 });
 
 function updateDurationLabel() {
-  const hours = Math.floor(duration / 60);
-  const mins = duration % 60;
+  const hours = Math.floor(workoutDuration / 60);
+  const mins = workoutDuration % 60;
   workoutFormRowMinuteDurationContent.innerHTML = "";
 
   if (hours > 0) {
@@ -269,6 +284,28 @@ function updateDurationLabel() {
     workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> minutes</div>`;
   else
     workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> minute</div>`;
+}
+
+async function saveNewWorkout(workout) {
+  console.log(workout);
+
+  const type = workout.type;
+  const intensity = workout.intensity;
+  const coordinates = workout.coords;
+  const duration = workout.duration;
+
+  await fetch("/addNewWorkout", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type,
+      intensity,
+      coordinates,
+      duration,
+    }),
+  }).then((res) => res.json());
 }
 
 //MEAL PANEL
