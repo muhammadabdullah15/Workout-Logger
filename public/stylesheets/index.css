@@ -677,12 +677,56 @@ body {
 
 #profileContent {
   margin-top: 1rem;
-  /* display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center; */
 }
 
 .panel-column-description-data {
   margin: 0.3rem;
+}
+
+.panel-table {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-table-row:first-of-type {
+  background-color: var(--sidebarDark);
+  font-size: 1.1rem;
+  font-weight: 600;
+  height: 5rem;
+}
+
+.panel-table-row:last-of-type {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.panel-table-row {
+  padding: 1rem;
+  display: flex;
+  height: 4rem;
+  width: 100%;
+  background-color: var(--sidebar);
+}
+
+.panel-table-row div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-table-column-delete {
+  width: 40% !important;
+}
+
+.panel-table-column-delete img {
+  height: 100%;
+  padding: 0.4rem;
+  border-radius: 10px;
+}
+
+.panel-table-column-delete img:hover {
+  cursor: pointer;
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
 }
