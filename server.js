@@ -250,8 +250,9 @@ async function authenticate(req, res, next) {
   }
 }
 
-app.get("/", async (req, res) => {
-  res.render("index");
+app.get("/", authenticate, async (req, res) => {
+  if (res.locals.id) res.render("index");
+  else res.redirect("signIn");
 });
 
 app.get("/signIn", async (req, res) => {

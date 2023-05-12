@@ -14,10 +14,6 @@ const DateOptions = {
 
 let URL = window.location.href.split("/", 3).join("/");
 
-let updateMealPlanButtons;
-
-authenticateUser();
-
 let sidebarState = "expanded";
 let focusedPanel = "workout";
 
@@ -25,11 +21,9 @@ extendButton.style.display = "none";
 updatePanels();
 updateSidebar();
 
-function getData() {
-  getUserWorkouts();
-  getMealPlanData();
-  getUserProfileData();
-}
+getUserWorkouts();
+getMealPlanData();
+getUserProfileData();
 
 function updatePanels() {
   panels.forEach((element) => {
@@ -99,17 +93,6 @@ function updateSidebar() {
       element.classList.remove("panelCollapsedAnimation");
     });
   }
-}
-
-async function authenticateUser() {
-  fetch("/login", {
-    method: "GET",
-    credentials: "same-origin",
-  }).then((response) => {
-    if (response.redirected) {
-      window.location.href = response.url;
-    } else getData();
-  });
 }
 
 collapseButton.onclick = function () {
@@ -538,7 +521,6 @@ async function getMealPlanData() {
       },
     });
     data = await res.json();
-    // console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -559,7 +541,7 @@ async function getMealPlanData() {
   }
   mealPlanData.insertAdjacentHTML("afterbegin", html);
 
-  updateMealPlanButtons = document.querySelectorAll(
+  const updateMealPlanButtons = document.querySelectorAll(
     ".panel-column-description-enroll"
   );
 
