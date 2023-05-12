@@ -4,6 +4,14 @@ const sidebar = document.querySelector(".sidebar");
 const sidebarMenu = document.querySelector(".sidebar--menu");
 const panels = document.querySelectorAll(".panel");
 
+const DateOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "Asia/Karachi",
+};
+
 let URL = window.location.href.split("/", 3).join("/");
 
 let updateMealPlanButtons;
@@ -178,7 +186,6 @@ function showWorkoutForm() {
   workoutType = "";
   workoutFormIntensityLabel.innerHTML = `<div class="bold">${workoutIntensity}</div>`;
   updateDurationLabel();
-  console.log(workoutIntensity, workoutDuration, workoutType);
   workoutFormContainer.style.display = "flex";
   workoutFormContainer.classList.add("workout-form-visible");
 }
@@ -287,6 +294,22 @@ function updateDurationLabel() {
     workoutFormRowMinuteDurationContent.innerHTML += `<div class="bold"> minute</div>`;
 }
 
+function getFormattedTime(minutes) {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  result = "";
+
+  if (hours > 0) {
+    result += `${hours} hour`;
+    if (hours > 1) result += "s";
+  }
+  result += `${mins} minute`;
+
+  if (mins > 1) result += "s";
+
+  return result;
+}
+
 async function saveNewWorkout(workout) {
   console.log(workout);
 
@@ -299,13 +322,14 @@ async function saveNewWorkout(workout) {
       ? "m"
       : "h";
   const coordinates = workout.coords[0] + "," + workout.coords[1];
-  console.log(coordinates);
   const duration = workout.duration;
   const date = `${String(workout.date.getFullYear())}-${String(
     workout.date.getMonth() + 1
   ).padStart(2, "0")}-${String(workout.date.getDate()).padStart(2, "0")}`;
 
-  await fetch("/addNewWorkout", {
+  const formattedDate = workout.date.toLocaleString("en-US", DateOptions);
+
+  const res = await fetch("/addNewWorkout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -317,7 +341,49 @@ async function saveNewWorkout(workout) {
       duration,
       date,
     }),
-  }).then((res) => res.json());
+  });
+  if (res.status === 200) console.log("Inserted Workout");
+  else console.log("Error inserting workout");
+
+  let data;
+  try {
+    const res = await fetch("/getCalorieData", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ type: "Walking" }),
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+
+  const calories =
+    duration *
+    (workout.intensity == "Low"
+      ? data.w_cpm_low
+      : workout.intensity == "Medium"
+      ? data.w_cpm_medium
+      : data.w_cpm_high);
+  console.log(`CAL: ${calories}`);
+  const html = `<div class="panel-table-row">
+                  <div class="panel-table-column-type">${workout.type}</div>
+                  <div class="panel-table-column-duration">${getFormattedTime(
+                    duration
+                  )}</div>
+                  <div class="panel-table-column-intensity">${
+                    workout.intensity
+                  }</div>
+                  <div class="panel-table-column-calories">${calories} cal</div>
+                  <div class="panel-table-column-date">${formattedDate}</div>
+                  <div class="panel-table-column-delete">
+                    <img src="/trash-outline.svg" id="wo${
+                      data.wo_id
+                    }" alt="Delete" />
+                  </div>
+              </div>`;
+  workoutHistoryTableTitleRow.insertAdjacentHTML("afterend", html);
 }
 
 async function getUserWorkouts() {
@@ -334,18 +400,75 @@ async function getUserWorkouts() {
     console.log(error);
   }
 
-  //Also push to workout history panel
+  let html = "";
+
   data.forEach((obj) => {
+    const date = new Date(obj.wo_workout_date);
+    const formattedDate = date.toLocaleString("en-US", DateOptions);
+
     const desc = `${obj.w_name[0].toUpperCase()}${obj.w_name.slice(1)} on ${
-      months[new Date(obj.wo_workout_date).getMonth()]
-    } ${new Date(obj.wo_workout_date).getDate()}`;
+      months[date.getMonth()]
+    } ${date.getDate()}`;
 
     app._renderWorkoutMarker({
       coords: obj.wo_coordinates.split(","),
       type: obj.w_name,
       description: desc,
     });
+
+    html += `
+        <div class="panel-table-row">
+            <div class="panel-table-column-type">${obj.w_name}</div>
+            <div class="panel-table-column-duration">${getFormattedTime(
+              obj.wo_duration
+            )}</div>
+            <div class="panel-table-column-intensity">${
+              obj.wo_intensity == "l"
+                ? "Low"
+                : obj.wo_intensity == "m"
+                ? "Medium"
+                : "High"
+            }</div>
+            <div class="panel-table-column-calories">${
+              obj.wo_calories
+            } cal</div>
+            <div class="panel-table-column-date">${formattedDate}</div>
+            <div class="panel-table-column-delete">
+              <img src="/trash-outline.svg" id="wo${obj.wo_id}" alt="Delete" />
+            </div>
+        </div>`;
   });
+
+  workoutHistoryTable.insertAdjacentHTML("beforeend", html);
+
+  deleteWorkoutButtons = document.querySelectorAll(
+    ".panel-table-column-delete"
+  );
+
+  for (i = 1; i < deleteWorkoutButtons.length; i++) {
+    deleteWorkoutButtons[i].firstElementChild.addEventListener(
+      "click",
+      function () {
+        deleteWorkout(this.id.substring(2));
+      }
+    );
+  }
+}
+
+async function deleteWorkout(id) {
+  try {
+    const res = await fetch("/deleteWorkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ wo_id: id }),
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+  location.reload();
 }
 
 //MEAL PANEL
@@ -380,6 +503,9 @@ async function getUserMealPlanData() {
     return null;
   }
 
+  const date = new Date(data.u_mealplan_joining_date);
+  const formattedDate = date.toLocaleString("en-US", DateOptions);
+
   html += `<div class="panel-row">
             <div class="panel-column-description-unenroll" id="unfollowPlanButton">
                 Unfollow Meal Plan
@@ -387,13 +513,8 @@ async function getUserMealPlanData() {
               <div class="panel-column-title">${data.m_name}</div>
               <div class="panel-column-description">
                   ${data.m_description}
-                <br><br><div class="bold">Daily Calories: ${
-                  data.m_daily_calories
-                }</div>
-                <br><div class="bold">Following Since: ${data.u_mealplan_joining_date.substring(
-                  0,
-                  10
-                )}</div>
+                <br><br><div class="bold">Daily Calories: </div>${data.m_daily_calories}
+                <br><div class="bold">Following Since: </div>${formattedDate}
               </div>
             </div>`;
 
@@ -426,7 +547,7 @@ async function getMealPlanData() {
   for (const key in data) {
     if (data[key].m_name == userMealName) continue;
     html += `<div class="panel-row">
-        <div class="panel-column-description-enroll" id="${data[key].m_id}">
+        <div class="panel-column-description-enroll" id="mp${data[key].m_id}">
             Select Meal Plan
       </div>
       <div class="panel-column-title">${data[key].m_name}</div>
@@ -444,7 +565,7 @@ async function getMealPlanData() {
 
   for (i = 0; i < updateMealPlanButtons.length; i++) {
     updateMealPlanButtons[i].addEventListener("click", function () {
-      updateMealplan(this.id);
+      updateMealplan(this.id.substring(2));
     });
   }
 }

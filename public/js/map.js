@@ -17,13 +17,11 @@ let map, mapEvent;
 
 class Workout {
   date = new Date();
-  //   id = (Date.now() + "").slice(-10);
   clicks = 0;
   type = "";
 
   constructor(type, coords, duration, intensity) {
-    this.coords = coords; // [] of latitude, longitude
-    // this.distance = distance;
+    this.coords = coords;
     this.type = type;
     this.duration = duration;
     this.intensity = intensity;

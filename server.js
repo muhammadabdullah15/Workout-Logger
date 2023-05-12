@@ -3,12 +3,12 @@ const path = require("path");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const app = express();
-// const { OAuth2Client } = require("google-auth-library");
-// const gClient = new OAuth2Client ()
 const bcrypt = require("bcrypt");
 const JWT = require("jsonwebtoken");
 const port = process.env.PORT || 8800;
 const { pool } = require("./db");
+// const { OAuth2Client } = require("google-auth-library");
+// const gClient = new OAuth2Client ()
 // const { Console } = require("console");
 
 app.use(express.urlencoded({ extended: true }));
@@ -79,15 +79,10 @@ app.post("/checkEmailExists", async (req, res) => {
   else res.json(false);
 });
 
-//WORKOUT PANEL CALLS
+//WORKOUT PANEL + WORKOUT HISTORY PANEL CALLS
 app.post("/addNewWorkout", authenticate, async (req, res) => {
   const type = req.body.type;
-  const intensity =
-    req.body.intensity == "Low"
-      ? "l"
-      : req.body.intensity == "Medium"
-      ? "m"
-      : "h";
+  const intensity = req.body.intensity;
   const coordinates = req.body.coordinates;
   const duration = req.body.duration;
   const date = req.body.date;
@@ -96,12 +91,34 @@ app.post("/addNewWorkout", authenticate, async (req, res) => {
     ('${res.locals.id}','${type}','${intensity}','${coordinates}','${duration}','${date}')`;
 
   await runQuery(queryText);
+  res.send({ status: 200 });
 });
 
 app.get("/getUserWorkoutsData", authenticate, async (req, res) => {
-  const queryText = `SELECT w_name,wo_intensity,wo_coordinates,wo_duration,wo_workout_date FROM Works_out,Workout WHERE Works_out.w_id = Workout.w_id AND u_id='${res.locals.id}';`;
+  const queryText = `SELECT wo_id,w_name, wo_intensity, wo_coordinates, wo_duration, wo_workout_date,
+        CASE
+            WHEN wo_intensity = 'l' THEN w_cpm_low
+            WHEN wo_intensity = 'm' THEN w_cpm_medium
+            WHEN wo_intensity = 'h' THEN w_cpm_high
+        END * wo_duration AS wo_calories
+    FROM Works_out, Workout 
+    WHERE Works_out.w_id = Workout.w_id 
+    AND u_id = '${res.locals.id}' 
+    ORDER BY wo_id DESC;`;
   const data = await runQuery(queryText);
   res.json(data);
+});
+
+app.post("/deleteWorkout", async (req, res) => {
+  const queryText = `DELETE FROM Works_out WHERE wo_id=${req.body.wo_id}`;
+  await runQuery(queryText);
+  res.json("Successfully deleted");
+});
+
+app.post("/getCalorieData", authenticate, async (req, res) => {
+  const queryText = `SELECT * FROM Workout WHERE w_name='${req.body.type}'`;
+  const data = await runQuery(queryText);
+  res.json(data[0]);
 });
 
 //MEAL PANEL CALLS
@@ -125,14 +142,12 @@ app.post("/updateUserMealPlan", authenticate, async (req, res) => {
   const day = currentDate.getDate();
   const formattedDate = `${year}-${month}-${day}`;
   const queryText = `UPDATE Users SET m_id='${m_id}',u_mealplan_joining_date='${formattedDate}' WHERE u_id='${res.locals.id}'`;
-  console.log(queryText);
   await runQuery(queryText);
   res.json("Successfully changed");
 });
 
 app.post("/unfollowUserMealPlan", authenticate, async (req, res) => {
   const queryText = `UPDATE Users SET m_id=NULL,u_mealplan_joining_date=NULL WHERE u_id='${res.locals.id}'`;
-  console.log(queryText);
   await runQuery(queryText);
   res.json("Successfully changed");
 });
@@ -230,7 +245,6 @@ async function authenticate(req, res, next) {
       return next();
     } catch (error) {
       console.error("Error verifying token:", error.message);
-      //   res.redirect("/signIn");
       return next();
     }
   }
