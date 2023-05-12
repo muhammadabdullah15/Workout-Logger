@@ -52,6 +52,11 @@
         <img class="buttonImages" src="/social.svg" alt="social" />
       </button>
 
+      <button class="sidebar--button" id="leaderboardButton">
+        <div class="buttonText">Leaderboard</div>
+        <img class="buttonImages" src="/chart-bar.svg" alt="social" />
+      </button>
+
       <button class="sidebar--button">
         <div class="sidebar--profileText buttonText" id="profileButton">
           My Profile
@@ -163,10 +168,13 @@
     </div>
 
     <div class="panel" id="workoutHistory">
-      <div class="panel-Heading">Workout History</div>
+      <div class="panel-heading">Workout History</div>
       <div class="panel-content">
         <div class="panel-table" id="workoutHistoryTable">
-          <div class="panel-table-row panel-row-top-border-radius" id="workoutHistoryTableTitleRow">
+          <div
+            class="panel-table-row panel-row-top-border-radius"
+            id="workoutHistoryTableTitleRow"
+          >
             <div class="panel-table-column-type">Type</div>
             <div class="panel-table-column-duration">Duration</div>
             <div class="panel-table-column-intensity">Intensity</div>
@@ -179,10 +187,10 @@
     </div>
 
     <div class="panel" id="meal">
-      <div class="panel-Heading">My Meal-Plan</div>
+      <div class="panel-heading">My Meal-Plan</div>
       <div class="panel-content" id="userMealPlanData"></div>
 
-      <div class="panel-Heading">Available Meal-Plans</div>
+      <div class="panel-heading">Available Meal-Plans</div>
       <div class="panel-Description">
         Select from these meal-plans as per your goals and calorie requirements
       </div>
@@ -190,8 +198,81 @@
     </div>
 
     <div class="panel" id="social">
-      <div class="panel-Heading">Social</div>
-      <div class="panel-content"></div>
+      <div class="add-friend-form-container">
+        <div class="add-friend-form" id="workoutForm">
+          <img id="closeAddFriendFormButton" src="/x.svg" alt="close" />
+          <div class="add-friend-form-row">Search user by email</div>
+          <div class="add-friend-form-row">
+            <input
+              type="text"
+              name="searchFriend"
+              id="searchFrinedEmailInput"
+              placeholder="Email"
+            />
+          </div>
+
+          <div class="add-friend-form-row" id="addFriendButton">Add Friend</div>
+        </div>
+      </div>
+
+      <div class="add-friend-container">
+        <img src="/add-outline.svg" id="addFriendFormButton" alt="Add friend" />
+      </div>
+
+      <div class="panel-heading" id="socialLabel">My Friends</div>
+      <div class="panel-content">
+        <div class="panel-table">
+          <!-- <div class="panel-table-row panel-row-top-border-radius">
+            <div class="panel-table-column">My Friends</div>
+          </div> -->
+          <div class="panel-table-row panel-row-top-border-radius">
+            <div class="panel-table-column">Name</div>
+            <div class="panel-table-column">Email</div>
+            <div class="panel-table-column">Weekly Calories</div>
+            <div class="panel-table-column">Followed Mealplan</div>
+            <div class="panel-table-column">Most frequent workout</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="leaderboard">
+      <div class="panel-heading">Global Leaderboard</div>
+      <div class="panel-content">
+        <div class="panel-table">
+          <div
+            class="panel-table-row panel-row-top-border-radius"
+            id="leaderboardSelectorContainer"
+          >
+            <div
+              class="panel-table-column-leaderboard-selector"
+              id="globalLeaderboardWeeklySelector"
+            >
+              This Week
+            </div>
+            <div class="panel-table-column-spaceholder"></div>
+            <div
+              class="panel-table-column-leaderboard-selector"
+              id="globalLeaderboardAllTimeSelector"
+            >
+              All-time
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-table">
+          <div
+            class="panel-table-row panel-row-top-border-radius"
+            id="globalLeaderboardTableTitleRow"
+          >
+            <div class="panel-table-column-rank">Rank</div>
+            <div class="panel-table-column-id">User ID</div>
+            <div class="panel-table-column">Name</div>
+            <div class="panel-table-column">Burned Calories</div>
+            <div class="panel-table-column">Followed Mealplan</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="panel" id="profile">
@@ -225,6 +306,13 @@
             <img src="/identification-card.svg" alt="Details" />
           </div>
           <div class="panel-column-description">
+            <div class="panel-column-description-container">
+              <div class="panel-column-description-label">User ID :</div>
+              <div
+                class="panel-column-description-data"
+                id="userProfileID"
+              ></div>
+            </div>
             <div class="panel-column-description-container">
               <div class="panel-column-description-label">First Name :</div>
               <div

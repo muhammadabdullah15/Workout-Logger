@@ -190,11 +190,13 @@ body {
   left: 15rem;
 }
 
-.panel-Heading {
+.panel-heading {
   /* width: 100%; */
   margin: 1rem;
   font-size: 2rem;
   font-weight: 600;
+  /* display: flex; */
+  /* align-items: flex-end; */
   text-align: center;
 }
 
@@ -289,7 +291,8 @@ body {
   }
 }
 
-.workout-form-container {
+.workout-form-container,
+.add-friend-form-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -320,7 +323,8 @@ body {
   }
 }
 
-.workout-form {
+.workout-form,
+.add-friend-form {
   border-radius: 15px;
   padding: 1.3rem;
   width: 30%;
@@ -331,7 +335,8 @@ body {
   flex-direction: column;
 }
 
-#closeWorkoutFormButton {
+#closeWorkoutFormButton,
+#closeAddFriendFormButton {
   margin-left: auto;
   margin-right: 0;
   height: 3rem;
@@ -340,12 +345,15 @@ body {
   border-radius: 10px;
 }
 
-#closeWorkoutFormButton:hover {
+#closeWorkoutFormButton:hover,
+#closeAddFriendFormButton:hover {
+  cursor: pointer;
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
 
-.workout-form-row {
+.workout-form-row,
+.add-friend-form-row {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -462,7 +470,8 @@ body {
   margin-top: 0;
 }
 
-.workout-form-row:last-of-type {
+.workout-form-row:last-of-type,
+.add-friend-form-row:last-of-type {
   height: 3rem;
   font-weight: 500;
   margin-top: 2rem;
@@ -471,7 +480,8 @@ body {
   border-radius: 15px;
 }
 
-#addWorkoutButton:hover {
+#addWorkoutButton:hover,
+#addFriendButton:hover {
   cursor: pointer;
   animation: sidebarButtonHoverAnimationDark 0.3s ease-in-out;
   animation-fill-mode: forwards;
@@ -692,7 +702,7 @@ body {
   background-color: var(--sidebarDark);
   font-size: 1.1rem;
   font-weight: 600;
-  height: 5rem;
+  height: 4rem;
 }
 
 .panel-table-row:last-of-type {
@@ -726,6 +736,85 @@ body {
 }
 
 .panel-table-column-delete img:hover {
+  cursor: pointer;
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+#leaderboardSelectorContainer {
+  background-color: var(--sidebar);
+  height: 3.5rem;
+  font-weight: 600;
+  padding: 0.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.selectorButtonSelected {
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.panel-table-column-spaceholder {
+  width: 2% !important;
+}
+
+/* .panel-table-row-leaderboard-current-user {
+  background-color: var(--sidebarHover);
+} */
+
+.add-friend-container {
+  display: flex;
+  width: 100%;
+}
+
+#addFriendFormButton {
+  height: 3.5rem;
+  border-radius: 15px;
+  padding: 0.2rem;
+  margin: 0.5rem;
+  margin-left: auto;
+  margin-bottom: -1rem;
+}
+
+#addFriendFormButton:hover,
+.add-friend-form input:hover {
+  cursor: pointer;
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.add-friend-form input {
+  background-color: var(--sidebar);
+  border: none;
+  height: 2rem;
+  width: 80%;
+  color: var(--sidebarText);
+  margin: 0.5rem;
+  border-radius: 10px;
+  padding: 0 0.5rem;
+}
+
+.add-friend-form input:focus {
+  outline: none;
+}
+
+#socialLabel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.panel-table-column-rank,
+.panel-table-column-id {
+  width: 22% !important;
+}
+
+.panel-table-column-leaderboard-selector {
+  border-radius: 15px;
+}
+
+.panel-table-column-leaderboard-selector:hover {
   cursor: pointer;
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;

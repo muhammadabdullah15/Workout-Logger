@@ -152,9 +152,53 @@ app.post("/unfollowUserMealPlan", authenticate, async (req, res) => {
   res.json("Successfully changed");
 });
 
+//LEADERBOARD PANEL CALLS
+app.get("/getWeeklyCalorieData", async (req, res) => {
+  const queryText = `
+    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, 
+       m.m_id, m.m_name,
+       SUM(
+            CASE
+                WHEN wo_intensity = 'l' THEN w_cpm_low
+                WHEN wo_intensity = 'm' THEN w_cpm_medium
+                WHEN wo_intensity = 'h' THEN w_cpm_high
+            END * wo_duration) AS wo_calories
+    FROM Works_out wo
+    JOIN Users u ON u.u_id = wo.u_id
+    JOIN Workout w ON wo.w_id = w.w_id
+    JOIN Mealplan m ON u.m_id = m.m_id
+    WHERE wo_workout_date >= date_trunc('week', current_date)::date
+    GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name
+    ORDER BY wo_calories DESC;
+`;
+  const data = await runQuery(queryText);
+  res.json(data);
+});
+
+app.get("/getAllTimeCalorieData", async (req, res) => {
+  const queryText = `
+    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, 
+       m.m_id, m.m_name,
+       SUM(
+            CASE
+                WHEN wo_intensity = 'l' THEN w_cpm_low
+                WHEN wo_intensity = 'm' THEN w_cpm_medium
+                WHEN wo_intensity = 'h' THEN w_cpm_high
+            END * wo_duration) AS wo_calories
+    FROM Works_out wo
+    JOIN Users u ON u.u_id = wo.u_id
+    JOIN Workout w ON wo.w_id = w.w_id
+    JOIN Mealplan m ON u.m_id = m.m_id
+    GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name
+    ORDER BY wo_calories DESC;
+`;
+  const data = await runQuery(queryText);
+  res.json(data);
+});
+
 //PROFILE PANEL CALLS
 app.get("/getUserProfileData", authenticate, async (req, res) => {
-  const queryText = `SELECT u_first_name,u_middle_name,u_last_name,u_email,u_birth_date,u_height,u_weight FROM Users WHERE u_id='${res.locals.id}'`;
+  const queryText = `SELECT u_id,u_first_name,u_middle_name,u_last_name,u_email,u_birth_date,u_height,u_weight FROM Users WHERE u_id='${res.locals.id}'`;
   const data = await runQuery(queryText);
   res.json(data[0]);
 });

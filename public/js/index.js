@@ -15,7 +15,7 @@ const DateOptions = {
 let URL = window.location.href.split("/", 3).join("/");
 
 let sidebarState = "expanded";
-let focusedPanel = "workout";
+let focusedPanel = "leaderboard";
 
 extendButton.style.display = "none";
 updatePanels();
@@ -24,6 +24,9 @@ updateSidebar();
 getUserWorkouts();
 getMealPlanData();
 getUserProfileData();
+
+let globalLeaderboardSelector = "weekly";
+updateGlobalLeaderboardSelector();
 
 function updatePanels() {
   panels.forEach((element) => {
@@ -129,6 +132,12 @@ socialButton.onclick = function () {
   updatePanels();
 };
 
+leaderboardButton.onclick = function () {
+  if (focusedPanel == "leaderboard") return;
+  focusedPanel = "leaderboard";
+  updatePanels();
+};
+
 profileButton.onclick = function () {
   if (focusedPanel == "profile") return;
   focusedPanel = "profile";
@@ -146,7 +155,7 @@ signOutButton.onclick = function () {
   });
 };
 
-//WORKOUT PANEL
+//WORKOUT + WORKOUT HISTORY PANEL
 const workoutFormContainer = document.querySelector(".workout-form-container");
 addWorkoutButton.style.display = "none";
 workoutFormContainer.style.display = "none";
@@ -180,11 +189,13 @@ function hideWorkoutForm() {
 }
 
 document.addEventListener("keydown", function (event) {
-  if (workoutFormContainer.classList.contains("workout-form-visible")) {
-    if (event.key === "Escape") {
-      popup.style.display = "flex";
-      workoutFormContainer.classList.remove("workout-form-visible");
-      workoutFormContainer.style.display = "none";
+  if (event.key === "Escape") {
+    if (workoutFormContainer.classList.contains("workout-form-visible")) {
+      hideWorkoutForm();
+    } else if (
+      addFriendFormContainer.classList.contains("workout-form-visible")
+    ) {
+      hideAddFriendForm();
     }
   }
 });
@@ -585,6 +596,176 @@ async function unfollowMealplan() {
   location.reload();
 }
 
+//SOCIAL PANEL
+const addFriendFormContainer = document.querySelector(
+  ".add-friend-form-container"
+);
+
+hideAddFriendForm();
+
+addFriendFormButton.onclick = function () {
+  addFriendFormContainer.style.display = "flex";
+  addFriendFormContainer.classList.add("workout-form-visible");
+};
+
+closeAddFriendFormButton.onclick = function () {
+  hideAddFriendForm();
+};
+
+function hideAddFriendForm() {
+  addFriendFormContainer.classList.remove("workout-form-visible");
+  addFriendFormContainer.style.display = "none";
+}
+
+//LEADERBOARD PANEL
+
+globalLeaderboardWeeklySelector.classList.add("hover-animation");
+
+function updateGlobalLeaderboardSelector() {
+  if (globalLeaderboardSelector == "weekly") {
+    globalLeaderboardAllTimeSelector.classList.remove("selectorButtonSelected");
+    globalLeaderboardWeeklySelector.classList.add("selectorButtonSelected");
+    getWeeklyLeaderboardData();
+  } else if (globalLeaderboardSelector == "allTime") {
+    globalLeaderboardWeeklySelector.classList.remove("selectorButtonSelected");
+    globalLeaderboardAllTimeSelector.classList.add("selectorButtonSelected");
+    getAllTimeLeaderboardData();
+  }
+}
+
+globalLeaderboardWeeklySelector.onclick = function () {
+  if (globalLeaderboardSelector == "weekly") return;
+  globalLeaderboardSelector = "weekly";
+  updateGlobalLeaderboardSelector();
+};
+
+globalLeaderboardAllTimeSelector.onclick = function () {
+  if (globalLeaderboardSelector == "allTime") return;
+  globalLeaderboardSelector = "allTime";
+
+  updateGlobalLeaderboardSelector();
+};
+
+async function getWeeklyLeaderboardData() {
+  let data;
+  try {
+    const res = await fetch("/getWeeklyCalorieData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+
+  let html = "";
+
+  while (globalLeaderboardTableTitleRow.nextElementSibling) {
+    const currentSibling = globalLeaderboardTableTitleRow.nextElementSibling;
+    globalLeaderboardTableTitleRow.nextElementSibling =
+      currentSibling.nextElementSibling;
+    currentSibling.remove();
+  }
+
+  data.forEach((obj, i) => {
+    const fullName = `${obj.u_first_name
+      .charAt(0)
+      .toUpperCase()}${obj.u_first_name.slice(1)} ${
+      obj.u_middle_name
+        ? obj.u_middle_name.charAt(0).toUpperCase() + obj.u_middle_name.slice(1)
+        : ""
+    } ${obj.u_last_name.charAt(0).toUpperCase()}${obj.u_last_name.slice(1)}`;
+
+    html += `
+      <div class="panel-table-row">`;
+
+    if (i == 0)
+      html += ` <div class="panel-table-column-rank"><img src="/crown-simple.svg" alt="1"></div>`;
+    else
+      html += `
+              <div class="panel-table-column-rank">${i + 1}</div>`;
+
+    html += `
+              <div class="panel-table-column-id">${obj.u_id}</div>`;
+
+    if (userProfileID.innerHTML == obj.u_id)
+      html += `
+              <div class="panel-table-column">You</div>`;
+    else
+      html += `
+              <div class="panel-table-column">${fullName}</div>`;
+
+    html += `
+              <div class="panel-table-column">${obj.wo_calories}</div>
+              <div class="panel-table-column">${obj.m_name}</div>
+          </div>`;
+  });
+
+  globalLeaderboardTableTitleRow.insertAdjacentHTML("afterend", html);
+}
+
+async function getAllTimeLeaderboardData() {
+  let data;
+  try {
+    const res = await fetch("/getAllTimeCalorieData", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+
+  let html = "";
+
+  while (globalLeaderboardTableTitleRow.nextElementSibling) {
+    const currentSibling = globalLeaderboardTableTitleRow.nextElementSibling;
+    globalLeaderboardTableTitleRow.nextElementSibling =
+      currentSibling.nextElementSibling;
+    currentSibling.remove();
+  }
+
+  data.forEach((obj, i) => {
+    const fullName = `${obj.u_first_name
+      .charAt(0)
+      .toUpperCase()}${obj.u_first_name.slice(1)} ${
+      obj.u_middle_name
+        ? obj.u_middle_name.charAt(0).toUpperCase() + obj.u_middle_name.slice(1)
+        : ""
+    } ${obj.u_last_name.charAt(0).toUpperCase()}${obj.u_last_name.slice(1)}`;
+
+    html += `
+      <div class="panel-table-row">`;
+
+    if (i == 0)
+      html += ` <div class="panel-table-column-rank"><img src="/crown-simple.svg" alt="1"></div>`;
+    else
+      html += `
+              <div class="panel-table-column-rank">${i + 1}</div>`;
+
+    html += `
+              <div class="panel-table-column-id">${obj.u_id}</div>`;
+
+    if (userProfileID.innerHTML == obj.u_id)
+      html += `
+              <div class="panel-table-column">You</div>`;
+    else
+      html += `
+              <div class="panel-table-column">${fullName}</div>`;
+
+    html += `
+              <div class="panel-table-column">${obj.wo_calories}</div>
+              <div class="panel-table-column">${obj.m_name}</div>
+          </div>`;
+  });
+
+  globalLeaderboardTableTitleRow.insertAdjacentHTML("afterend", html);
+}
+
 //PROFILE PANEL
 async function getUserProfileData() {
   let data;
@@ -603,6 +784,7 @@ async function getUserProfileData() {
 
   profileNameLabel.innerHTML = `Welcome, <div class="bold">${data.u_first_name} ${data.u_last_name}</div>`;
   userProfileEmail.innerHTML = data.u_email;
+  userProfileID.innerHTML = data.u_id;
   userProfileFirstName.innerHTML = data.u_first_name;
   userProfileMiddleName.innerHTML =
     data.u_middle_name == null ? "-" : data.u_middle_name;
