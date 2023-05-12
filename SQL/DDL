@@ -1,34 +1,3 @@
-    CREATE TABLE Mealplan(
-	m_id SERIAL,
-	m_name VARCHAR(25) NOT NULL,
-	m_daily_calories INT CHECK(daily_calories > 100 AND daily_calories < 5000) NOT NULL,
-	m_type VARCHAR(25) NOT NULL,
-	
-	CONSTRAINT mealplan_pk_m_id PRIMARY KEY(m_id)
-);
-
-
-CREATE TABLE Challenge(
-	c_id SERIAL ,
-	c_name VARCHAR(50) NOT NULL,
-	start_date DATE NOT NULL,
-	end_date DATE CHECK(end_date > CURRENT_DATE),
-	
-	CONSTRAINT challenge_pk_c_id PRIMARY KEY(c_id)
-);
-
-CREATE TABLE Workout(
-	w_id SERIAL,
-	w_name VARCHAR(50) NOT NULL,
-	w_cpm_low FLOAT CHECK(w_cpm_low > 0) NOT NULL,
-	w_cpm_medium FLOAT CHECK(w_cpm_medium > 0) NOT NULL,
-	w_cpm_high FLOAT CHECK(w_cpm_high > 0) NOT NULL,
-
-	
-	CONSTRAINT workout_pk_w_id PRIMARY KEY(w_id)
-);
-
-
 CREATE TABLE Users(
 	u_id SERIAL,
 	u_first_name VARCHAR(20) NOT NULL,
@@ -49,6 +18,25 @@ CREATE TABLE Users(
 	CONSTRAINT mealplan_fk_m_id FOREIGN KEY(m_id) REFERENCES Mealplan(m_id)
 );
 
+CREATE TABLE Mealplan(
+	m_id SERIAL,
+	m_name VARCHAR(25) NOT NULL,
+	m_daily_calories INT CHECK(daily_calories > 100 AND daily_calories < 5000) NOT NULL,
+	m_type VARCHAR(25) NOT NULL,
+	
+	CONSTRAINT mealplan_pk_m_id PRIMARY KEY(m_id)
+);
+
+CREATE TABLE Workout(
+	w_id SERIAL,
+	w_name VARCHAR(50) NOT NULL,
+	w_cpm_low FLOAT CHECK(w_cpm_low > 0) NOT NULL,
+	w_cpm_medium FLOAT CHECK(w_cpm_medium > 0) NOT NULL,
+	w_cpm_high FLOAT CHECK(w_cpm_high > 0) NOT NULL,
+
+	CONSTRAINT workout_pk_w_id PRIMARY KEY(w_id)
+);
+
 CREATE TABLE Works_out(
     wo_id SERIAL PRIMARY KEY;
 	u_id INT NOT NULL,
@@ -62,13 +50,31 @@ CREATE TABLE Works_out(
 	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id)
 );
 
+CREATE TABLE Friends(
+    u_id INT NOT NULL,
+    f_id INT CHECK (f_id <> u_id) NOT NULL,
+    f_date_added DATE NOT NULL,
+
+    CONSTRAINT friend_fk_u_id FOREIGN KEY(u_id) REFERENCES Users(u_id),
+    CONSTRAINT friend_fk_f_id FOREIGN KEY(f_id) REFERENCES Users(u_id)
+);
+
+CREATE TABLE Challenge(
+	c_id SERIAL ,
+	c_name VARCHAR(50) NOT NULL,
+	start_date DATE NOT NULL,
+	end_date DATE CHECK(end_date > CURRENT_DATE),
+	
+	CONSTRAINT challenge_pk_c_id PRIMARY KEY(c_id)
+);
+
 CREATE TABLE Participates(
 	w_id INT,
 	u_id INT,
 	c_id INT,
 	
 	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id),
-	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES UserS(u_id),
+	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES Users(u_id),
 	CONSTRAINT challenge_fk_c_id FOREIGN KEY(c_id) REFERENCES Challenge(c_id)
 );
 
