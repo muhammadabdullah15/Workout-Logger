@@ -498,7 +498,7 @@ body {
 
 #workout,
 #profile,
-#leaderboard {
+#social {
   height: 100vh;
 }
 
@@ -750,7 +750,7 @@ body {
   animation-fill-mode: forwards;
 }
 
-#leaderboardSelectorContainer {
+.leaderboard-selector-container {
   background-color: var(--sidebar);
   height: 3.5rem;
   font-weight: 600;

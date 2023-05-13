@@ -216,7 +216,7 @@ app.post("/unfollowUser", authenticate, async (req, res) => {
 });
 
 //LEADERBOARD PANEL CALLS
-app.get("/getWeeklyCalorieData", async (req, res) => {
+app.get("/getGlobalWeeklyCalorieData", async (req, res) => {
   const queryText = `
     SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_name,
        SUM(
@@ -237,7 +237,7 @@ app.get("/getWeeklyCalorieData", async (req, res) => {
   res.json(data);
 });
 
-app.get("/getAllTimeCalorieData", async (req, res) => {
+app.get("/getGlobalAllTimeCalorieData", async (req, res) => {
   const queryText = `
     SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, 
        m.m_id, m.m_name,
@@ -251,6 +251,50 @@ app.get("/getAllTimeCalorieData", async (req, res) => {
     JOIN Users u ON u.u_id = wo.u_id
     JOIN Workout w ON wo.w_id = w.w_id
     JOIN Mealplan m ON u.m_id = m.m_id
+    GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name
+    ORDER BY wo_calories DESC;
+`;
+  const data = await runQuery(queryText);
+  res.json(data);
+});
+
+app.get("/getFollowWeeklyCalorieData", authenticate, async (req, res) => {
+  const queryText = `
+    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_name,
+       SUM(
+            CASE
+                WHEN wo_intensity = 'l' THEN w_cpm_low
+                WHEN wo_intensity = 'm' THEN w_cpm_medium
+                WHEN wo_intensity = 'h' THEN w_cpm_high
+            END * wo_duration) AS wo_calories
+    FROM Works_out wo
+    JOIN Users u ON u.u_id = wo.u_id
+    JOIN Workout w ON wo.w_id = w.w_id
+    JOIN Mealplan m ON u.m_id = m.m_id
+    WHERE wo_workout_date >= date_trunc('week', current_date)::date 
+    AND (u.u_id IN (SELECT f_id FROM Follows WHERE u_id = '${res.locals.id}') OR u.u_id='${res.locals.id}')
+    GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name
+    ORDER BY wo_calories DESC;
+
+`;
+  const data = await runQuery(queryText);
+  res.json(data);
+});
+
+app.get("/getFollowAllTimeCalorieData", authenticate, async (req, res) => {
+  const queryText = `
+    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_name,
+       SUM(
+            CASE
+                WHEN wo_intensity = 'l' THEN w_cpm_low
+                WHEN wo_intensity = 'm' THEN w_cpm_medium
+                WHEN wo_intensity = 'h' THEN w_cpm_high
+            END * wo_duration) AS wo_calories
+    FROM Works_out wo
+    JOIN Users u ON u.u_id = wo.u_id
+    JOIN Workout w ON wo.w_id = w.w_id
+    JOIN Mealplan m ON u.m_id = m.m_id
+    WHERE (u.u_id IN (SELECT f_id FROM Follows WHERE u_id = '${res.locals.id}') OR u.u_id='${res.locals.id}')
     GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name
     ORDER BY wo_calories DESC;
 `;
