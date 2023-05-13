@@ -180,7 +180,7 @@
             <div class="panel-table-column-intensity">Intensity</div>
             <div class="panel-table-column-calories">Calories burned</div>
             <div class="panel-table-column-date">Date</div>
-            <div class="panel-table-column-delete">Delete</div>
+            <div class="panel-table-column-delete-workout">Delete</div>
           </div>
         </div>
       </div>
@@ -198,39 +198,45 @@
     </div>
 
     <div class="panel" id="social">
-      <div class="add-friend-form-container">
-        <div class="add-friend-form" id="workoutForm">
-          <img id="closeAddFriendFormButton" src="/x.svg" alt="close" />
-          <div class="add-friend-form-row">Search user by email</div>
-          <div class="add-friend-form-row">
+      <div class="add-follow-form-container">
+        <div class="add-follow-form">
+          <img id="closeAddFollowFormButton" src="/x.svg" alt="close" />
+          <div class="add-follow-form-row">
             <input
-              type="text"
-              name="searchFriend"
-              id="searchFrinedEmailInput"
-              placeholder="Email"
+              type="number"
+              name="searchFollow"
+              id="searchFriendIDInput"
+              placeholder="User ID"
             />
           </div>
 
-          <div class="add-friend-form-row" id="addFriendButton">Add Friend</div>
+          <div class="add-follow-form-row" id="addFollowErrorLabel">
+            User ID doesn't exist
+          </div>
+
+          <div class="add-follow-form-row" id="addFollowButton">
+            Follow User
+          </div>
         </div>
       </div>
 
-      <div class="add-friend-container">
-        <img src="/add-outline.svg" id="addFriendFormButton" alt="Add friend" />
+      <div class="add-follow-container">
+        <img src="/add-outline.svg" id="addFollowFormButton" alt="Add follow" />
       </div>
 
-      <div class="panel-heading" id="socialLabel">My Friends</div>
+      <div class="panel-heading" id="socialLabel">Followed Users</div>
       <div class="panel-content">
         <div class="panel-table">
-          <!-- <div class="panel-table-row panel-row-top-border-radius">
-            <div class="panel-table-column">My Friends</div>
-          </div> -->
-          <div class="panel-table-row panel-row-top-border-radius">
+          <div
+            class="panel-table-row panel-row-top-border-radius"
+            id="followTableTitleRow"
+          >
+            <div class="panel-table-column-id">User ID</div>
             <div class="panel-table-column">Name</div>
-            <div class="panel-table-column">Email</div>
             <div class="panel-table-column">Weekly Calories</div>
-            <div class="panel-table-column">Followed Mealplan</div>
-            <div class="panel-table-column">Most frequent workout</div>
+            <div class="panel-table-column">Mealplan</div>
+            <div class="panel-table-column">Following Since</div>
+            <div class="panel-table-column-delete-follow">Unfollow</div>
           </div>
         </div>
       </div>
@@ -397,6 +403,6 @@
       </div>
     </div>
 
-    <script src="/index.js"></script>
+    <script defer src="/index.js"></script>
   </body>
 </html>

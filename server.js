@@ -152,11 +152,73 @@ app.post("/unfollowUserMealPlan", authenticate, async (req, res) => {
   res.json("Successfully changed");
 });
 
+//SOCIAL PANEL CALLS
+app.post("/addFollow", authenticate, async (req, res) => {
+  if (req.body.f_id == res.locals.id) {
+    res.send({ status: 1200, error: "Cannot follow yourself" });
+    return;
+  }
+
+  const checkQuery1 = `SELECT u_id FROM Users WHERE u_id=${req.body.f_id};`;
+  const data1 = await runQuery(checkQuery1);
+
+  if (data1.length == 0) {
+    res.send({ status: 1200, error: "User ID does not exist!" });
+    return;
+  }
+
+  const checkQuery2 = `SELECT u_id FROM Follows WHERE f_id=${req.body.f_id} AND u_id='${res.locals.id}';`;
+  const data2 = await runQuery(checkQuery2);
+
+  if (data2.length != 0) {
+    res.send({ status: 1200, error: "Already following User!" });
+    return;
+  }
+
+  //IF ALL CHECKS PASSED
+  const queryText = `INSERT INTO Follows(u_id,f_id,f_date_added) VALUES
+        ('${res.locals.id}','${req.body.f_id}','${req.body.date}')`;
+
+  try {
+    await runQuery(queryText);
+    res.send({ status: 200 });
+  } catch (error) {
+    console.error(error);
+    res.send("An error occurred while adding the follow.");
+  }
+});
+
+app.get("/getFollowedUsers", authenticate, async (req, res) => {
+  const queryText = `
+    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_name, f.f_date_added,
+       SUM(
+            CASE
+                WHEN wo_intensity = 'l' THEN w_cpm_low
+                WHEN wo_intensity = 'm' THEN w_cpm_medium
+                WHEN wo_intensity = 'h' THEN w_cpm_high
+            END * wo_duration) AS wo_calories
+    FROM Works_out wo
+    JOIN Users u ON u.u_id = wo.u_id
+    JOIN Workout w ON wo.w_id = w.w_id
+    JOIN Mealplan m ON u.m_id = m.m_id
+    JOIN Follows f ON u.u_id = f.f_id
+    WHERE wo_workout_date >= date_trunc('week', current_date)::date AND f.u_id = '${res.locals.id}'
+    GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name, f.f_date_added
+    ORDER BY wo_calories DESC;`;
+  const data = await runQuery(queryText);
+  res.json(data);
+});
+
+app.post("/unfollowUser", authenticate, async (req, res) => {
+  const queryText = `DELETE FROM Follows WHERE u_id='${res.locals.id}' AND f_id='${req.body.f_id}';`;
+  await runQuery(queryText);
+  res.json("Successfully changed");
+});
+
 //LEADERBOARD PANEL CALLS
 app.get("/getWeeklyCalorieData", async (req, res) => {
   const queryText = `
-    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, 
-       m.m_id, m.m_name,
+    SELECT u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_name,
        SUM(
             CASE
                 WHEN wo_intensity = 'l' THEN w_cpm_low

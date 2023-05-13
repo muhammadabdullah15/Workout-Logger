@@ -292,7 +292,7 @@ body {
 }
 
 .workout-form-container,
-.add-friend-form-container {
+.add-follow-form-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -324,7 +324,7 @@ body {
 }
 
 .workout-form,
-.add-friend-form {
+.add-follow-form {
   border-radius: 15px;
   padding: 1.3rem;
   width: 30%;
@@ -336,7 +336,7 @@ body {
 }
 
 #closeWorkoutFormButton,
-#closeAddFriendFormButton {
+#closeAddFollowFormButton {
   margin-left: auto;
   margin-right: 0;
   height: 3rem;
@@ -346,14 +346,14 @@ body {
 }
 
 #closeWorkoutFormButton:hover,
-#closeAddFriendFormButton:hover {
+#closeAddFollowFormButton:hover {
   cursor: pointer;
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
 
 .workout-form-row,
-.add-friend-form-row {
+.add-follow-form-row {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -471,7 +471,7 @@ body {
 }
 
 .workout-form-row:last-of-type,
-.add-friend-form-row:last-of-type {
+.add-follow-form-row:last-of-type {
   height: 3rem;
   font-weight: 500;
   margin-top: 2rem;
@@ -481,7 +481,7 @@ body {
 }
 
 #addWorkoutButton:hover,
-#addFriendButton:hover {
+#addFollowButton:hover {
   cursor: pointer;
   animation: sidebarButtonHoverAnimationDark 0.3s ease-in-out;
   animation-fill-mode: forwards;
@@ -497,7 +497,8 @@ body {
 }
 
 #workout,
-#profile {
+#profile,
+#leaderboard {
   height: 100vh;
 }
 
@@ -725,17 +726,25 @@ body {
   justify-content: center;
 }
 
-.panel-table-column-delete {
+.panel-table-column-delete-workout,
+.panel-table-column-delete-follow {
   width: 40% !important;
 }
 
-.panel-table-column-delete img {
+.panel-table-column-delete-workout img,
+.panel-table-column-delete-follow img {
   height: 100%;
   padding: 0.4rem;
   border-radius: 10px;
 }
 
-.panel-table-column-delete img:hover {
+.panel-table-column-delete-workout img:hover {
+  cursor: pointer;
+  animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.panel-table-column-delete-follow img:hover {
   cursor: pointer;
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
@@ -759,16 +768,12 @@ body {
   width: 2% !important;
 }
 
-/* .panel-table-row-leaderboard-current-user {
-  background-color: var(--sidebarHover);
-} */
-
-.add-friend-container {
+.add-follow-container {
   display: flex;
   width: 100%;
 }
 
-#addFriendFormButton {
+#addFollowFormButton {
   height: 3.5rem;
   border-radius: 15px;
   padding: 0.2rem;
@@ -777,14 +782,14 @@ body {
   margin-bottom: -1rem;
 }
 
-#addFriendFormButton:hover,
-.add-friend-form input:hover {
+#addFollowFormButton:hover,
+.add-follow-form input:hover {
   cursor: pointer;
   animation: sidebarButtonHoverAnimation 0.3s ease-in-out;
   animation-fill-mode: forwards;
 }
 
-.add-friend-form input {
+.add-follow-form input {
   background-color: var(--sidebar);
   border: none;
   height: 2rem;
@@ -795,11 +800,18 @@ body {
   padding: 0 0.5rem;
 }
 
-.add-friend-form input:focus {
+.add-follow-form input:focus {
   outline: none;
 }
 
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 #socialLabel {
+  margin-top: -1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -807,7 +819,7 @@ body {
 
 .panel-table-column-rank,
 .panel-table-column-id {
-  width: 22% !important;
+  width: 24% !important;
 }
 
 .panel-table-column-leaderboard-selector {

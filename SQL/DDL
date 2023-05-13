@@ -50,7 +50,7 @@ CREATE TABLE Works_out(
 	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id)
 );
 
-CREATE TABLE Friends(
+CREATE TABLE Follows(
     u_id INT NOT NULL,
     f_id INT CHECK (f_id <> u_id) NOT NULL,
     f_date_added DATE NOT NULL,

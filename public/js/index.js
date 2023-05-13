@@ -15,7 +15,7 @@ const DateOptions = {
 let URL = window.location.href.split("/", 3).join("/");
 
 let sidebarState = "expanded";
-let focusedPanel = "leaderboard";
+let focusedPanel = "workout";
 
 extendButton.style.display = "none";
 updatePanels();
@@ -23,6 +23,7 @@ updateSidebar();
 
 getUserWorkouts();
 getMealPlanData();
+getFollowedUsers();
 getUserProfileData();
 
 let globalLeaderboardSelector = "weekly";
@@ -193,9 +194,9 @@ document.addEventListener("keydown", function (event) {
     if (workoutFormContainer.classList.contains("workout-form-visible")) {
       hideWorkoutForm();
     } else if (
-      addFriendFormContainer.classList.contains("workout-form-visible")
+      addFollowFormContainer.classList.contains("workout-form-visible")
     ) {
-      hideAddFriendForm();
+      hideAddFollowForm();
     }
   }
 });
@@ -410,6 +411,13 @@ async function getUserWorkouts() {
       description: desc,
     });
 
+    while (workoutHistoryTableTitleRow.nextElementSibling) {
+      const currentSibling = workoutHistoryTableTitleRow.nextElementSibling;
+      workoutHistoryTableTitleRow.nextElementSibling =
+        currentSibling.nextElementSibling;
+      currentSibling.remove();
+    }
+
     html += `
         <div class="panel-table-row">
             <div class="panel-table-column-type">${obj.w_name}</div>
@@ -427,7 +435,7 @@ async function getUserWorkouts() {
               obj.wo_calories
             } cal</div>
             <div class="panel-table-column-date">${formattedDate}</div>
-            <div class="panel-table-column-delete">
+            <div class="panel-table-column-delete-workout">
               <img src="/trash-outline.svg" id="wo${obj.wo_id}" alt="Delete" />
             </div>
         </div>`;
@@ -436,7 +444,7 @@ async function getUserWorkouts() {
   workoutHistoryTable.insertAdjacentHTML("beforeend", html);
 
   deleteWorkoutButtons = document.querySelectorAll(
-    ".panel-table-column-delete"
+    ".panel-table-column-delete-workout"
   );
 
   for (i = 1; i < deleteWorkoutButtons.length; i++) {
@@ -462,7 +470,7 @@ async function deleteWorkout(id) {
   } catch (error) {
     console.log(error);
   }
-  location.reload();
+  getUserWorkouts();
 }
 
 //MEAL PANEL
@@ -483,7 +491,8 @@ async function getUserMealPlanData() {
 
   let html = "";
 
-  if (!data.m_name) {
+  //   console.log(!data);
+  if (!data) {
     html += `<div class="panel-row">
               <div class="panel-column-description" style="width:100%;">
                 <div style="text-align: center; width:100%;">
@@ -597,28 +606,141 @@ async function unfollowMealplan() {
 }
 
 //SOCIAL PANEL
-const addFriendFormContainer = document.querySelector(
-  ".add-friend-form-container"
+const addFollowFormContainer = document.querySelector(
+  ".add-follow-form-container"
 );
 
-hideAddFriendForm();
+hideAddFollowForm();
 
-addFriendFormButton.onclick = function () {
-  addFriendFormContainer.style.display = "flex";
-  addFriendFormContainer.classList.add("workout-form-visible");
+addFollowFormButton.onclick = function () {
+  addFollowFormContainer.style.display = "flex";
+  addFollowFormContainer.classList.add("workout-form-visible");
+  addFollowButton.style.display = "none";
+  addFollowErrorLabel.style.opacity = 0;
+  searchFriendIDInput.value = "";
 };
 
-closeAddFriendFormButton.onclick = function () {
-  hideAddFriendForm();
+closeAddFollowFormButton.onclick = function () {
+  hideAddFollowForm();
 };
 
-function hideAddFriendForm() {
-  addFriendFormContainer.classList.remove("workout-form-visible");
-  addFriendFormContainer.style.display = "none";
+function hideAddFollowForm() {
+  addFollowFormContainer.classList.remove("workout-form-visible");
+  addFollowFormContainer.style.display = "none";
+}
+
+searchFriendIDInput.addEventListener("input", function () {
+  addFollowButton.style.display = "flex";
+});
+
+addFollowButton.onclick = function () {
+  addFollow();
+};
+
+async function addFollow() {
+  const f_id = searchFriendIDInput.value;
+  const date = new Date().toISOString();
+
+  const res = await fetch("/addFollow", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      f_id,
+      date,
+    }),
+  });
+  const data = await res.json();
+
+  if (data.status === 1200) {
+    addFollowErrorLabel.innerHTML = data.error;
+    addFollowErrorLabel.style.opacity = 1;
+  } else {
+    console.log("Followed User");
+    addFollowErrorLabel.style.opacity = 0;
+    hideAddFollowForm();
+  }
+  getFollowedUsers();
+}
+
+async function getFollowedUsers() {
+  let data;
+  try {
+    const res = await fetch("/getFollowedUsers", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+
+  let html = "";
+
+  while (followTableTitleRow.nextElementSibling) {
+    const currentSibling = followTableTitleRow.nextElementSibling;
+    followTableTitleRow.nextElementSibling = currentSibling.nextElementSibling;
+    currentSibling.remove();
+  }
+
+  data.forEach((obj, i) => {
+    const date = new Date(obj.f_date_added);
+    const formattedDate = date.toLocaleString("en-US", DateOptions);
+    const fullName = `${obj.u_first_name
+      .charAt(0)
+      .toUpperCase()}${obj.u_first_name.slice(1)} ${
+      obj.u_middle_name
+        ? obj.u_middle_name.charAt(0).toUpperCase() + obj.u_middle_name.slice(1)
+        : ""
+    } ${obj.u_last_name.charAt(0).toUpperCase()}${obj.u_last_name.slice(1)}`;
+
+    html += `
+          <div class="panel-table-row">
+              <div class="panel-table-column-id">${obj.u_id}</div>
+              <div class="panel-table-column">${fullName}</div>
+              <div class="panel-table-column">${obj.wo_calories}</div>
+              <div class="panel-table-column">${obj.m_name}</div>
+              <div class="panel-table-column">${formattedDate}</div>
+              <div class="panel-table-column-delete-follow">
+                <img src="/trash-outline.svg" id="fo${obj.u_id}" alt="Delete" />
+              </div>
+          </div>
+        `;
+  });
+
+  followTableTitleRow.insertAdjacentHTML("afterend", html);
+
+  unfollowButtons = document.querySelectorAll(
+    ".panel-table-column-delete-follow"
+  );
+
+  for (i = 1; i < unfollowButtons.length; i++) {
+    unfollowButtons[i].firstElementChild.addEventListener("click", function () {
+      unfollow(this.id.substring(2));
+    });
+  }
+}
+
+async function unfollow(id) {
+  try {
+    const res = await fetch("/unfollowUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ f_id: id }),
+    });
+    data = await res.json();
+  } catch (error) {
+    console.log(error);
+  }
+  getFollowedUsers();
 }
 
 //LEADERBOARD PANEL
-
 globalLeaderboardWeeklySelector.classList.add("hover-animation");
 
 function updateGlobalLeaderboardSelector() {
@@ -692,7 +814,7 @@ async function getWeeklyLeaderboardData() {
 
     if (userProfileID.innerHTML == obj.u_id)
       html += `
-              <div class="panel-table-column">You</div>`;
+              <div class="panel-table-column"><div class="bold">You</div></div>`;
     else
       html += `
               <div class="panel-table-column">${fullName}</div>`;
@@ -752,7 +874,7 @@ async function getAllTimeLeaderboardData() {
 
     if (userProfileID.innerHTML == obj.u_id)
       html += `
-              <div class="panel-table-column">You</div>`;
+               <div class="panel-table-column"><div class="bold">You</div></div>`;
     else
       html += `
               <div class="panel-table-column">${fullName}</div>`;
@@ -782,7 +904,15 @@ async function getUserProfileData() {
     console.log(error);
   }
 
-  profileNameLabel.innerHTML = `Welcome, <div class="bold">${data.u_first_name} ${data.u_last_name}</div>`;
+  const fullName = `${data.u_first_name
+    .charAt(0)
+    .toUpperCase()}${data.u_first_name.slice(1)} ${
+    data.u_middle_name
+      ? data.u_middle_name.charAt(0).toUpperCase() + data.u_middle_name.slice(1)
+      : ""
+  } ${data.u_last_name.charAt(0).toUpperCase()}${data.u_last_name.slice(1)}`;
+
+  profileNameLabel.innerHTML = `Welcome, <div class="bold">${fullName}</div>`;
   userProfileEmail.innerHTML = data.u_email;
   userProfileID.innerHTML = data.u_id;
   userProfileFirstName.innerHTML = data.u_first_name;
