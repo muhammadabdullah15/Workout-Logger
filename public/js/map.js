@@ -44,11 +44,7 @@ class App {
     this._workouts = [];
     this.mapZoomLevel = 15;
     this._getPosition();
-    // this._renderStoredWorkouts();
-
-    // render all stored workouts
-    // this.savedWorkouts = await getUserWorkouts();
-    // console.log(this.savedWorkouts);
+    this._renderStoredWorkouts();
 
     addWorkoutButton.addEventListener("click", (e) => {
       e.preventDefault();
@@ -66,7 +62,35 @@ class App {
       );
   }
 
-  _loadMap(position) {
+  async _renderStoredWorkouts() {
+    let data;
+    try {
+      const res = await fetch("/getUserWorkoutsData", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      data = await res.json();
+    } catch (error) {
+      console.log(error);
+    }
+
+    data.forEach((obj) => {
+      const date = new Date(obj.wo_workout_date);
+      const desc = `${obj.w_name[0].toUpperCase()}${obj.w_name.slice(1)} on ${
+        months[date.getMonth()]
+      } ${date.getDate()}`;
+
+      this._renderWorkoutMarker({
+        coords: obj.wo_coordinates.split(","),
+        type: obj.w_name,
+        description: desc,
+      });
+    });
+  }
+
+  async _loadMap(position) {
     console.log(position);
 
     const { latitude, longitude } = position.coords;

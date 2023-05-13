@@ -59,25 +59,6 @@ CREATE TABLE Follows(
     CONSTRAINT friend_fk_f_id FOREIGN KEY(f_id) REFERENCES Users(u_id)
 );
 
-CREATE TABLE Challenge(
-	c_id SERIAL ,
-	c_name VARCHAR(50) NOT NULL,
-	start_date DATE NOT NULL,
-	end_date DATE CHECK(end_date > CURRENT_DATE),
-	
-	CONSTRAINT challenge_pk_c_id PRIMARY KEY(c_id)
-);
-
-CREATE TABLE Participates(
-	w_id INT,
-	u_id INT,
-	c_id INT,
-	
-	CONSTRAINT workout_fk_w_id FOREIGN KEY(w_id) REFERENCES Workout(w_id),
-	CONSTRAINT user_fk_u_id FOREIGN KEY(u_id) REFERENCES Users(u_id),
-	CONSTRAINT challenge_fk_c_id FOREIGN KEY(c_id) REFERENCES Challenge(c_id)
-);
-
 --TEST QUERIES
 INSERT INTO Users(u_first_name,u_last_name,u_email,u_password,u_gender,u_birth_date,u_height,u_weight) VALUES
 ('f1','l1','e1','$2b$10$G7IL1/mp/MV8g.RHNwtBnuqNRx/D6NkmvwVXTB.syg342Sx7WjgQS','M','2003-01-01',150,70);

@@ -363,7 +363,7 @@ async function saveNewWorkout(workout) {
       : workout.intensity == "Medium"
       ? data.w_cpm_medium
       : data.w_cpm_high);
-  console.log(`CAL: ${calories}`);
+
   const html = `<div class="panel-table-row">
                   <div class="panel-table-column-type">${workout.type}</div>
                   <div class="panel-table-column-duration">${getFormattedTime(
@@ -402,16 +402,6 @@ async function getUserWorkouts() {
   data.forEach((obj) => {
     const date = new Date(obj.wo_workout_date);
     const formattedDate = date.toLocaleString("en-US", DateOptions);
-
-    const desc = `${obj.w_name[0].toUpperCase()}${obj.w_name.slice(1)} on ${
-      months[date.getMonth()]
-    } ${date.getDate()}`;
-
-    app._renderWorkoutMarker({
-      coords: obj.wo_coordinates.split(","),
-      type: obj.w_name,
-      description: desc,
-    });
 
     while (workoutHistoryTableTitleRow.nextElementSibling) {
       const currentSibling = workoutHistoryTableTitleRow.nextElementSibling;
@@ -493,7 +483,6 @@ async function getUserMealPlanData() {
 
   let html = "";
 
-  //   console.log(!data);
   if (!data) {
     html += `<div class="panel-row">
               <div class="panel-column-description" style="width:100%;">
@@ -584,7 +573,6 @@ async function updateMealplan(id) {
       body: JSON.stringify({ m_id: id }),
     });
     data = await res.json();
-    // console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -659,7 +647,6 @@ async function addFollow() {
     addFollowErrorLabel.innerHTML = data.error;
     addFollowErrorLabel.style.opacity = 1;
   } else {
-    console.log("Followed User");
     addFollowErrorLabel.style.opacity = 0;
     hideAddFollowForm();
   }
