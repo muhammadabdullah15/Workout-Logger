@@ -202,7 +202,7 @@ app.get("/getFollowedUsers", authenticate, async (req, res) => {
     JOIN Workout w ON wo.w_id = w.w_id
     JOIN Mealplan m ON u.m_id = m.m_id
     JOIN Follows f ON u.u_id = f.f_id
-    WHERE wo_workout_date >= date_trunc('week', current_date)::date AND f.u_id = '${res.locals.id}'
+    WHERE f.u_id = '${res.locals.id}'
     GROUP BY u.u_id, u.u_first_name, u.u_middle_name, u.u_last_name, m.m_id, m.m_name, f.f_date_added
     ORDER BY wo_calories DESC;`;
   const data = await runQuery(queryText);

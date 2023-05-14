@@ -423,9 +423,9 @@ async function getUserWorkouts() {
                 ? "Medium"
                 : "High"
             }</div>
-            <div class="panel-table-column-calories">${
+            <div class="panel-table-column-calories">${Math.round(
               obj.wo_calories
-            } cal</div>
+            )} cal</div>
             <div class="panel-table-column-date">${formattedDate}</div>
             <div class="panel-table-column-delete-workout">
               <img src="/trash-outline.svg" id="wo${obj.wo_id}" alt="Delete" />
@@ -1066,5 +1066,5 @@ async function getUserProfileData() {
   )}'${Math.round(
     data.u_height / 2.54 - Math.floor(data.u_height / 2.54 / 12) * 12
   )}")`;
-  userProfileWeight.innerHTML = Math.trunc(data.u_weight);
+  userProfileWeight.innerHTML = `${Math.trunc(data.u_weight)} kg`;
 }
