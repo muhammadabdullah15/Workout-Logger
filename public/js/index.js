@@ -137,6 +137,7 @@ socialButton.onclick = function () {
 
 leaderboardButton.onclick = function () {
   if (focusedPanel == "leaderboard") return;
+  updateGlobalLeaderboardSelector();
   focusedPanel = "leaderboard";
   updatePanels();
 };
